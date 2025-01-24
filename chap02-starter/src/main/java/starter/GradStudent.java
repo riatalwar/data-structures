@@ -1,21 +1,11 @@
 package starter;
 
-public class GradStudent {
-  private final String name;
-  private final String email;
+public class GradStudent extends Student {
   private String advisor;
 
   public GradStudent(String name, String email) {
-    this.name = name;
-    this.email = email;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public String getEmail() {
-    return email;
+    super(name, email);
+    //this.advisor = advisor;
   }
 
   public String getAdvisor() {
@@ -24,5 +14,11 @@ public class GradStudent {
 
   public void setAdvisor(String advisor) {
     this.advisor = advisor;
+  }
+
+  public String toString() {
+    return this.getName(); // this. is not necessary, only for cases of resolving ambiguity
+    // also works: getName(), super.getName()--this one will always go look at the super function, could result in using incorrect implementation
+    // doesn't work: name, this.name, super.name, super(name)
   }
 }

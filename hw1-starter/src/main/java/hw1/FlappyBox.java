@@ -37,7 +37,9 @@ public class FlappyBox extends FallingBox {
    * Makes this FlappyBox jump up.
    */
   public void jump() {
-    // TODO: Implement this method
+    setY(getY() + getJumpVelocity());
+    setVelocity(0, GameConstant.FALLING_SPEED);
+    setAcceleration(0, GameConstant.GRAVITY);
     System.out.println("Jump!");
   }
 }

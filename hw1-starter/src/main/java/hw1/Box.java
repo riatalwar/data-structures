@@ -35,6 +35,11 @@ public class Box extends Sprite {
    */
   public boolean intersects(Box other) {
     // TODO: Implement this method
+    if (other.getX() - other.getWidth() <= getX()
+            && other.getX() + other.getWidth() >= getX()) {
+      return other.getY() - other.getHeight() <= getY()
+              && other.getY() + other.getHeight() >= getY();
+    }
     return false;
   }
 }

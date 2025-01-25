@@ -54,6 +54,11 @@ public class FallingBox extends Box {
 
   @Override
   public void move() {
+    if (getY() - getHeight() + getVelocityY() <= 0) {
+      setVelocity(0, 0);
+      setFallingAcceleration(0);
+      setY(getHeight());
+    }
     super.move();
     // TODO: Update the move method to make sure the FallingBox does not fall off the screen.
   }

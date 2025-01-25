@@ -57,6 +57,10 @@ public class FallingBoxDemo {
       drawGameObjects();
       StdDraw.show();
       StdDraw.pause(GameConstant.FRAME_DELAY);
+
+      if (fallingBox.getY() == fallingBox.getHeight()) {
+        isGameOver = true;
+      }
     }
   }
 

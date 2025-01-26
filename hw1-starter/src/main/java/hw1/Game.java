@@ -68,7 +68,18 @@ public class Game {
 
   // Remove the pipes that are out of the canvas and add new pipes.
   private void recyclePipes() {
-    // TODO: Implement this method
+    if (pipes.get(0).right() <= 0) {
+      pipes.remove(0);
+    }
+
+    if (pipes.get(pipes.size() - 1).right() <= GameConstant.CANVAS_WIDTH / 2.0) {
+      double x = pipes.get(pipes.size() - 1).right() + GameConstant.CANVAS_WIDTH / 2.0;
+      pipes.add(
+              new Pipe(x,
+                      GameConstant.CANVAS_HEIGHT - GameConstant.BOX_SPACE / 2.0
+              )
+      );
+    }
   }
 
   // Display the current score on the screen

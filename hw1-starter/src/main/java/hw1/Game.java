@@ -52,8 +52,24 @@ public class Game {
    * Start the game loop.
    */
   public void runGameLoop() {
-    // TODO: Implement this method
-    StdDraw.close();
+    while (!isGameOver) {
+      StdDraw.clear(GameConstant.CANVAS_COLOR);
+      moveGameObjects();
+      drawGameObjects();
+      updateScore();
+      displayScore();
+      recyclePipes();
+      StdDraw.show();
+      StdDraw.pause(GameConstant.FRAME_DELAY);
+
+      if (flappyBox.getY() == flappyBox.getHeight()
+          || flappyBox.getY() >= GameConstant.CANVAS_HEIGHT) {
+        isGameOver = true;
+      } else if (handleCollisions()) {
+        isGameOver = true;
+      }
+    }
+    displayGameOver();
   }
 
   // Move the flappy box and the pipes.

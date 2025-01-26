@@ -52,7 +52,11 @@ public class Game {
 
   // Return true if the flappy box collides with any pipe.
   private boolean handleCollisions() {
-    // TODO: Implement this method
+    for (Pipe pipe : pipes) {
+      if (pipe.intersects(flappyBox)) {
+        return true;
+      }
+    }
     return false;
   }
 

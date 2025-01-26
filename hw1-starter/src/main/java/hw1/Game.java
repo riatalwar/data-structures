@@ -74,7 +74,14 @@ public class Game {
 
   // Move the flappy box and the pipes.
   private void moveGameObjects() {
-    // TODO: Implement this method
+    if (StdDraw.isKeyPressed(KeyEvent.VK_SPACE)) {
+      flappyBox.jump();
+    }
+    flappyBox.move();
+
+    for (Pipe pipe : pipes) {
+      pipe.move();
+    }
   }
 
   // Return true if the flappy box collides with any pipe.

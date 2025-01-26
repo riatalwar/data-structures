@@ -63,7 +63,11 @@ public class Game {
 
   // Draw the flappy box and the pipes.
   private void drawGameObjects() {
-    // TODO: Implement this method
+    flappyBox.draw();
+
+    for (Pipe pipe : pipes) {
+      pipe.draw();
+    }
   }
 
   // Remove the pipes that are out of the canvas and add new pipes.

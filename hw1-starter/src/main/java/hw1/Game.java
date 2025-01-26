@@ -34,11 +34,13 @@ public class Game {
 
   // Set up the game objects.
   private void setUpGameObjects() {
+    // flappy box setup
     flappyBox = new FlappyBox(
             200,
             GameConstant.CANVAS_HEIGHT - 50
     );
 
+    // set up array of pipes
     pipes = new ArrayList<>();
     pipes.add(
             new Pipe(
@@ -53,6 +55,7 @@ public class Game {
    */
   public void runGameLoop() {
     while (!isGameOver) {
+      // update display and score
       StdDraw.clear(GameConstant.CANVAS_COLOR);
       moveGameObjects();
       drawGameObjects();
@@ -62,6 +65,7 @@ public class Game {
       StdDraw.show();
       StdDraw.pause(GameConstant.FRAME_DELAY);
 
+      // check if flappy box goes out of bounds or collides with pipe
       if (flappyBox.getY() == flappyBox.getHeight()
           || flappyBox.getY() >= GameConstant.CANVAS_HEIGHT) {
         isGameOver = true;
@@ -69,16 +73,19 @@ public class Game {
         isGameOver = true;
       }
     }
+
     displayGameOver();
   }
 
   // Move the flappy box and the pipes.
   private void moveGameObjects() {
+    // jump when space and move
     if (StdDraw.isKeyPressed(KeyEvent.VK_SPACE)) {
       flappyBox.jump();
     }
     flappyBox.move();
 
+    // move pipes
     for (Pipe pipe : pipes) {
       pipe.move();
     }
@@ -86,6 +93,7 @@ public class Game {
 
   // Return true if the flappy box collides with any pipe.
   private boolean handleCollisions() {
+    // check all pipes for collisions
     for (Pipe pipe : pipes) {
       if (pipe.intersects(flappyBox)) {
         return true;
@@ -96,12 +104,15 @@ public class Game {
 
   // Update the score if the flappy box passes a pipe.
   private void updateScore() {
+    // check all pipes if passed
     for (Pipe pipe : pipes) {
-      if (flappyBox.getX() >= pipe.getX() + pipe.getWidth()) {
+      // if pipe has been passed
+      if (flappyBox.getX() > pipe.right()) {
+        // update score if not registered as passed
         if (!pipe.isFlappyPassedThisPipe()) {
           score += 1;
+          pipe.setFlappyPassedThisPipe(true);
         }
-        pipe.setFlappyPassedThisPipe(true);
       }
     }
   }
@@ -117,10 +128,12 @@ public class Game {
 
   // Remove the pipes that are out of the canvas and add new pipes.
   private void recyclePipes() {
+    // if pipe off-screen
     if (pipes.get(0).right() <= 0) {
       pipes.remove(0);
     }
 
+    // if right pipe past middle of canvas add new pipe
     if (pipes.get(pipes.size() - 1).right() <= GameConstant.CANVAS_WIDTH / 2.0) {
       double x = pipes.get(pipes.size() - 1).right() + GameConstant.CANVAS_WIDTH / 2.0;
       pipes.add(

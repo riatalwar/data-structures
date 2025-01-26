@@ -34,7 +34,18 @@ public class Game {
 
   // Set up the game objects.
   private void setUpGameObjects() {
-    // TODO: Implement this method
+    flappyBox = new FlappyBox(
+            200,
+            GameConstant.CANVAS_HEIGHT - 50
+    );
+
+    pipes = new ArrayList<>();
+    pipes.add(
+            new Pipe(
+                    GameConstant.CANVAS_WIDTH,
+                    GameConstant.CANVAS_HEIGHT - GameConstant.BOX_SPACE / 2.0
+            )
+    );
   }
 
   /**

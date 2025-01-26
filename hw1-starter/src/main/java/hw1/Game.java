@@ -96,7 +96,14 @@ public class Game {
 
   // Update the score if the flappy box passes a pipe.
   private void updateScore() {
-    // TODO: Implement this method
+    for (Pipe pipe : pipes) {
+      if (flappyBox.getX() >= pipe.getX() + pipe.getWidth()) {
+        if (!pipe.isFlappyPassedThisPipe()) {
+          score += 1;
+        }
+        pipe.setFlappyPassedThisPipe(true);
+      }
+    }
   }
 
   // Draw the flappy box and the pipes.

@@ -49,7 +49,6 @@ public class FallingBoxDemo {
    * Run the main game loop.
    */
   private void runGameLoop() {
-    // TODO: Update the runGameLoop method to end the game when the FallingBox reaches/falls off the screen.
     boolean isGameOver = false;
     while (!isGameOver) {
       StdDraw.clear(GameConstant.CANVAS_COLOR);

@@ -34,7 +34,6 @@ public class Box extends Sprite {
    * @return true if this Box intersects with the other Box.
    */
   public boolean intersects(Box other) {
-    // TODO: Implement this method
     if (other.getX() - other.getWidth() <= getX()
             && other.right() >= getX()) {
       return other.bottom() <= getY()

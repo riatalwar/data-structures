@@ -60,6 +60,5 @@ public class FallingBox extends Box {
       setY(getHeight());
     }
     super.move();
-    // TODO: Update the move method to make sure the FallingBox does not fall off the screen.
   }
 }

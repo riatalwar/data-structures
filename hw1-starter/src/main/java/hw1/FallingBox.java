@@ -54,7 +54,7 @@ public class FallingBox extends Box {
 
   @Override
   public void move() {
-    if (getY() - getHeight() + getVelocityY() <= 0) {
+    if (bottom() + getVelocityY() <= 0) {
       setVelocity(0, 0);
       setFallingAcceleration(0);
       setY(getHeight());

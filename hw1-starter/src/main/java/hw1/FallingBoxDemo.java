@@ -57,6 +57,7 @@ public class FallingBoxDemo {
       StdDraw.show();
       StdDraw.pause(GameConstant.FRAME_DELAY);
 
+      // end loop when box hits bottom
       if (fallingBox.getY() == fallingBox.getHeight()) {
         isGameOver = true;
       }

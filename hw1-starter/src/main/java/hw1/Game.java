@@ -58,15 +58,15 @@ public class Game {
       // update display and score
       StdDraw.clear(GameConstant.CANVAS_COLOR);
       moveGameObjects();
+      recyclePipes();
       drawGameObjects();
       updateScore();
       displayScore();
-      recyclePipes();
       StdDraw.show();
       StdDraw.pause(GameConstant.FRAME_DELAY);
 
       // check if flappy box goes out of bounds or collides with pipe
-      if (flappyBox.getY() == flappyBox.getHeight()
+      if (flappyBox.getY() <= flappyBox.getHeight()
           || flappyBox.getY() >= GameConstant.CANVAS_HEIGHT) {
         isGameOver = true;
       } else if (handleCollisions()) {

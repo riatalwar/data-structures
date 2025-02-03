@@ -3,7 +3,7 @@ package starter;
 public class JhuRoster implements Roster {
   @Override
   public void add(Student s) {
-    
+
   }
 
   @Override

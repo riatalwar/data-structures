@@ -23,7 +23,7 @@ public interface IndexedList<T> {
    * @return value at the given index.
    * @throws IndexOutOfBoundsException Iff index < 0 or index >= length
    */
-  T get(int index) throws IndexOutOfBoundsException;
+  T get(int index) throws IndexException;
 
   /**
    * Get the declared capacity of this list.

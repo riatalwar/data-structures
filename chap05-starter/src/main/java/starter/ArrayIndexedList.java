@@ -14,8 +14,12 @@ public class ArrayIndexedList<T> implements IndexedList<T> {
    *
    * @param size         the capacity of this list.
    * @param defaultValue a default value to plaster over the entire list.
+   * @throws LengthException if size is not positive
    */
   public ArrayIndexedList(int size, T defaultValue) {
+    if (size <= 0) {
+      throw new LengthException();
+    }
     data = (T[]) new Object[size];
     for (int i = 0; i < size; i++) {
       data[i] = defaultValue;
@@ -28,7 +32,10 @@ public class ArrayIndexedList<T> implements IndexedList<T> {
   }
 
   @Override
-  public T get(int index) {
+  public T get(int index) throws IndexException{
+    if (index < 0 || index >= data.length) {
+      throw new IndexException();
+    }
     return data[index];
   }
 

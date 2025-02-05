@@ -32,6 +32,12 @@ public abstract class IndexedListTest {
   }
 
   @Test
+  @DisplayName("length() returns the specified length after IndexedList is instantiated.")
+  void testLengthAfterConstruction() {
+    assertEquals(10, indexedList.length());
+  }
+
+  @Test
   @DisplayName("get() throws exception if index is below the valid range.")
   void testGetWithIndexBelowRangeThrowsException() {
     try {
@@ -43,5 +49,64 @@ public abstract class IndexedListTest {
   }
 
   // TODO Add more tests!
+  @Test
+  @DisplayName("get() throws exception if index is above the valid range.")
+  void testGetWithIndexAboveRangeThrowsException() {
+    try {
+      indexedList.get(10);
+      fail("IndexException was not thrown for index = length");
+    } catch (IndexException ex) {
+      return;
+    }
+
+    try {
+      indexedList.get(11);
+      fail("IndexException was not thrown for index > length");
+    } catch (IndexException ex) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("put() throws exception if index is below the valid range.")
+  void testPutWithIndexBelowRangeThrowsException() {
+    try {
+      indexedList.put(-1, 0);
+      fail("IndexException was not thrown for index < 0");
+    } catch (IndexException ex) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("put() throws exception if index is above the valid range.")
+  void testPutWithIndexAboveRangeThrowsException() {
+    try {
+      indexedList.put(10, 0);
+      fail("IndexException was not thrown for index = length");
+    } catch (IndexException ex) {
+      return;
+    }
+
+    try {
+      indexedList.put(11, 0);
+      fail("IndexException was not thrown for index > length");
+    } catch (IndexException ex) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("put() changes the value at a designated index.")
+  void testPutChangesDesiredValue() {
+    indexedList.put(0, 0);
+    assertEquals(0, indexedList.get(0));
+
+    indexedList.put(4, 3);
+    assertEquals(3, indexedList.get(4));
+
+    indexedList.put(9, 5);
+    assertEquals(5, indexedList.get(9));
+  }
 
 }

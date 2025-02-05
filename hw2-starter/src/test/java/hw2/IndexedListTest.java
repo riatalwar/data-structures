@@ -5,8 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import java.util.Iterator;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit Tests for any class implementing the IndexedList interface.
@@ -107,6 +108,17 @@ public abstract class IndexedListTest {
 
     indexedList.put(9, 5);
     assertEquals(5, indexedList.get(9));
+  }
+
+  @Test
+  @DisplayName("iterator() returns valid iterator.")
+  void testIteratorTraverses() {
+    Iterator<Integer> it = indexedList.iterator();
+    for (int i = 0; i < LENGTH; i++) {
+      assertTrue(it.hasNext());
+      assertEquals(INITIAL, it.next());
+    }
+    assertFalse(it.hasNext());
   }
 
 }

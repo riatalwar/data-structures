@@ -7,7 +7,7 @@ import exception.IndexException;
  *
  * @param <T> the base type of the items in the IndexedList.
  */
-public interface IndexedList<T> {
+public interface IndexedList<T> extends Iterable<T> {
 
   /**
    * Change the value at the given index.

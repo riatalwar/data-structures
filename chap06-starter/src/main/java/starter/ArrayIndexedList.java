@@ -3,6 +3,9 @@ package starter;
 import exception.IndexException;
 import exception.LengthException;
 
+import java.util.Arrays;
+import java.util.Iterator;
+
 /**
  * An implementation of IndexedList that takes a default value
  * to plaster over the entire data structure.
@@ -51,6 +54,12 @@ public class ArrayIndexedList<T> implements IndexedList<T> {
   @Override
   public int length() {
     return data.length;
+  }
+
+  @Override
+  public Iterator<T> iterator() {
+    Iterator<T> iterator = new ArrayIndexedListIterator<>(data);
+    return iterator;
   }
 }
 

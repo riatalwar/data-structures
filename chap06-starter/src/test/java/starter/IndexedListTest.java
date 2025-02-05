@@ -103,4 +103,15 @@ class IndexedListTest {
   void testLengthAfterConstruction() {
     assertEquals(size, numbers.length());
   }
+
+  @Test
+  public void testIteratorRightNumElem() {
+    int count = 0;
+    for (Integer i : numbers) {
+      assertEquals(numbers.get(count), i);
+      count++;
+    }
+    assertEquals(count, numbers.length());
+
+  }
 }

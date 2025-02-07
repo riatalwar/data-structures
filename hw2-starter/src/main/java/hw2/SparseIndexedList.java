@@ -66,6 +66,14 @@ public class SparseIndexedList<T> implements IndexedList<T> {
   }
 
   private class SparseIndexedListIterator implements Iterator<T> {
+    private int nextIndex;
+    private Node<T> nextNode;
+
+    private SparseIndexedListIterator() {
+      nextIndex = 0;
+      nextNode = head;
+    }
+
     @Override
     public boolean hasNext() {
       // TODO

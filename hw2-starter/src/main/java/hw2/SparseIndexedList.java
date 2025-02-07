@@ -102,6 +102,8 @@ public class SparseIndexedList<T> implements IndexedList<T> {
       }
 
       T val = defaultValue;
+
+      // check if nextIndex is non default
       if (nextNode != null) {
         if (nextNode.index == nextIndex) {
           val = nextNode.data;

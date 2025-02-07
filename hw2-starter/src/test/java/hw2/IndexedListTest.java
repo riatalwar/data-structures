@@ -123,7 +123,7 @@ public abstract class IndexedListTest {
 
     try {
       it.next();
-      fail("Exception expected");
+      fail("NoSuchElementException was not thrown for index >= length");
     } catch (NoSuchElementException e) {
       // expected
     }

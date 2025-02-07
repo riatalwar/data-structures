@@ -44,8 +44,25 @@ public class SparseIndexedList<T> implements IndexedList<T> {
 
   @Override
   public T get(int index) throws IndexException {
-    // TODO
-    return null;
+    if (index < 0 || index >= length) {
+      throw new IndexException();
+    }
+
+    // check non default vals
+    Node<T> cur = head;
+    while (cur != null) {
+      // if non default at index
+      if (cur.index == index) {
+        return cur.data;
+      }
+      // if passed index
+      if (cur.index > index) {
+        return defaultValue;
+      }
+      cur = cur.next;
+    }
+
+    return defaultValue;
   }
 
   @Override

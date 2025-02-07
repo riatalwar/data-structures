@@ -112,13 +112,24 @@ public abstract class IndexedListTest {
 
   @Test
   @DisplayName("iterator() returns valid iterator.")
-  void testIteratorTraverses() {
+  void testIteratorDirectAccess() {
     Iterator<Integer> it = indexedList.iterator();
     for (int i = 0; i < LENGTH; i++) {
       assertTrue(it.hasNext());
       assertEquals(INITIAL, it.next());
     }
     assertFalse(it.hasNext());
+  }
+
+  @Test
+  @DisplayName("iterator() for each loop functions properly.")
+  void testIteratorForEach() {
+    int count = 0;
+    for (Integer i : indexedList) {
+      assertEquals(INITIAL, i);
+      count++;
+    }
+    assertEquals(LENGTH, count);
   }
 
 }

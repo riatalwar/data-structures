@@ -110,6 +110,7 @@ public class SparseIndexedList<T> implements IndexedList<T> {
           nextNode = nextNode.next;
         }
       }
+
       nextIndex++;
       return val;
     }

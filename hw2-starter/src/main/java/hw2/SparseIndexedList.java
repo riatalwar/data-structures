@@ -97,6 +97,10 @@ public class SparseIndexedList<T> implements IndexedList<T> {
 
     @Override
     public T next() throws NoSuchElementException {
+      if (nextIndex >= length) {
+        throw new NoSuchElementException();
+      }
+
       T val = defaultValue;
       if (nextNode != null) {
         if (nextNode.index == nextIndex) {

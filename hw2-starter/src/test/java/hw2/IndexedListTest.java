@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -45,7 +46,7 @@ public abstract class IndexedListTest {
       indexedList.get(-1);
       fail("IndexException was not thrown for index < 0");
     } catch (IndexException ex) {
-      return;
+      // expected
     }
   }
 
@@ -57,14 +58,14 @@ public abstract class IndexedListTest {
       indexedList.get(10);
       fail("IndexException was not thrown for index = length");
     } catch (IndexException ex) {
-      return;
+      // expected
     }
 
     try {
       indexedList.get(11);
       fail("IndexException was not thrown for index > length");
     } catch (IndexException ex) {
-      return;
+      // expected
     }
   }
 
@@ -75,7 +76,7 @@ public abstract class IndexedListTest {
       indexedList.put(-1, 0);
       fail("IndexException was not thrown for index < 0");
     } catch (IndexException ex) {
-      return;
+      // expected
     }
   }
 
@@ -86,14 +87,14 @@ public abstract class IndexedListTest {
       indexedList.put(10, 0);
       fail("IndexException was not thrown for index = length");
     } catch (IndexException ex) {
-      return;
+      // expected
     }
 
     try {
       indexedList.put(11, 0);
       fail("IndexException was not thrown for index > length");
     } catch (IndexException ex) {
-      return;
+      // expected
     }
   }
 

@@ -39,8 +39,7 @@ public class SparseIndexedList<T> implements IndexedList<T> {
 
   @Override
   public int length() {
-    // TODO
-    return 0;
+    return length;
   }
 
   @Override

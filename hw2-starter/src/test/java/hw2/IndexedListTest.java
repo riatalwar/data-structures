@@ -119,6 +119,13 @@ public abstract class IndexedListTest {
       assertEquals(INITIAL, it.next());
     }
     assertFalse(it.hasNext());
+
+    try {
+      it.next();
+      fail("Exception expected");
+    } catch (NoSuchElementException e) {
+      // expected
+    }
   }
 
   @Test

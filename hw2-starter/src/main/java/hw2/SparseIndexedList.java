@@ -76,8 +76,7 @@ public class SparseIndexedList<T> implements IndexedList<T> {
 
     @Override
     public boolean hasNext() {
-      // TODO
-      return false;
+      return nextIndex < length;
     }
 
     @Override

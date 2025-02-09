@@ -27,7 +27,7 @@ public class SparseIndexedList<T> implements IndexedList<T> {
    * @throws LengthException if size <= 0.
    */
   public SparseIndexedList(int size, T defaultValue) throws LengthException {
-    // TODO
+    // check condition
     if (size <= 0) {
       throw new LengthException();
     }

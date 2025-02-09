@@ -75,8 +75,8 @@ public class SparseIndexedList<T> implements IndexedList<T> {
     return new SparseIndexedListIterator();
   }
 
-  private static class Node<T> {
-    T data;
+  private static class Node<E> {
+    E data;
     int index;
     SparseIndexedList.Node<T> next;
   }

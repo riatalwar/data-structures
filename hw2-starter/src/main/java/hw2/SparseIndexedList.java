@@ -78,7 +78,12 @@ public class SparseIndexedList<T> implements IndexedList<T> {
   private static class Node<E> {
     E data;
     int index;
-    SparseIndexedList.Node<T> next;
+    SparseIndexedList.Node<E> next;
+
+    Node(E data, int index) {
+      this.data = data;
+      this.index = index;
+    }
   }
 
   private class SparseIndexedListIterator implements Iterator<T> {

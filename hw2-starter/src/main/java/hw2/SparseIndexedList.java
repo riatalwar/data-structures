@@ -67,7 +67,79 @@ public class SparseIndexedList<T> implements IndexedList<T> {
 
   @Override
   public void put(int index, T value) throws IndexException {
-    // TODO
+    if (index < 0 || index >= length) {
+      throw new IndexException();
+    }
+
+    // simply delete index if setting to default
+    if (value == defaultValue) {
+      delete(index);
+      return;
+    }
+
+    Node<T> node = new Node<>(value, index);
+
+    // empty list
+    if (head == null) {
+      head = node;
+      return;
+    } else if (head.index > index) {
+      // insert at beginning of list
+      node.next = head;
+      head = node;
+      return;
+    }
+
+    insertMiddle(node);
+  }
+
+  /**
+   * Deletes non-default value at given index.
+   *
+   * @param index Index within list, expected: index < length.
+   */
+  private void delete(int index) {
+    if (head == null) {
+      return;
+    } else if (head.index == index) {
+      head = head.next;
+      return;
+    }
+
+    Node<T> cur = head;
+    while (cur.next != null) {
+      if (cur.next.index == index) {
+        cur.next = cur.next.next;
+        return;
+      } else if (cur.next.index > index) {
+        return;
+      }
+    }
+  }
+
+  /**
+   * Inserts a non-default node into its given index.
+   *
+   * @param node Length of list, expected: node.index < length, node.data != defaultValue.
+   */
+  private void insertMiddle(Node<T> node) {
+    Node<T> cur = head;
+    while (cur.next != null) {
+      if (cur.index == node.index) {
+        // replace element
+        cur.data = node.data;
+        return;
+      } else if (cur.next.index > node.index) {
+        // insert element
+        node.next = cur.next;
+        cur.next = node;
+        return;
+      }
+      cur = cur.next;
+    }
+
+    // add to end if index not in middle of list
+    cur.next = node;
   }
 
   @Override

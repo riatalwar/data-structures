@@ -114,6 +114,7 @@ public class SparseIndexedList<T> implements IndexedList<T> {
       } else if (cur.next.index > index) {
         return;
       }
+      cur = cur.next;
     }
   }
 

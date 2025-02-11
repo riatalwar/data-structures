@@ -114,6 +114,40 @@ public abstract class IndexedListTest {
   }
 
   @Test
+  @DisplayName("put() changes nondefault value at a designated index.")
+  void testPutChangesNondefaultValue() {
+    indexedList.put(0, 0);
+    indexedList.put(5, 4);
+    indexedList.put(9, 5);
+    indexedList.put(4, 3);
+
+    indexedList.put(9, 9);
+    indexedList.put(4, 5);
+    indexedList.put(0, 0);
+
+    assertEquals(9, indexedList.get(9));
+    assertEquals(5, indexedList.get(4));
+    assertEquals(0, indexedList.get(0));
+  }
+
+  @Test
+  @DisplayName("put() changes nondefault to default at a designated index.")
+  void testPutChangesNondefaultToDefault() {
+    indexedList.put(0, 0);
+    indexedList.put(5, 4);
+    indexedList.put(9, 5);
+    indexedList.put(4, 3);
+
+    indexedList.put(9, INITIAL);
+    indexedList.put(4, INITIAL);
+    indexedList.put(0, INITIAL);
+
+    assertEquals(INITIAL, indexedList.get(4));
+    assertEquals(INITIAL, indexedList.get(9));
+    assertEquals(INITIAL, indexedList.get(0));
+  }
+
+  @Test
   @DisplayName("get() functions properly after values in IndexedList are modified.")
   void testGetAfterChanges() {
     indexedList.put(4, 3);

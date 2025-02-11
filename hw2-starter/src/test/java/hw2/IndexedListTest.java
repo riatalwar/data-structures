@@ -109,6 +109,8 @@ public abstract class IndexedListTest {
 
     indexedList.put(4, 3);
     assertEquals(3, indexedList.get(4));
+
+    assertEquals(LENGTH, indexedList.length());
   }
 
   @Test

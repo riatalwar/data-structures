@@ -152,4 +152,25 @@ public abstract class IndexedListTest {
     assertEquals(LENGTH, count);
   }
 
+  @Test
+  @DisplayName("iterator() functions after modifications.")
+  void testIteratorAfterModifications() {
+    indexedList.put(4, 3);
+    indexedList.put(9, 5);
+
+    int count = 0;
+    for (Integer i : indexedList) {
+      if (count == 4) {
+        assertEquals(3, i);
+      } else if (count == 9) {
+        assertEquals(5, i);
+      } else {
+        assertEquals(INITIAL, i);
+      }
+
+      count++;
+    }
+    assertEquals(LENGTH, count);
+  }
+
 }

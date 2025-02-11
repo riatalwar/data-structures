@@ -104,11 +104,23 @@ public abstract class IndexedListTest {
     indexedList.put(0, 0);
     assertEquals(0, indexedList.get(0));
 
-    indexedList.put(4, 3);
-    assertEquals(3, indexedList.get(4));
-
     indexedList.put(9, 5);
     assertEquals(5, indexedList.get(9));
+
+    indexedList.put(4, 3);
+    assertEquals(3, indexedList.get(4));
+  }
+
+  @Test
+  @DisplayName("get() functions properly after values in IndexedList are modified.")
+  void testGetAfterChanges() {
+    indexedList.put(4, 3);
+    indexedList.put(9, 5);
+
+    assertEquals(3, indexedList.get(4));
+    assertEquals(5, indexedList.get(9));
+    assertEquals(INITIAL, indexedList.get(0));
+    assertEquals(INITIAL, indexedList.get(5));
   }
 
   @Test

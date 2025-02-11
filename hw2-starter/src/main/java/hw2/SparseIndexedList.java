@@ -90,7 +90,8 @@ public class SparseIndexedList<T> implements IndexedList<T> {
       return;
     }
 
-    insertMiddle(node);
+    // insert into middle after checking edge cases
+    putMiddle(node);
   }
 
   /**
@@ -123,7 +124,7 @@ public class SparseIndexedList<T> implements IndexedList<T> {
    *
    * @param node Length of list, expected: node.index < length, node.data != defaultValue.
    */
-  private void insertMiddle(Node<T> node) {
+  private void putMiddle(Node<T> node) {
     Node<T> cur = head;
     while (cur.next != null) {
       if (cur.index == node.index) {

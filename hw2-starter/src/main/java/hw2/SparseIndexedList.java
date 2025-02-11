@@ -72,47 +72,53 @@ public class SparseIndexedList<T> implements IndexedList<T> {
     }
 
     // simply delete index if setting to default
-    if (value == defaultValue) {
+    if (defaultValue.equals(value)) {
       delete(index);
       return;
     }
 
     Node<T> node = new Node<>(value, index);
 
-    // empty list
+    // handle edge cases
     if (head == null) {
+      // empty list
       head = node;
-      return;
     } else if (head.index > index) {
       // insert at beginning of list
       node.next = head;
       head = node;
-      return;
+    } else {
+      // insert into middle if not edge case
+      putMiddle(node);
     }
 
-    // insert into middle after checking edge cases
-    putMiddle(node);
+
   }
 
   /**
    * Deletes non-default value at given index.
    *
-   * @param index Index within list, expected: index < length.
+   * @param index Index within list, expected: 0 <= index < length.
    */
   private void delete(int index) {
     if (head == null) {
+      // no non default vals
       return;
     } else if (head.index == index) {
+      // head edge case
       head = head.next;
       return;
     }
 
+    // search for index
     Node<T> cur = head;
     while (cur.next != null) {
       if (cur.next.index == index) {
+        // delete next
         cur.next = cur.next.next;
         return;
       } else if (cur.next.index > index) {
+        // stop when past index
         return;
       }
       cur = cur.next;
@@ -122,7 +128,8 @@ public class SparseIndexedList<T> implements IndexedList<T> {
   /**
    * Inserts a non-default node into its given index.
    *
-   * @param node Length of list, expected: node.index < length, node.data != defaultValue.
+   * @param node to insert, expected: 0 <= node.index < length,
+   *             node.data != defaultValue.
    */
   private void putMiddle(Node<T> node) {
     Node<T> cur = head;
@@ -140,6 +147,11 @@ public class SparseIndexedList<T> implements IndexedList<T> {
       cur = cur.next;
     }
 
+    // replace if at last index
+    if (cur.index == node.index) {
+      cur.data = node.data;
+      return;
+    }
     // add to end if index not in middle of list
     cur.next = node;
   }

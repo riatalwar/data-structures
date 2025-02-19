@@ -51,7 +51,7 @@ public class MeasuredIndexedList<T> extends ArrayIndexedList<T>
 
   @Override
   public int accesses() {
-    return 0; // TODO: Implement me
+    return accesses;
   }
 
   @Override

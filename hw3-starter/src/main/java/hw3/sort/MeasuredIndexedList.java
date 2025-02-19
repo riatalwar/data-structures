@@ -39,7 +39,8 @@ public class MeasuredIndexedList<T> extends ArrayIndexedList<T>
 
   @Override
   public void put(int index, T value) throws IndexException {
-    // TODO: Implement me
+    super.put(index, value);
+    mutations++;
   }
 
   @Override

@@ -61,7 +61,15 @@ public class MeasuredIndexedList<T> extends ArrayIndexedList<T>
 
   @Override
   public int count(T value) {
-    return 0; // TODO: Implement me
+    int count = 0;
+    Iterator<T> it = super.iterator();
+    while (it.hasNext()) {
+      if (it.next() == value) {
+        count++;
+      }
+      accesses++;
+    }
+    return count;
   }
 
 }

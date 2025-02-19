@@ -56,7 +56,7 @@ public class MeasuredIndexedList<T> extends ArrayIndexedList<T>
 
   @Override
   public int mutations() {
-    return 0; // TODO: Implement me
+    return mutations;
   }
 
   @Override

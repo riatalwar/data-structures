@@ -123,4 +123,23 @@ public class MeasuredIndexedListTest {
     assertEquals(12, measuredIndexedList.count(DEFAULT_VALUE));
     assertEquals(60, measuredIndexedList.accesses());
   }
+
+  @Test
+  @DisplayName("Reset sets correct value after modifications")
+  void resetAfterModifications() {
+    measuredIndexedList.put(0, 4);
+    measuredIndexedList.put(4, 4);
+    measuredIndexedList.put(14, 2);
+    measuredIndexedList.count(2);
+    measuredIndexedList.get(0);
+    measuredIndexedList.get(12);
+
+    assertEquals(17, measuredIndexedList.accesses());
+    assertEquals(3, measuredIndexedList.mutations());
+
+    measuredIndexedList.reset();
+
+    assertEquals(0, measuredIndexedList.accesses());
+    assertEquals(0, measuredIndexedList.mutations());
+  }
 }

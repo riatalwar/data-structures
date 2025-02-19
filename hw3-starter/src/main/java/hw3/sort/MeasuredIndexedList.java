@@ -32,8 +32,9 @@ public class MeasuredIndexedList<T> extends ArrayIndexedList<T>
 
   @Override
   public T get(int index) throws IndexException {
-    // TODO: Implement me
-    return null;
+    T val = super.get(index);
+    accesses++;
+    return val;
   }
 
   @Override

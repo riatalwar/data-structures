@@ -1,6 +1,7 @@
 package hw3.sort;
 
 import exceptions.IndexException;
+import java.util.Iterator;
 
 /**
  * An ArrayIndexedList that is able to report the number of

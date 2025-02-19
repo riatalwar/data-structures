@@ -1,5 +1,6 @@
 package hw3;
 
+import exceptions.IndexException;
 import hw3.sort.MeasuredIndexedList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

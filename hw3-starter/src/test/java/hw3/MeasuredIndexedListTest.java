@@ -92,4 +92,33 @@ public class MeasuredIndexedListTest {
       assertEquals(2, measuredIndexedList.mutations());
     }
   }
+
+  @Test
+  @DisplayName("Count correctly increments access counter")
+  void countCorrectlyIncrementsAccesses() {
+    measuredIndexedList.count(DEFAULT_VALUE);
+    assertEquals(15, measuredIndexedList.accesses());
+    measuredIndexedList.count(20);
+    assertEquals(30, measuredIndexedList.accesses());
+  }
+
+  @Test
+  @DisplayName("Count returns correct value with no previous changes made")
+  void countReturnsCorrectValue() {
+    assertEquals(15, measuredIndexedList.count(DEFAULT_VALUE));
+    assertEquals(0, measuredIndexedList.count(20));
+  }
+
+  @Test
+  @DisplayName("Count returns correct value after modifications")
+  void countReturnsCorrectAfterModifications() {
+    measuredIndexedList.put(0, 4);
+    measuredIndexedList.put(4, 4);
+    measuredIndexedList.put(14, 2);
+    assertEquals(1, measuredIndexedList.count(2));
+    assertEquals(0, measuredIndexedList.count(20));
+    assertEquals(2, measuredIndexedList.count(4));
+    assertEquals(12, measuredIndexedList.count(DEFAULT_VALUE));
+    assertEquals(60, measuredIndexedList.accesses());
+  }
 }

@@ -45,7 +45,8 @@ public class MeasuredIndexedList<T> extends ArrayIndexedList<T>
 
   @Override
   public void reset() {
-    // TODO: Implement me
+    mutations = 0;
+    accesses = 0;
   }
 
   @Override

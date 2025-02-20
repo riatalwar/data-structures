@@ -9,5 +9,15 @@ public class TransposeArraySet<T> extends ArraySet<T> {
 
   // TODO: incorporate the transpose-sequential-search heuristic
   //  each time a value is accessed. Override the relevant method(s) from ArraySet.
+  @Override
+  protected int find(T t) {
+    int idx = super.find(t);
+    if (idx <= 0) {
+      return idx;
+    }
+    data[idx] = data[idx - 1];
+    data[idx - 1] = t;
+    return idx;
+  }
 
 }

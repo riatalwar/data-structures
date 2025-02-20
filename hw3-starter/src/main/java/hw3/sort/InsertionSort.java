@@ -12,6 +12,19 @@ public final class InsertionSort<T extends Comparable<T>>
   @Override
   public void sort(IndexedList<T> indexedList) {
     // TODO: Implement me
+    int len = indexedList.length();
+    int i = 1;  // track beginning of unsorted portion
+    while (i < len) {
+      T x = indexedList.get(i);
+      // insert x into sorted order
+      int j = i;
+      while (j > 0 && indexedList.get(j - 1).compareTo(x) > 0) {
+        indexedList.put(j, indexedList.get(j - 1));
+        j--;
+      }
+      indexedList.put(j, x);
+      i++;
+    }
   }
 
   @Override

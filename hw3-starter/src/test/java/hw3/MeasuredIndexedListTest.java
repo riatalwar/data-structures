@@ -33,7 +33,6 @@ public class MeasuredIndexedListTest {
     assertEquals(0, measuredIndexedList.mutations());
   }
 
-  // TODO Add more tests
   @Test
   @DisplayName("Get correctly increases access counter")
   void getIncreasesAccesses() {

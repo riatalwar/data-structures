@@ -7,8 +7,7 @@ package hw3.search;
  */
 public class MoveToFrontLinkedSet<T> extends LinkedSet<T> {
 
-  // TODO: incorporate move-to-front heuristic each time a value is accessed.
-  //  Override the relevant method(s) from LinkedSet.
+  // move-to-front heuristic
   @Override
   protected Node<T> find(T t) {
     // super find method still holds

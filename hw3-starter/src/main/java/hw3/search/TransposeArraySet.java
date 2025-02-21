@@ -7,14 +7,16 @@ package hw3.search;
  */
 public class TransposeArraySet<T> extends ArraySet<T> {
 
-  // TODO: incorporate the transpose-sequential-search heuristic
-  //  each time a value is accessed. Override the relevant method(s) from ArraySet.
+  // transpose-sequential-search heuristic
   @Override
   protected int find(T t) {
     int idx = super.find(t);
+    // if not found or already front
     if (idx <= 0) {
       return idx;
     }
+
+    // swap with prev if not front
     data[idx] = data[idx - 1];
     data[idx - 1] = t;
     return idx;

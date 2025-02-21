@@ -41,38 +41,68 @@ public class LinkedList<T> implements List<T> {
   @Override
   public int length() {
     // TODO Implement me!
-    return 0;
+    return numElements;
   }
 
   @Override
   public boolean empty() {
     // TODO Implement me!
-    return false;
+    return numElements == 0;
   }
 
   @Override
   public Position<T> insertFront(T data) {
     // TODO Implement me!
-    return null;
+    Node<T> n = new Node<>(data, this);
+    if (empty()) {
+      head = n;
+      tail = n;
+      return n;
+    }
+    n.next = head;
+    head.prev = n;
+    head = n;
+    return n;
   }
 
   @Override
   public Position<T> insertBack(T data) {
     // TODO Implement me!
-    return null;
+    Node<T> n = new Node<>(data, this);
+    if (empty()) {
+      head = n;
+      tail = n;
+      return n;
+    }
+    n.prev = tail;
+    tail.next = n;
+    tail = n;
+    return n;
   }
 
   @Override
   public Position<T> insertBefore(Position<T> position, T data)
       throws PositionException {
     // TODO Implement me!
-    return null;
+    Node<T> next = convert(position);
+    Node<T> n = new Node<>(data, this);
+    n.next = next;
+    n.prev = next.prev;
+    next.prev.next = n;
+    next.prev = n;
+    return n;
   }
 
   @Override
   public Position<T> insertAfter(Position<T> position, T data)
       throws PositionException {
     // TODO Implement me!
+    Node<T> prev = convert(position);
+    Node<T> n = new Node<>(data, this);
+    n.prev = prev;
+    n.next = prev.next;
+    prev.next.prev = n;
+    prev.next = n;
     return null;
   }
 

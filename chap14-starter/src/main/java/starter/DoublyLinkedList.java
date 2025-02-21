@@ -5,7 +5,7 @@ public class DoublyLinkedList<T> {
   private Node<T> tail;
   private int numElements;
 
-  private static class Node<E> {
+  public static class Node<E> { // public exposes to user, not fun
     E data;
     Node<E> next;
     Node<E> prev;
@@ -46,11 +46,53 @@ public class DoublyLinkedList<T> {
     numElements++;
   }
 
-  public T get(int index) {
-    if (index < numElements / 2) {
-      Node cur = head;
-      while (cur != null) {}
+  public Node<T> get(int index) {
+    if (index <= numElements / 2) {
+      Node<T> cur = head;
+      int count = 0;
+      while (cur != null) {
+        if (count == index) {
+          return cur;
+        }
+        count++;
+        cur = cur.next;
+      }
     }
-    return null; // TODO Implement me!
+    Node<T> cur = tail;
+    int count = numElements - 1;
+    while (cur != null) {
+      if (count == index) {
+        return cur;
+      }
+      count--;
+      cur = cur.prev;
+    }
+    return null;
+  }
+
+  public void delete(Node<T> target) {
+    if (target == null) {
+      return;
+    }
+    if (target.prev != null) {
+      target.prev.next = target.next;
+    }
+    if (target.next != null) {
+      target.next.prev = target.prev;
+    }
+    numElements--;
+  }
+
+  public void insertAfter(Node<T> target, T data) {
+    if (target == null) {
+      return;
+    }
+    Node<T> n = new Node<>(data);
+    n.next = target.next;
+    n.prev = target;
+    target.next = n;
+    if (n.next != null) {
+      n.next.prev = n;
+    }
   }
 }

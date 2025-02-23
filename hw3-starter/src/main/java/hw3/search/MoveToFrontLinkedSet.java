@@ -25,7 +25,8 @@ public class MoveToFrontLinkedSet<T> extends LinkedSet<T> {
       head.prev = n;
     }
     head = n;
-    return n;
+    head.prev = null;
+    return head;
   }
 
 }

@@ -2,6 +2,9 @@
 
 ## PART I: MeasuredIndexedList Iterator
 
+When looking at the implementation of the iterator, we see that it does effectively the same thing as the get method: it checks that the index is valid by using hasNext() and then directly indexes into the array to get the element. However, it is also important to consider the purpose of an iterator relative to the purpose of measuring the mutations and accesses. Measuring these values is useful for determining the complexity of algorithms such as find() or insert(). We can determine how many operations are used in these algorithms to evaluate the efficiency. However, the iterator is not typically used here, and is more useful for outputting the contents of the array without much computational purpose. The number of accesses executed by an iterator is easy to determine, and is not useful for evaluating the overall efficiency of the data structure, only the efficiency of the iterator itself. Overall, there is little purpose to changing the access and mutation counts through the iterator.
+Regardless of this, it is not possible to override the next() and hasNext() methods, as they are members of a private class within ArrayIndexedList, meaning that they cannot be accessed by the subclasses of ArrayIndexedList. So, it is not possible to override the next() and hasNext() methods without creating an entirely new iterator class within MeasuredIndexedList.
+
 
 ## PART II: Profiling Sorting Algorithms
 

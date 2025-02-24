@@ -40,6 +40,9 @@ Next, we have the number of assignments. Line 3 will produce one assignment. Lin
 
 ## PART IV: Reflecting on Search Heuristics
 
+In the case of TransposeArraySet, the removal logic is actually working against the heuristic. When an element is removed, the last element in the array is inserted at the index of the removed item. Since the goal of the TransposeArraySet is to gradually order the array by most searched for, this will throw off the ordering of the array, as the items at the end are theoretically the least searched for but will be moved up within the list due to the structure of remove. Because of this, the removal logic conflicts with the heuristic and hampers its goal.
+
+For MoveToFrontLinkedSet, the removal logic is more reasonable, as it will not alter the overall ordering aside from removing the designated node by the end of the function. However, there is still the issue of redundancy. Because the remove operation uses find to first locate the node, it will end up moving the node to the beginning of the list despite the fact that it is about to be removed. While this does not end up affecting the efficiency of has since the general ordering of the list is not affected, it is not necessary to have that additional step when removing an element.
 
 ## PART V: Profiling Search Heuristics
 

@@ -15,6 +15,28 @@ Upon closer inspection of the data, I noticed that adding an 11th value is when 
 
 ## PART III: Analysis of Selection Sort
 
+Comparisons
+Line by line counts:
+3 - a.length
+5 - sum 2 to a.length
+6 - sum 1 to a.length - 1
+
+Explanation:
+The outer loop will run n - 1 times, but the condition will be evaluated one extra time to account for the check to terminate the loop, so we have n comparisons at line 3. The inner loop at line 5 then evaluates its condition n - i times for each of the n - 1 iterations of the outer loop, so this requires us to sum the numbers 2 through n. This can be done using Gauss's formula, which gives us (n - 1) * (n + 2) / 2 = (n^2 + n - 2) / 2 comparisons. Lastly, we have the condition at line six evaluated inside the inner loop. The inner loop is run n - (i + 1) times for each iteration of the outer loop, so we must sum the numbers 1 through n - 1. We can again use the formula to get (n - 1) * (n - 1 + 1) / 2 = (n^2 - n) / 2 comparisons. Overall, this gives us n + ((n^2 + n - 2) / 2) + ((n^2 - n) / 2) = n^2 + n - 1 comparisons.
+
+Assignments
+Line by line counts:
+3 - 1
+4 - a.length - 1
+5 - a.length - 1
+7 - sum 1 to a.length - 1
+10 - a.length - 1
+11 - a.length - 1
+12 - a.length - 1
+
+Explanation:
+Next, we have the number of assignments. Line 3 will produce one assignment. Line 4 produces n - 1 assignments, one for each iteration of the loop. The same is true for line 5. Line 7 then produces n - i assignments in the worst case scenario, so we must sum the numbers 1 through n - 1, which gives us (n - 1) * (n - 1 + 1) / 2 = (n^2 - n) / 2 assignments by the same formula as above. Next, line 10, 11, and 12 each result in n - 1 comparisons, so we have 3(n - 1). Overall, this adds up to 1 + (n - 1) + (n - 1) + (n^2 - n) / 2 + 3(n - 1) = 1 + 5n - 5 + (1/2) n^2 - (1/2) n = (1/2) n^2 + (9/2) n - 4 assignments.
+
 
 ## PART IV: Reflecting on Search Heuristics
 

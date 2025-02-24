@@ -141,4 +141,28 @@ public class MeasuredIndexedListTest {
     assertEquals(0, measuredIndexedList.accesses());
     assertEquals(0, measuredIndexedList.mutations());
   }
+
+  @Test
+  @DisplayName("Complex series of operations yields correct results")
+  void complexSeriesOperations() {
+    measuredIndexedList.put(0, 4);
+    measuredIndexedList.put(4, 4);
+    measuredIndexedList.count(2);
+    measuredIndexedList.reset();
+    measuredIndexedList.get(0);
+    measuredIndexedList.put(14, 2);
+    measuredIndexedList.get(12);
+
+    assertEquals(2, measuredIndexedList.accesses());
+    assertEquals(1, measuredIndexedList.mutations());
+
+    measuredIndexedList.reset();
+    measuredIndexedList.put(4, 4);
+    measuredIndexedList.get(0);
+    measuredIndexedList.get(10);
+    measuredIndexedList.get(4);
+
+    assertEquals(3, measuredIndexedList.accesses());
+    assertEquals(1, measuredIndexedList.mutations());
+  }
 }

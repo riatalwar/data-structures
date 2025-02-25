@@ -7,6 +7,10 @@ package hw3.search;
  */
 public class TransposeArraySet<T> extends ArraySet<T> {
 
+  /**
+   * Execute series of operations on set
+   * @param args - main
+   */
   public static void main(String[] args) {
     TransposeArraySet<Integer> ls = new TransposeArraySet<>();
 
@@ -16,8 +20,8 @@ public class TransposeArraySet<T> extends ArraySet<T> {
     ls.insert(4);
     ls.insert(6);
 
+    ls.remove(1);
     ls.remove(3);
-    ls.remove(4);
 
     ls.insert(5);
 
@@ -38,7 +42,7 @@ public class TransposeArraySet<T> extends ArraySet<T> {
     // swap with prev if not front
     data[idx] = data[idx - 1];
     data[idx - 1] = t;
-    return idx;
+    return idx - 1;
   }
 
 }

@@ -23,6 +23,32 @@ public class BstOrderedSet<T extends Comparable<T>> implements OrderedSet<T> {
   @Override
   public void insert(T t) {
     // TODO Implement me!
+    Node<T> n = new Node<>(t);
+    if (root == null) {
+      root = n;
+      numElements++;
+      return;
+    }
+    Node<T> cur = root;
+    while (!t.equals(cur.data)) {
+      if (t.compareTo(cur.data) < 0) {
+        if (cur.left == null) {
+          cur.left = n;
+          numElements++;
+          return;
+        } else {
+          cur = cur.left;
+        }
+      } else {
+        if (cur.right == null) {
+          cur.right = n;
+          numElements++;
+          return;
+        } else {
+          cur = cur.right;
+        }
+      }
+    }
   }
 
   @Override
@@ -33,19 +59,60 @@ public class BstOrderedSet<T extends Comparable<T>> implements OrderedSet<T> {
   @Override
   public boolean has(T t) {
     // TODO Implement me!
+    Node<T> cur = root;
+    while (cur != null) {
+      if (t.equals(cur.data)) {
+        return true;
+      }
+      if (t.compareTo(cur.data) < 0) {
+        cur = cur.left;
+      } else {
+        cur = cur.right;
+      }
+    }
     return false;
+
+    // return has(t, root);
+  }
+
+  private boolean has(T t, Node<T> root) {
+    if (t.equals(root.data)) {
+      return true;
+    } else if (t.compareTo(root.data) < 0) {
+      return has(t, root.left);
+    } else {
+      return has(t, root.right);
+    }
   }
 
   @Override
   public int size() {
     // TODO Implement me!
-    return 0;
+    return numElements;
   }
 
   @Override
   public Iterator<T> iterator() {
     // TODO Implement me!
     return null;
+  }
+
+  private class BSTIterator implements Iterator{
+    Node<T> tree;
+
+    public BSTIterator () {
+      tree = root;
+    }
+
+    @Override
+    public boolean hasNext() {
+      return false;
+    }
+
+    @Override
+    public Object next() {
+      return null;
+    }
   }
 
   private static class Node<E> {

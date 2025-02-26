@@ -59,6 +59,24 @@ public class BstOrderedSet<T extends Comparable<T>> implements OrderedSet<T> {
   @Override
   public boolean has(T t) {
     // TODO Implement me!
+    //return find(t) != null;
+
+    return has(t, root);
+  }
+
+  private boolean has(T t, Node<T> tree) {  //recursive vers
+    if (tree == null) {
+      return false;
+    } else if (t.equals(tree.data)) {
+      return true;
+    } else if (t.compareTo(tree.data) < 0) {
+      return has(t, tree.left);
+    } else {
+      return has(t, tree.right);
+    }
+  }
+
+  private Node<T> find(T t) {
     Node<T> cur = root;
     while (cur != null) {
       if (t.equals(cur.data)) {

@@ -51,6 +51,49 @@ public class BstOrderedSet<T extends Comparable<T>> implements OrderedSet<T> {
     }
   }
 
+  private void insert(Node<T> n) { // iterative
+    Node<T> cur = root;
+    while (!n.data.equals(cur.data)) {
+      if (n.data.compareTo(cur.data) < 0) {
+        if (cur.left == null) {
+          cur.left = n;
+          numElements++;
+          return;
+        } else {
+          cur = cur.left;
+        }
+      } else {
+        if (cur.right == null) {
+          cur.right = n;
+          numElements++;
+          return;
+        } else {
+          cur = cur.right;
+        }
+      }
+    }
+  }
+
+  private void insert(Node<T> n, Node<T> tree) { // recursive
+    if (n.data.equals(tree.data)) { // data already in tree
+      return;
+    } else if (n.data.compareTo(tree.data) < 0) { // go left
+      if (tree.left == null) {
+        tree.left = n;
+        numElements++;
+      } else {
+        insert(n, tree.left);
+      }
+    } else {  // go right
+      if (tree.right == null) {
+        tree.right = n;
+        numElements++;
+      } else {
+        insert(n, tree.right);
+      }
+    }
+  }
+
   @Override
   public void remove(T t) {
     // TODO Implement me!

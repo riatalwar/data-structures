@@ -40,6 +40,10 @@ public class JmhRuntimeTest {
     for (Integer num : data) {
       set.insert(num);
     }
+
+    for (int i = 0; i < LENGTH + 1; i++) {
+      set.has(data.get(data.size() - 1));
+    }
   }
 
   @Benchmark

@@ -45,5 +45,6 @@ In the case of TransposeArraySet, the removal logic is actually working against 
 
 For MoveToFrontLinkedSet, the removal logic is more reasonable, as it will not alter the overall ordering aside from removing the designated node by the end of the function. However, there is still the issue of redundancy. Because the remove operation uses find to first locate the node, it will end up moving the node to the beginning of the list despite the fact that it is about to be removed. While this does not end up affecting the efficiency of has since the general ordering of the list is not affected, it is not necessary to have that additional step when removing an element.
 
+
 ## PART V: Profiling Search Heuristics
 

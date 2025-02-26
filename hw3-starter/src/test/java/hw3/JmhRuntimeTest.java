@@ -28,7 +28,7 @@ public class JmhRuntimeTest {
   public void setUp() {
     // You may update this method.
     data = new ArrayList<>();
-    for (int i = 0; i < 1000; i++) {
+    for (int i = 0; i < LENGTH; i++) {
       data.add(i);
     }
     Collections.shuffle(data);

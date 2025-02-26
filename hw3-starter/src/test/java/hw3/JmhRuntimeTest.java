@@ -23,6 +23,7 @@ public class JmhRuntimeTest {
 
   private List<Integer> data;
   // You may add more private fields in here.
+  private final long LENGTH = 1000000000;
 
   @Setup(Level.Invocation)
   public void setUp() {

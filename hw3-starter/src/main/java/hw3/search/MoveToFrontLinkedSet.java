@@ -8,7 +8,7 @@ package hw3.search;
 public class MoveToFrontLinkedSet<T> extends LinkedSet<T> {
 
   /**
-   * Execute series of operations on set
+   * Execute series of operations on set.
    * @param args - main
    */
   public static void main(String[] args) {

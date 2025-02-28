@@ -99,6 +99,20 @@ public class BstOrderedSet<T extends Comparable<T>> implements OrderedSet<T> {
     return numElements;
   }
 
+  public void printInOrder() {
+    printInOrder(root);
+  }
+
+  private void printInOrder(Node<T> node) {
+    if (node == null) {
+      return;
+    }
+    // simply change to root, left, right or left, right, root for pre or post order
+    printInOrder(node.left);
+    System.out.println(node.data);
+    printInOrder(node.right);
+  }
+
   @Override
   public Iterator<T> iterator() {
     // TODO Implement me!

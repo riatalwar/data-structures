@@ -29,26 +29,8 @@ public class BstOrderedSet<T extends Comparable<T>> implements OrderedSet<T> {
       numElements++;
       return;
     }
-    Node<T> cur = root;
-    while (!t.equals(cur.data)) {
-      if (t.compareTo(cur.data) < 0) {
-        if (cur.left == null) {
-          cur.left = n;
-          numElements++;
-          return;
-        } else {
-          cur = cur.left;
-        }
-      } else {
-        if (cur.right == null) {
-          cur.right = n;
-          numElements++;
-          return;
-        } else {
-          cur = cur.right;
-        }
-      }
-    }
+    // insert(n);
+    insert(n, root);
   }
 
   private void insert(Node<T> n) { // iterative
@@ -59,39 +41,36 @@ public class BstOrderedSet<T extends Comparable<T>> implements OrderedSet<T> {
           cur.left = n;
           numElements++;
           return;
-        } else {
-          cur = cur.left;
         }
+        cur = cur.left;
       } else {
         if (cur.right == null) {
           cur.right = n;
           numElements++;
           return;
-        } else {
-          cur = cur.right;
         }
+        cur = cur.right;
       }
     }
   }
 
   private void insert(Node<T> n, Node<T> tree) { // recursive
-    if (n.data.equals(tree.data)) { // data already in tree
-      return;
-    } else if (n.data.compareTo(tree.data) < 0) { // go left
+    int comp = n.data.compareTo(tree.data);
+    if (comp < 0) { // go left
       if (tree.left == null) {
         tree.left = n;
         numElements++;
       } else {
         insert(n, tree.left);
       }
-    } else {  // go right
+    } else if (comp > 0) {  // go right
       if (tree.right == null) {
         tree.right = n;
         numElements++;
       } else {
         insert(n, tree.right);
       }
-    }
+    } // if equal do nothing
   }
 
   @Override
@@ -170,7 +149,6 @@ public class BstOrderedSet<T extends Comparable<T>> implements OrderedSet<T> {
   public boolean has(T t) {
     // TODO Implement me!
     //return find(t) != null;
-
     return has(t, root);
   }
 
@@ -190,7 +168,7 @@ public class BstOrderedSet<T extends Comparable<T>> implements OrderedSet<T> {
     Node<T> cur = root;
     while (cur != null) {
       if (t.equals(cur.data)) {
-        return true;
+        return cur;
       }
       if (t.compareTo(cur.data) < 0) {
         cur = cur.left;
@@ -198,19 +176,7 @@ public class BstOrderedSet<T extends Comparable<T>> implements OrderedSet<T> {
         cur = cur.right;
       }
     }
-    return false;
-
-    // return has(t, root);
-  }
-
-  private boolean has(T t, Node<T> root) {
-    if (t.equals(root.data)) {
-      return true;
-    } else if (t.compareTo(root.data) < 0) {
-      return has(t, root.left);
-    } else {
-      return has(t, root.right);
-    }
+    return null;
   }
 
   @Override
@@ -222,23 +188,23 @@ public class BstOrderedSet<T extends Comparable<T>> implements OrderedSet<T> {
   @Override
   public Iterator<T> iterator() {
     // TODO Implement me!
-    return null;
+    return new BSTIterator();
   }
 
-  private class BSTIterator implements Iterator{
-    Node<T> tree;
+  private class BSTIterator implements Iterator<T> {
+    Node<T> cur;
 
     public BSTIterator () {
-      tree = root;
+      cur = root;
     }
 
     @Override
     public boolean hasNext() {
-      return false;
+      return cur != null;
     }
 
     @Override
-    public Object next() {
+    public T next() {
       return null;
     }
   }
@@ -272,5 +238,9 @@ public class BstOrderedSet<T extends Comparable<T>> implements OrderedSet<T> {
     System.out.println(bst.size());
     System.out.println(bst.has(13));
     System.out.println(bst.has(23));
+
+    bst.remove(13);
+    bst.remove(10);
+    bst.remove(0);
   }
 }

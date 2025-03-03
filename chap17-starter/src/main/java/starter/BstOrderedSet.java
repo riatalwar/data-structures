@@ -42,6 +42,12 @@ public class BstOrderedSet<T extends Comparable<T>> implements OrderedSet<T> {
     bst.remove(5);
     bst.remove(2);
     bst.remove(13);
+
+    bst.printInOrder();
+
+    for (Integer i : bst) {
+      System.out.println(i);
+    }
   }
 
   /* recursive find */
@@ -117,6 +123,47 @@ public class BstOrderedSet<T extends Comparable<T>> implements OrderedSet<T> {
   public Iterator<T> iterator() {
     // TODO Implement me!
     return null;
+  }
+
+  private class BstIterator implements Iterator<T> {
+
+    T[] ordered;
+    int length;
+    int index;
+
+    public BstIterator() {
+      ordered = (T[]) new Object[numElements];
+      length = 0;
+      fillArray(root);
+      index = 0;
+    }
+
+    @Override
+    public boolean hasNext() {
+      if (index < length) {
+        return true;
+      }
+      return false;
+    }
+
+    public void fillArray(Node<T> node) {
+      if (node == null) {
+        return;
+      }
+      fillArray(node.left);
+      ordered[length] = node.data;
+      length++;
+      fillArray(node.right);
+    }
+
+    @Override
+    public T next() {
+      if (hasNext()) {
+        index++;
+        return ordered[index - 1];
+      }
+      throw new IndexOutOfBoundsException();
+    }
   }
 
   private static class Node<E> {

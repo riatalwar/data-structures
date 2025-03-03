@@ -97,6 +97,73 @@ public class BstOrderedSet<T extends Comparable<T>> implements OrderedSet<T> {
   @Override
   public void remove(T t) {
     // TODO Implement me!
+    if (root == null) {
+      return;
+    }
+    if (root.data == t) {
+      if (root.left != null && root.right != null) {
+        replaceWithSuccessor(root);
+      } else {
+        root = getReplacement(root);
+      }
+    } else {
+      remove(root, t);
+    }
+  }
+
+  private void remove(Node<T> parent, T t) {
+    int comp = t.compareTo(parent.data);
+    if (comp < 0) {
+      Node<T> left = parent.left;
+      if (left == null) {
+        return;
+      } else if (left.data == t) {
+        if (left.left != null && left.right != null) {
+          replaceWithSuccessor(left);
+        } else {
+          parent.left = getReplacement(left);
+        }
+      } else {
+        remove(parent.left, t);
+      }
+    } else {
+      Node<T> right = parent.right;
+      if (right == null) {
+        return;
+      } else if (right.data == t) {
+        if (right.left != null && right.right != null) {
+          replaceWithSuccessor(right);
+        } else {
+          parent.right = getReplacement(right);
+        }
+      } else {
+        remove(parent.right, t);
+      }
+    }
+  }
+
+  private Node<T> getReplacement(Node<T> node) {
+    if (node.left != null) {
+      return node.left;
+    } else if (node.right != null) {
+      return node.right;
+    }
+    return null;
+  }
+
+  private void replaceWithSuccessor(Node<T> n) {
+    Node<T> cur = n.right;
+    Node<T> parent = n;
+    while (cur.left != null) {
+      parent = cur;
+      cur = cur.left;
+    }
+    if (parent == n) {
+      n.right = null;
+    } else {
+      parent.left = null;
+    }
+    n.data = cur.data;
   }
 
   @Override

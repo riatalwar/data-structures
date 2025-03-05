@@ -53,6 +53,36 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
     return null;
   }
 
+  // Iterative in-order traversal over the keys
+  // TODO: do we have to write tests for the iterator given that it is copied?
+  private class InorderIterator implements Iterator<K> {
+    private final Stack<AvlTreeMap.Node<K, V>> stack;
+
+    InorderIterator() {
+      stack = new Stack<>();
+      pushLeft(root);
+    }
+
+    private void pushLeft(AvlTreeMap.Node<K, V> curr) {
+      while (curr != null) {
+        stack.push(curr);
+        curr = curr.left;
+      }
+    }
+
+    @Override
+    public boolean hasNext() {
+      return !stack.isEmpty();
+    }
+
+    @Override
+    public K next() {
+      AvlTreeMap.Node<K, V> top = stack.pop();
+      pushLeft(top.right);
+      return top.key;
+    }
+  }
+
   /*** Do not change this function's name or modify its code. ***/
   @Override
   public String toString() {

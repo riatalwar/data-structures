@@ -49,8 +49,7 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
 
   @Override
   public Iterator<K> iterator() {
-    // TODO Implement Me!
-    return null;
+    return new AvlTreeMap.InorderIterator();
   }
 
   // Iterative in-order traversal over the keys

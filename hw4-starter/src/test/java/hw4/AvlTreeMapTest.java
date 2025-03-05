@@ -50,4 +50,33 @@ public class AvlTreeMapTest extends BinarySearchTreeMapTest {
 
   // TODO Add more tests
 
+  public void insertThrowsExceptionDuplicateKey(){}
+  public void insertThrowsExceptionIllegalArgument(){}
+  public void insertCorrectlyAddsNode(){}
+  public void insertCorrectlyRemovesRoot(){}
+  public void insertResultsInBalancedTree(){}
+  public void insertChangesSize(){}
+
+  public void removeThrowsExceptionNullKey(){}
+  public void removeThrowsExceptionNotFoundKey(){}
+  public void removeCorrectlyRemovesNode(){}
+  public void removeCorrectlyRemovesRoot(){}
+  public void removeResultsInBalancedTree(){}
+  public void removeChangesSize(){}
+
+  public void putThrowsExceptionNullKey(){}
+  public void putThrowsExceptionNotFoundKey(){}
+  public void putCorrectlyChangesValue(){}
+  public void putDoesNotChangeSize(){}
+
+  public void getThrowsExceptionNullKey(){}
+  public void getThrowsExceptionNotFoundKey(){}
+  public void getReturnsCorrectValue(){}
+  public void getDoesNotChangeSize(){}
+
+  public void hasCorrectlyFindsKey(){}
+
+  public void sizeZeroOnConstruction(){}
+  public void sizeAccurateAfterSeriesOperations(){}
+
 }

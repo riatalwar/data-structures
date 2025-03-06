@@ -1,8 +1,10 @@
 package hw4;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * In addition to the tests in BinarySearchTreeMapTest (and in OrderedMapTest & MapTest),
@@ -79,7 +81,7 @@ public class AvlTreeMapTest extends BinarySearchTreeMapTest {
       // success
     }
 
-    assertEquals(map.size(), 4);
+    assertEquals(4, map.size());
   }
 
   @Test
@@ -101,13 +103,83 @@ public class AvlTreeMapTest extends BinarySearchTreeMapTest {
       // success
     }
 
-    assertEquals(map.size(), 1);
+    assertEquals(1, map.size());
   }
 
-  public void insertCorrectlyAddsNode(){}
-  public void insertCorrectlyRemovesRoot(){}
-  public void insertResultsInBalancedTree(){}
-  public void insertChangesSize(){}
+  @Test
+  @DisplayName("insert() correctly adds nodes to tree.")
+  public void insertCorrectlyAddsNode() {
+    map.insert("2", "a");
+    map.insert("1", "b");
+    map.insert("3", "c");
+    map.insert("4", "d");
+
+    assertEquals(4, map.size());
+    String[] expected = new String[]{
+            "2:a",
+            "1:b 3:c",
+            "4:d"
+    };
+    assertEquals((String.join("\n", expected) + "\n"), map.toString());
+  }
+
+  @Test
+  @DisplayName("insert() correctly executes a right rotation.")
+  public void insertRightRotation() {
+    map.insert("3", "a");
+    map.insert("2", "b");
+    map.insert("1", "c");
+
+    String[] expected = new String[]{
+            "2:b",
+            "1:c 3:a"
+    };
+    assertEquals((String.join("\n", expected) + "\n"), map.toString());
+  }
+
+  @Test
+  @DisplayName("insert() correctly executes a left right rotation.")
+  public void insertLeftRightRotation() {
+    map.insert("3", "a");
+    map.insert("1", "b");
+    map.insert("2", "c");
+
+    String[] expected = new String[]{
+            "2:c",
+            "1:b 3:a"
+    };
+    assertEquals((String.join("\n", expected) + "\n"), map.toString());
+  }
+
+  @Test
+  @DisplayName("insert() correctly executes a right left rotation.")
+  public void insertRightLeftRotation() {
+    map.insert("1", "a");
+    map.insert("3", "b");
+    map.insert("2", "c");
+
+    String[] expected = new String[]{
+            "2:c",
+            "1:a 3:b"
+    };
+    assertEquals((String.join("\n", expected) + "\n"), map.toString());
+  }
+
+  @Test
+  @DisplayName("insert() accurately changes size of tree.")
+  public void insertChangesSize() {
+    assertEquals(0, map.size());
+
+    map.insert("2", "a");
+    map.insert("1", "b");
+
+    assertEquals(2, map.size());
+
+    map.insert("3", "c");
+    map.insert("4", "d");
+
+    assertEquals(4, map.size());
+  }
 
   public void removeThrowsExceptionNullKey(){}
   public void removeThrowsExceptionNotFoundKey(){}

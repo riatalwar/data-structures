@@ -78,6 +78,8 @@ public class AvlTreeMapTest extends BinarySearchTreeMapTest {
     } catch (IllegalArgumentException e) {
       // success
     }
+
+    assertEquals(map.size(), 4);
   }
 
   public void insertThrowsExceptionIllegalArgument(){}

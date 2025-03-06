@@ -50,7 +50,36 @@ public class AvlTreeMapTest extends BinarySearchTreeMapTest {
 
   // TODO Add more tests
 
-  public void insertThrowsExceptionDuplicateKey(){}
+  @Test
+  @DisplayName("insert() throws IllegalArgumentException for duplicate keys.")
+  public void insertThrowsExceptionDuplicateKey(){
+    map.insert("2", "a");
+    map.insert("1", "b");
+    map.insert("3", "c");
+    map.insert("4", "d");
+
+    try {
+      map.insert("2", "e");
+      fail("Expected IllegalArgumentException");
+    } catch (IllegalArgumentException e) {
+      // success
+    }
+
+    try {
+      map.insert("1", "f");
+      fail("Expected IllegalArgumentException");
+    } catch (IllegalArgumentException e) {
+      // success
+    }
+
+    try {
+      map.insert("4", "g");
+      fail("Expected IllegalArgumentException");
+    } catch (IllegalArgumentException e) {
+      // success
+    }
+  }
+
   public void insertThrowsExceptionIllegalArgument(){}
   public void insertCorrectlyAddsNode(){}
   public void insertCorrectlyRemovesRoot(){}

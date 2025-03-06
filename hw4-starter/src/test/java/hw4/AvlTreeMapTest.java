@@ -52,7 +52,7 @@ public class AvlTreeMapTest extends BinarySearchTreeMapTest {
 
   @Test
   @DisplayName("insert() throws IllegalArgumentException for duplicate keys.")
-  public void insertThrowsExceptionDuplicateKey(){
+  public void insertThrowsExceptionDuplicateKey() {
     map.insert("2", "a");
     map.insert("1", "b");
     map.insert("3", "c");

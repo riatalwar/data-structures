@@ -373,8 +373,38 @@ public class AvlTreeMapTest extends BinarySearchTreeMapTest {
       // success
     }
   }
-  public void putCorrectlyChangesValue(){}
-  public void putDoesNotChangeSize(){}
+
+  public void putCorrectlyChangesValue() {
+    map.insert("2", "a");
+    map.insert("1", "b");
+    map.insert("3", "c");
+    map.insert("4", "d");
+
+    map.put("2", "e");
+    map.put("1", "f");
+    map.put("4", "g");
+
+    String[] expected = new String[]{
+            "2:e",
+            "1:f 3:c",
+            "null null null 4:g"
+    };
+    assertEquals((String.join("\n", expected) + "\n"), map.toString());
+  }
+
+  public void putDoesNotChangeSize() {
+    map.insert("2", "a");
+    map.insert("1", "b");
+    map.insert("3", "c");
+    map.insert("4", "d");
+    assertEquals(4, map.size());
+
+    map.put("1", "e");
+    assertEquals(4, map.size());
+
+    map.put("4", "f");
+    assertEquals(4, map.size());
+  }
 
   public void getThrowsExceptionNullKey(){}
   public void getThrowsExceptionNotFoundKey(){}

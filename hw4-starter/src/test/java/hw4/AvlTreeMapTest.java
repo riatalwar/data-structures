@@ -86,7 +86,7 @@ public class AvlTreeMapTest extends BinarySearchTreeMapTest {
     String[] expected = new String[]{
             "2:a",
             "1:b 3:c",
-            "4:d"
+            "null null null 4:d"
     };
     assertEquals((String.join("\n", expected) + "\n"), map.toString());
   }

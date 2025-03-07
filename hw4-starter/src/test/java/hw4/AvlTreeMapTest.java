@@ -236,7 +236,22 @@ public class AvlTreeMapTest extends BinarySearchTreeMapTest {
     assertEquals((String.join("\n", expected) + "\n"), map.toString());
   }
 
-  public void removeCorrectlyRemovesRoot(){}
+  @Test
+  @DisplayName("remove() correctly removes root of the tree.")
+  public void removeCorrectlyRemovesRoot() {
+    map.insert("2", "a");
+    map.insert("1", "b");
+    map.insert("3", "c");
+
+    map.remove("2");
+
+    assertEquals(2, map.size());
+    String[] expected = new String[]{
+            "1:b",
+            "null 3:c"
+    };
+    assertEquals((String.join("\n", expected) + "\n"), map.toString());
+  }
 
   @Test
   @DisplayName("remove() correctly executes a left rotation.")

@@ -186,7 +186,79 @@ public class AvlTreeMapTest extends BinarySearchTreeMapTest {
   public void removeThrowsExceptionNotFoundKey(){}
   public void removeCorrectlyRemovesNode(){}
   public void removeCorrectlyRemovesRoot(){}
-  public void removeResultsInBalancedTree(){}
+
+  @Test
+  @DisplayName("remove() correctly executes a left rotation.")
+  public void removeLeftRotation() {
+    map.insert("2", "a");
+    map.insert("1", "b");
+    map.insert("3", "c");
+    map.insert("4", "d");
+
+    map.remove("1");
+
+    assertEquals(3, map.size());
+    String[] expected = new String[]{
+            "3:c",
+            "2:a 4:d"
+    };
+    assertEquals((String.join("\n", expected) + "\n"), map.toString());
+  }
+
+  @Test
+  @DisplayName("remove() correctly executes a right rotation.")
+  public void removeRightRotation() {
+    map.insert("3", "a");
+    map.insert("2", "b");
+    map.insert("1", "c");
+    map.insert("4", "d");
+
+    map.remove("4");
+
+    assertEquals(3, map.size());
+    String[] expected = new String[]{
+            "2:b",
+            "1:c 3:a"
+    };
+    assertEquals((String.join("\n", expected) + "\n"), map.toString());
+  }
+
+  @Test
+  @DisplayName("remove() correctly executes a left right rotation.")
+  public void removeLeftRightRotation() {
+    map.insert("3", "a");
+    map.insert("1", "b");
+    map.insert("2", "c");
+    map.insert("4", "d");
+
+    map.remove("4");
+
+    assertEquals(3, map.size());
+    String[] expected = new String[]{
+            "2:c",
+            "1:b 3:a"
+    };
+    assertEquals((String.join("\n", expected) + "\n"), map.toString());
+  }
+
+  @Test
+  @DisplayName("remove() correctly executes a right left rotation.")
+  public void removeRightLeftRotation() {
+    map.insert("2", "a");
+    map.insert("1", "b");
+    map.insert("4", "c");
+    map.insert("3", "d");
+
+    map.remove("1");
+
+    assertEquals(3, map.size());
+    String[] expected = new String[]{
+            "3:d",
+            "2:a 4:c"
+    };
+    assertEquals((String.join("\n", expected) + "\n"), map.toString());
+  }
+
   public void removeChangesSize(){}
 
   public void putThrowsExceptionNullKey(){}

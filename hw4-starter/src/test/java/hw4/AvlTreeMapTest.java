@@ -310,7 +310,21 @@ public class AvlTreeMapTest extends BinarySearchTreeMapTest {
     assertEquals((String.join("\n", expected) + "\n"), map.toString());
   }
 
-  public void removeChangesSize(){}
+  @Test
+  @DisplayName("remove() accurately changes the size of the tree.")
+  public void removeChangesSize() {
+    map.insert("2", "a");
+    map.insert("1", "b");
+    map.insert("3", "c");
+    map.insert("4", "d");
+    assertEquals(4, map.size());
+
+    map.remove("4");
+    assertEquals(3, map.size());
+
+    map.remove("1");
+    assertEquals(2, map.size());
+  }
 
   public void putThrowsExceptionNullKey(){}
   public void putThrowsExceptionNotFoundKey(){}

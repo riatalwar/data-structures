@@ -182,6 +182,7 @@ public class AvlTreeMapTest extends BinarySearchTreeMapTest {
     assertEquals(4, map.size());
   }
 
+
   @Test
   @DisplayName("remove() throws IllegalArgumentException for null keys.")
   public void removeThrowsExceptionNullKey() {
@@ -341,8 +342,9 @@ public class AvlTreeMapTest extends BinarySearchTreeMapTest {
     assertEquals(2, map.size());
   }
 
+
   @Test
-  @DisplayName("insert() throws IllegalArgumentException for null keys.")
+  @DisplayName("put() throws IllegalArgumentException for null keys.")
   public void putThrowsExceptionNullKey() {
     try {
       map.put(null, "a");
@@ -374,6 +376,8 @@ public class AvlTreeMapTest extends BinarySearchTreeMapTest {
     }
   }
 
+  @Test
+  @DisplayName("put() correctly changes the value of a given key.")
   public void putCorrectlyChangesValue() {
     map.insert("2", "a");
     map.insert("1", "b");
@@ -392,6 +396,8 @@ public class AvlTreeMapTest extends BinarySearchTreeMapTest {
     assertEquals((String.join("\n", expected) + "\n"), map.toString());
   }
 
+  @Test
+  @DisplayName("put() does not change the size of the tree.")
   public void putDoesNotChangeSize() {
     map.insert("2", "a");
     map.insert("1", "b");
@@ -413,7 +419,7 @@ public class AvlTreeMapTest extends BinarySearchTreeMapTest {
 
   public void hasCorrectlyFindsKey(){}
 
-  public void sizeZeroOnConstruction(){}
+  public void sizeZeroOnConstruction() {}
   public void sizeAccurateAfterSeriesOperations(){}
 
 }

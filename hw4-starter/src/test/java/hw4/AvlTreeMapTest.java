@@ -341,8 +341,38 @@ public class AvlTreeMapTest extends BinarySearchTreeMapTest {
     assertEquals(2, map.size());
   }
 
-  public void putThrowsExceptionNullKey(){}
-  public void putThrowsExceptionNotFoundKey(){}
+  @Test
+  @DisplayName("insert() throws IllegalArgumentException for null keys.")
+  public void putThrowsExceptionNullKey() {
+    try {
+      map.put(null, "a");
+      fail("Expected IllegalArgumentException");
+    } catch (IllegalArgumentException e) {
+      // success
+    }
+  }
+
+  @Test
+  @DisplayName("put() throws IllegalArgumentException for nonexistent keys.")
+  public void putThrowsExceptionNotFoundKey() {
+    try {
+      map.put("1", "a");
+      fail("Expected IllegalArgumentException");
+    } catch (IllegalArgumentException e) {
+      // success
+    }
+
+    map.insert("2", "a");
+    map.insert("1", "b");
+    map.insert("3", "c");
+
+    try {
+      map.put("5", "e");
+      fail("Expected IllegalArgumentException");
+    } catch (IllegalArgumentException e) {
+      // success
+    }
+  }
   public void putCorrectlyChangesValue(){}
   public void putDoesNotChangeSize(){}
 

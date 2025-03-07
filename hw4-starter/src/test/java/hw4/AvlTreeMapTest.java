@@ -182,9 +182,60 @@ public class AvlTreeMapTest extends BinarySearchTreeMapTest {
     assertEquals(4, map.size());
   }
 
-  public void removeThrowsExceptionNullKey(){}
-  public void removeThrowsExceptionNotFoundKey(){}
-  public void removeCorrectlyRemovesNode(){}
+  @Test
+  @DisplayName("remove() throws IllegalArgumentException for null keys.")
+  public void removeThrowsExceptionNullKey() {
+    try {
+      map.remove(null);
+      fail("Expected IllegalArgumentException");
+    } catch (IllegalArgumentException e) {
+      // success
+    }
+  }
+
+  @Test
+  @DisplayName("remove() throws IllegalArgumentException for nonexistent keys.")
+  public void removeThrowsExceptionNotFoundKey() {
+    map.insert("2", "a");
+    map.insert("1", "b");
+    map.insert("3", "c");
+    map.insert("4", "d");
+
+    try {
+      map.remove("5");
+      fail("Expected IllegalArgumentException");
+    } catch (IllegalArgumentException e) {
+      // success
+    }
+
+    assertEquals(4, map.size());
+    String[] expected = new String[]{
+            "2:a",
+            "1:b 3:c",
+            "null null null 4:d"
+    };
+    assertEquals((String.join("\n", expected) + "\n"), map.toString());
+
+  }
+
+  @Test
+  @DisplayName("remove() correctly removes a node from the tree.")
+  public void removeCorrectlyRemovesNode() {
+    map.insert("2", "a");
+    map.insert("1", "b");
+    map.insert("3", "c");
+    map.insert("4", "d");
+
+    map.remove("4");
+
+    assertEquals(3, map.size());
+    String[] expected = new String[]{
+            "2:a",
+            "1:b 3:c"
+    };
+    assertEquals((String.join("\n", expected) + "\n"), map.toString());
+  }
+
   public void removeCorrectlyRemovesRoot(){}
 
   @Test

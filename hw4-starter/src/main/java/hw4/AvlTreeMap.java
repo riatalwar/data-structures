@@ -15,7 +15,13 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
 
   @Override
   public void insert(K k, V v) throws IllegalArgumentException {
-    // TODO Implement Me!
+    if (k == null) {
+      throw new IllegalArgumentException("cannot handle null key");
+    }
+
+    root = insert(root, k, v);
+    size++;
+    root = rebalance(root);
   }
 
   @Override

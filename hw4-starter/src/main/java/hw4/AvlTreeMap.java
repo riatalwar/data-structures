@@ -24,6 +24,23 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
     root = rebalance(root);
   }
 
+  private Node<K, V> insert(Node<K, V> n, K k, V v) {
+    if (n == null) {
+      return new AvlTreeMap.Node<>(k, v);
+    }
+
+    int cmp = k.compareTo(n.key);
+    if (cmp < 0) {
+      n.left = insert(n.left, k, v);
+    } else if (cmp > 0) {
+      n.right = insert(n.right, k, v);
+    } else {
+      throw new IllegalArgumentException("duplicate key " + k);
+    }
+
+    return n;
+  }
+
   @Override
   public V remove(K k) throws IllegalArgumentException {
     // TODO Implement Me!

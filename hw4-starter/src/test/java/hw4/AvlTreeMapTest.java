@@ -21,77 +21,6 @@ public class AvlTreeMapTest extends BinarySearchTreeMapTest {
   // TODO Add more tests
 
   @Test
-  @DisplayName("insert() throws IllegalArgumentException for duplicate keys.")
-  public void insertThrowsExceptionDuplicateKey() {
-    map.insert("2", "a");
-    map.insert("1", "b");
-    map.insert("3", "c");
-    map.insert("4", "d");
-
-    try {
-      map.insert("2", "e");
-      fail("Expected IllegalArgumentException");
-    } catch (IllegalArgumentException e) {
-      // success
-    }
-
-    try {
-      map.insert("1", "f");
-      fail("Expected IllegalArgumentException");
-    } catch (IllegalArgumentException e) {
-      // success
-    }
-
-    try {
-      map.insert("4", "g");
-      fail("Expected IllegalArgumentException");
-    } catch (IllegalArgumentException e) {
-      // success
-    }
-
-    assertEquals(4, map.size());
-  }
-
-  @Test
-  @DisplayName("insert() throws IllegalArgumentException for null keys.")
-  public void insertThrowsExceptionNullKey() {
-    try {
-      map.insert(null, "a");
-      fail("Expected IllegalArgumentException");
-    } catch (IllegalArgumentException e) {
-      // success
-    }
-
-    map.insert("2", "a");
-
-    try {
-      map.insert(null, "b");
-      fail("Expected IllegalArgumentException");
-    } catch (IllegalArgumentException e) {
-      // success
-    }
-
-    assertEquals(1, map.size());
-  }
-
-  @Test
-  @DisplayName("insert() correctly adds nodes to tree.")
-  public void insertCorrectlyAddsNode() {
-    map.insert("2", "a");
-    map.insert("1", "b");
-    map.insert("3", "c");
-    map.insert("4", "d");
-
-    assertEquals(4, map.size());
-    String[] expected = new String[]{
-            "2:a",
-            "1:b 3:c",
-            "null null null 4:d"
-    };
-    assertEquals((String.join("\n", expected) + "\n"), map.toString());
-  }
-
-  @Test
   @DisplayName("insert() correctly executes a left rotation.")
   public void insertLeftRotation() {
     map.insert("1", "a");
@@ -184,77 +113,6 @@ public class AvlTreeMapTest extends BinarySearchTreeMapTest {
 
 
   @Test
-  @DisplayName("remove() throws IllegalArgumentException for null keys.")
-  public void removeThrowsExceptionNullKey() {
-    try {
-      map.remove(null);
-      fail("Expected IllegalArgumentException");
-    } catch (IllegalArgumentException e) {
-      // success
-    }
-  }
-
-  @Test
-  @DisplayName("remove() throws IllegalArgumentException for nonexistent keys.")
-  public void removeThrowsExceptionNotFoundKey() {
-    map.insert("2", "a");
-    map.insert("1", "b");
-    map.insert("3", "c");
-    map.insert("4", "d");
-
-    try {
-      map.remove("5");
-      fail("Expected IllegalArgumentException");
-    } catch (IllegalArgumentException e) {
-      // success
-    }
-
-    assertEquals(4, map.size());
-    String[] expected = new String[]{
-            "2:a",
-            "1:b 3:c",
-            "null null null 4:d"
-    };
-    assertEquals((String.join("\n", expected) + "\n"), map.toString());
-
-  }
-
-  @Test
-  @DisplayName("remove() correctly removes a node from the tree.")
-  public void removeCorrectlyRemovesNode() {
-    map.insert("2", "a");
-    map.insert("1", "b");
-    map.insert("3", "c");
-    map.insert("4", "d");
-
-    map.remove("4");
-
-    assertEquals(3, map.size());
-    String[] expected = new String[]{
-            "2:a",
-            "1:b 3:c"
-    };
-    assertEquals((String.join("\n", expected) + "\n"), map.toString());
-  }
-
-  @Test
-  @DisplayName("remove() correctly removes root of the tree.")
-  public void removeCorrectlyRemovesRoot() {
-    map.insert("2", "a");
-    map.insert("1", "b");
-    map.insert("3", "c");
-
-    map.remove("2");
-
-    assertEquals(2, map.size());
-    String[] expected = new String[]{
-            "1:b",
-            "null 3:c"
-    };
-    assertEquals((String.join("\n", expected) + "\n"), map.toString());
-  }
-
-  @Test
   @DisplayName("remove() correctly executes a left rotation.")
   public void removeLeftRotation() {
     map.insert("2", "a");
@@ -342,84 +200,30 @@ public class AvlTreeMapTest extends BinarySearchTreeMapTest {
     assertEquals(2, map.size());
   }
 
-
   @Test
-  @DisplayName("put() throws IllegalArgumentException for null keys.")
-  public void putThrowsExceptionNullKey() {
-    try {
-      map.put(null, "a");
-      fail("Expected IllegalArgumentException");
-    } catch (IllegalArgumentException e) {
-      // success
-    }
-  }
-
-  @Test
-  @DisplayName("put() throws IllegalArgumentException for nonexistent keys.")
-  public void putThrowsExceptionNotFoundKey() {
-    try {
-      map.put("1", "a");
-      fail("Expected IllegalArgumentException");
-    } catch (IllegalArgumentException e) {
-      // success
-    }
-
-    map.insert("2", "a");
-    map.insert("1", "b");
-    map.insert("3", "c");
-
-    try {
-      map.put("5", "e");
-      fail("Expected IllegalArgumentException");
-    } catch (IllegalArgumentException e) {
-      // success
-    }
-  }
-
-  @Test
-  @DisplayName("put() correctly changes the value of a given key.")
-  public void putCorrectlyChangesValue() {
+  @DisplayName("get() correctly returns value of key.")
+  public void hasCorrectlyFindsKey() {
     map.insert("2", "a");
     map.insert("1", "b");
     map.insert("3", "c");
     map.insert("4", "d");
 
-    map.put("2", "e");
-    map.put("1", "f");
-    map.put("4", "g");
-
-    String[] expected = new String[]{
-            "2:e",
-            "1:f 3:c",
-            "null null null 4:g"
-    };
-    assertEquals((String.join("\n", expected) + "\n"), map.toString());
+    assertEquals("a", map.get("2"));
+    assertEquals("b", map.get("1"));
+    assertEquals("d", map.get("4"));
   }
 
   @Test
-  @DisplayName("put() does not change the size of the tree.")
-  public void putDoesNotChangeSize() {
-    map.insert("2", "a");
-    map.insert("1", "b");
-    map.insert("3", "c");
+  @DisplayName("size is correct after series of operations.")
+  public void sizeAccurateAfterSeriesOperations() {
+    map.insert("3", "a");
+    map.insert("2", "b");
+    map.insert("1", "c");
+    map.remove("1");
     map.insert("4", "d");
-    assertEquals(4, map.size());
+    map.remove("3");
 
-    map.put("1", "e");
-    assertEquals(4, map.size());
-
-    map.put("4", "f");
-    assertEquals(4, map.size());
+    assertEquals(2, map.size());
   }
-
-  public void getThrowsExceptionNullKey(){}
-  public void getThrowsExceptionNotFoundKey(){}
-  public void getReturnsCorrectValue(){}
-  public void getDoesNotChangeSize(){}
-
-  public void hasCorrectlyFindsKey(){}
-
-  public void sizeZeroOnConstruction() {}
-  public void sizeAccurateAfterSeriesOperations(){}
 
 }

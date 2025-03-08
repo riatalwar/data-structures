@@ -26,7 +26,6 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
 
     root = insert(root, k, v);
     size++;
-    root = rebalance(root);
   }
 
   private Node<K, V> insert(Node<K, V> n, K k, V v) {

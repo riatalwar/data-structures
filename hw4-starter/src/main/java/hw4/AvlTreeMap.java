@@ -231,7 +231,6 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
   }
 
   // Iterative in-order traversal over the keys
-  // TODO: do we have to write tests for the iterator given that it is copied?
   private class InorderIterator implements Iterator<K> {
     private final Stack<AvlTreeMap.Node<K, V>> stack;
 

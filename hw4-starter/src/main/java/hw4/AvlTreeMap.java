@@ -166,7 +166,7 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
 
   @Override
   public Iterator<K> iterator() {
-    return new AvlTreeMap.InorderIterator();
+    return new InorderIterator();
   }
 
   // Iterative in-order traversal over the keys

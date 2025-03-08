@@ -38,6 +38,12 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
       throw new IllegalArgumentException("duplicate key " + k);
     }
 
+    n.height = calculateHeight(n);
+    int bf = balanceFactor(n);
+    if (bf < -1 || bf > 1) {
+      balance(n);
+    }
+
     return n;
   }
 

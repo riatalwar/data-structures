@@ -44,7 +44,11 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
   @Override
   public V remove(K k) throws IllegalArgumentException {
     // TODO Implement Me!
-    return null;
+    Node<K, V> n = findForSure(k);
+    V value = n.value;
+    root = remove(root, n);
+    size--;
+    return value;
   }
 
   private Node<K, V> remove(Node<K, V> tree, Node<K, V> toRemove) {

@@ -278,6 +278,7 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
     Node<K, V> right;
     K key;
     V value;
+    int height;
 
     // Constructor to make node creation easier to read.
     Node(K k, V v) {

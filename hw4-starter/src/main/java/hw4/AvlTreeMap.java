@@ -92,6 +92,14 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
     }
   }
 
+  private Node<K, V> findForSure(K k) {
+    Node<K, V> n = find(k);
+    if (n == null) {
+      throw new IllegalArgumentException("cannot find key " + k);
+    }
+    return n;
+  }
+
   @Override
   public int size() {
     return size;

@@ -40,9 +40,7 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
 
     n.height = calculateHeight(n);
     int bf = balanceFactor(n);
-    if (bf < -1 || bf > 1) {
-      balance(n);
-    }
+    n = balance(n);
 
     return n;
   }

@@ -54,7 +54,10 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
 
   @Override
   public V get(K k) throws IllegalArgumentException {
-    // TODO Implement Me!
+    Node<K, V> n = find(k);
+    if (n != null) {
+      return n.value;
+    }
     return null;
   }
 

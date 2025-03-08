@@ -12,6 +12,11 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
 
   /*** Do not change variable name of 'root'. ***/
   private Node<K, V> root;
+  private int size;
+
+  public AvlTreeMap() {
+    size = 0;
+  }
 
   @Override
   public void insert(K k, V v) throws IllegalArgumentException {

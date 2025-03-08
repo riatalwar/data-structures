@@ -285,6 +285,7 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
       // left and right default to null
       key = k;
       value = v;
+      height = 0;
     }
 
     @Override

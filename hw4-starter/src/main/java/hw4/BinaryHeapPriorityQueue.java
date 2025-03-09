@@ -56,6 +56,18 @@ public class BinaryHeapPriorityQueue<T extends Comparable<T>> implements Priorit
     return heap.size() == 1;
   }
 
+  private int leftChild(int i) {
+    return 2 * i;
+  }
+
+  private int rightChild(int i) {
+    return 2 * i + 1;
+  }
+
+  private int parent(int i) {
+    return i / 2;
+  }
+
   @Override
   public Iterator<T> iterator() {
     return null;

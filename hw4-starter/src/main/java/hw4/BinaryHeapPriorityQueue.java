@@ -53,8 +53,7 @@ public class BinaryHeapPriorityQueue<T extends Comparable<T>> implements Priorit
 
   @Override
   public boolean empty() {
-    // TODO Implement Me!
-    return false;
+    return heap.size() == 1;
   }
 
   @Override

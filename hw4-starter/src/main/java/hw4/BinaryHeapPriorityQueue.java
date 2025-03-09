@@ -64,7 +64,19 @@ public class BinaryHeapPriorityQueue<T extends Comparable<T>> implements Priorit
 
   @Override
   public void remove() throws EmptyException {
-    // TODO Implement Me!
+    if (empty()) {
+      throw new EmptyException("Heap is empty");
+    }
+
+    int size = heap.size();
+    if (size == 2) {
+      heap.remove(1);
+      return;
+    }
+
+    heap.set(1, heap.get(size - 1));
+    heap.remove(size - 1);
+    swimDown(1);
   }
 
   @Override

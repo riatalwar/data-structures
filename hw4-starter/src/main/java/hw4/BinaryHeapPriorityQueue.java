@@ -151,7 +151,7 @@ public class BinaryHeapPriorityQueue<T extends Comparable<T>> implements Priorit
 
   @Override
   public Iterator<T> iterator() {
-    return null;
+    return new LevelOrderIterator();
   }
 
   public String toString() {

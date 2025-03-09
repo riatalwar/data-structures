@@ -154,6 +154,26 @@ public class BinaryHeapPriorityQueue<T extends Comparable<T>> implements Priorit
     return new LevelOrderIterator();
   }
 
+  private class LevelOrderIterator implements Iterator<T> {
+    private int index;
+
+    LevelOrderIterator() {
+      index = 1;
+    }
+
+    @Override
+    public boolean hasNext() {
+      return index < heap.size();
+    }
+
+    @Override
+    public T next() {
+      return heap.get(index++);
+    }
+
+
+  }
+
   public String toString() {
     if (empty()) {
       return "[]";

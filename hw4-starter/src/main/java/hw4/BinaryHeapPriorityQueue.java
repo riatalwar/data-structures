@@ -35,7 +35,31 @@ public class BinaryHeapPriorityQueue<T extends Comparable<T>> implements Priorit
 
   @Override
   public void insert(T t) {
-    // TODO Implement Me!
+    heap.add(t);
+    // no swim if only element
+    if (heap.size() == 2) {
+      return;
+    }
+
+    // track current index and parent as swimming
+    int index = heap.size() - 1;
+    int parentIdx = parent(index);
+    T parent = heap.get(parentIdx);
+
+    // while t is less than parent, swap
+    while (cmp.compare(t, parent) < 0) {
+      heap.set(index, parent);
+      heap.set(parentIdx, t);
+
+      index = parentIdx;
+      parentIdx = parent(index);
+      parent = heap.get(parentIdx);
+
+      // stop when at the top
+      if (parentIdx == 0) {
+        return;
+      }
+    }
   }
 
   @Override

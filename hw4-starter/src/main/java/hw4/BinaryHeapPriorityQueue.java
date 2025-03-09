@@ -73,6 +73,9 @@ public class BinaryHeapPriorityQueue<T extends Comparable<T>> implements Priorit
     return null;
   }
 
+  public String toString() {
+    return heap.toString().replaceAll("null, ", "");
+  }
   // Default comparator is the natural order of elements that are Comparable.
   private static class DefaultComparator<T extends Comparable<T>> implements Comparator<T> {
     public int compare(T t1, T t2) {

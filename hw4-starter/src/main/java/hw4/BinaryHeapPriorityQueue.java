@@ -45,8 +45,10 @@ public class BinaryHeapPriorityQueue<T extends Comparable<T>> implements Priorit
 
   @Override
   public T best() throws EmptyException {
-    // TODO Implement Me!
-    return null;
+    if (empty()) {
+      throw new EmptyException("Heap is empty");
+    }
+    return heap.get(1);
   }
 
   @Override

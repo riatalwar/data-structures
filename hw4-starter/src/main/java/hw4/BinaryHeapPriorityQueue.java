@@ -79,6 +79,51 @@ public class BinaryHeapPriorityQueue<T extends Comparable<T>> implements Priorit
     swimDown(1);
   }
 
+  private void swimDown(int index) {
+    int leftIdx = leftChild(index);
+    int rightIdx = rightChild(index);
+    int size = heap.size();
+
+    if (leftIdx < size && rightIdx < size) {
+      swimDown(index, leftIdx, rightIdx);
+    } else if (leftIdx < size) {
+      swimDown(index, leftIdx);
+    }
+  }
+
+  private void swimDown(int index, int leftIdx, int rightIdx) {
+    T current = heap.get(index);
+    T left = heap.get(leftIdx);
+    T right = heap.get(rightIdx);
+
+    if (cmp.compare(left, right) < 0
+            && cmp.compare(left, current) < 0) {
+      heap.set(leftIdx, current);
+      heap.set(index, left);
+
+      if (leftChild(leftIdx) < heap.size()) {
+        swimDown(leftIdx);
+      }
+    } else if (cmp.compare(right, current) < 0) {
+      heap.set(rightIdx, current);
+      heap.set(index, right);
+
+      if (rightChild(rightIdx) < heap.size()) {
+        swimDown(rightIdx);
+      }
+    }
+  }
+
+  private void swimDown(int index, int leftIdx) {
+    T current = heap.get(index);
+    T left = heap.get(leftIdx);
+
+    if (cmp.compare(left, current) < 0) {
+      heap.set(leftIdx, current);
+      heap.set(index, left);
+    }
+  }
+
   @Override
   public T best() throws EmptyException {
     if (empty()) {

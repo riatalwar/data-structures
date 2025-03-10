@@ -65,6 +65,37 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
     return find(k) != null;
   }
 
+  private Node<K, V> find(K k) {
+    if (k == null) {
+      throw new IllegalArgumentException("cannot handle null key");
+    }
+
+    return find(root, k);
+  }
+
+  private Node<K, V> find(Node<K, V> n, K k) {
+    if (n == null) {
+      return null;
+    }
+
+    int cmp = k.compareTo(n.key);
+    if (cmp < 0) {
+      return find(n.left, k);
+    } else if (cmp > 0) {
+      return find(n.right, k);
+    } else {
+      return n;
+    }
+  }
+
+  private Node<K, V> findForSure(K k) {
+    Node<K, V> n = find(k);
+    if (n == null) {
+      throw new IllegalArgumentException("cannot find key " + k);
+    }
+    return n;
+  }
+
   @Override
   public int size() {
     // TODO Implement Me!

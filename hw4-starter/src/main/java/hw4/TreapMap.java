@@ -59,8 +59,10 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
 
   @Override
   public boolean has(K k) {
-    // TODO Implement Me!
-    return false;
+    if (k == null) {
+      return false;
+    }
+    return find(k) != null;
   }
 
   @Override

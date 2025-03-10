@@ -1,8 +1,11 @@
 package hw4;
 
 import exceptions.EmptyException;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Priority queue implemented as a binary heap with a ranked array representation.
@@ -100,7 +103,7 @@ public class BinaryHeapPriorityQueue<T extends Comparable<T>> implements Priorit
     T left = heap.get(leftIdx);
     T right = heap.get(rightIdx);
 
-    // swap with greatest child and continue swim
+    // swap with the greatest child and continue swim
     // left is larger than right, current
     if (cmp.compare(left, right) > 0
             && cmp.compare(left, current) > 0) {
@@ -187,6 +190,8 @@ public class BinaryHeapPriorityQueue<T extends Comparable<T>> implements Priorit
 
   /**
    * Convert heap to string format.
+   *
+   * @return String representation of heap
    */
   public String toString() {
     if (empty()) {

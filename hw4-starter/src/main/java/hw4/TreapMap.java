@@ -113,6 +113,35 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
   }
 
 
+  // Iterative in-order traversal over the keys
+  private class InorderIterator implements Iterator<K> {
+    private final Stack<Node<K, V>> stack;
+
+    InorderIterator() {
+      stack = new Stack<>();
+      pushLeft(root);
+    }
+
+    private void pushLeft(Node<K, V> curr) {
+      while (curr != null) {
+        stack.push(curr);
+        curr = curr.left;
+      }
+    }
+
+    @Override
+    public boolean hasNext() {
+      return !stack.isEmpty();
+    }
+
+    @Override
+    public K next() {
+      Node<K, V> top = stack.pop();
+      pushLeft(top.right);
+      return top.key;
+    }
+  }
+
   /**
    * Inner node class, each holds a key (which is what we sort the
    * BST by) as well as a value. We don't need a parent pointer as

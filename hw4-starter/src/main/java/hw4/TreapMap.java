@@ -23,6 +23,15 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
     rand = new Random();
   }
 
+  /**
+   * Make a TreapMap.
+   *
+   * @param r optionally seeded random generator.
+   */
+  public TreapMap(Random r) {
+    rand = r;
+  }
+
   @Override
   public void insert(K k, V v) throws IllegalArgumentException {
     // TODO Implement Me!

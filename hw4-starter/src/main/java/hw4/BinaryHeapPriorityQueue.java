@@ -47,7 +47,7 @@ public class BinaryHeapPriorityQueue<T extends Comparable<T>> implements Priorit
     T parent = heap.get(parentIdx);
 
     // while t is less than parent, swap
-    while (cmp.compare(t, parent) < 0) {
+    while (cmp.compare(t, parent) > 0) {
       heap.set(index, parent);
       heap.set(parentIdx, t);
 
@@ -96,15 +96,15 @@ public class BinaryHeapPriorityQueue<T extends Comparable<T>> implements Priorit
     T left = heap.get(leftIdx);
     T right = heap.get(rightIdx);
 
-    if (cmp.compare(left, right) < 0
-            && cmp.compare(left, current) < 0) {
+    if (cmp.compare(left, right) > 0
+            && cmp.compare(left, current) > 0) {
       heap.set(leftIdx, current);
       heap.set(index, left);
 
       if (leftChild(leftIdx) < heap.size()) {
         swimDown(leftIdx);
       }
-    } else if (cmp.compare(right, current) < 0) {
+    } else if (cmp.compare(right, current) > 0) {
       heap.set(rightIdx, current);
       heap.set(index, right);
 
@@ -118,7 +118,7 @@ public class BinaryHeapPriorityQueue<T extends Comparable<T>> implements Priorit
     T current = heap.get(index);
     T left = heap.get(leftIdx);
 
-    if (cmp.compare(left, current) < 0) {
+    if (cmp.compare(left, current) > 0) {
       heap.set(leftIdx, current);
       heap.set(index, left);
     }
@@ -170,8 +170,6 @@ public class BinaryHeapPriorityQueue<T extends Comparable<T>> implements Priorit
     public T next() {
       return heap.get(index++);
     }
-
-
   }
 
   public String toString() {

@@ -45,7 +45,8 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
 
   @Override
   public void put(K k, V v) throws IllegalArgumentException {
-    // TODO Implement Me!
+    Node<K, V> n = findForSure(k);
+    n.value = v;
   }
 
   @Override

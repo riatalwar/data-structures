@@ -168,6 +168,9 @@ public class BinaryHeapPriorityQueue<T extends Comparable<T>> implements Priorit
 
     @Override
     public T next() {
+      if (!hasNext()) {
+        throw new NoSuchElementException();
+      }
       return heap.get(index++);
     }
   }

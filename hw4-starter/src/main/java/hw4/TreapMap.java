@@ -98,8 +98,7 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
 
   @Override
   public int size() {
-    // TODO Implement Me!
-    return 0;
+    return size;
   }
 
   @Override

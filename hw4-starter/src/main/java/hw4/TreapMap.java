@@ -103,8 +103,7 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
 
   @Override
   public Iterator<K> iterator() {
-    // TODO Implement Me!
-    return null;
+    return new InorderIterator();
   }
 
   /*** Do not change this function's name or modify its code. ***/

@@ -102,6 +102,22 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
     return size;
   }
 
+  private Node<K, V> rightRotation(Node<K, V> n) {
+    Node<K, V> rotated = n.left;
+    Node<K, V> shift = rotated.right;
+    rotated.right = n;
+    n.left = shift;
+    return rotated;
+  }
+
+  private Node<K, V> leftRotation(Node<K, V> n) {
+    Node<K, V> rotated = n.right;
+    Node<K, V> shift = rotated.left;
+    rotated.left = n;
+    n.right = shift;
+    return rotated;
+  }
+
   @Override
   public Iterator<K> iterator() {
     return new InorderIterator();

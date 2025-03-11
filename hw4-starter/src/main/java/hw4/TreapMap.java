@@ -125,6 +125,26 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
     return size;
   }
 
+  private Node<K, V> orderPriorites(Node<K, V> tree) {
+    int rightPrior = Integer.MAX_VALUE;
+    int leftPrior = Integer.MAX_VALUE;
+    if (tree.right != null) {
+      rightPrior = tree.right.priority;
+    }
+    if (tree.left != null) {
+      leftPrior = tree.left.priority;
+    }
+
+    if (tree.left != null && leftPrior < rightPrior
+              && leftPrior < tree.priority) {
+      return rightRotation(tree);
+    } else if (tree.right != null && rightPrior < tree.priority) {
+      return leftRotation(tree);
+    }
+
+    return tree;
+  }
+
   private Node<K, V> rightRotation(Node<K, V> n) {
     Node<K, V> rotated = n.left;
     Node<K, V> shift = rotated.right;

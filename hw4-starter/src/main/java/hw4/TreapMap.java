@@ -44,9 +44,7 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
 
   private Node<K, V> insert(Node<K, V> n, K k, V v) {
     if (n == null) {
-      Node<K, V> toInsert = new Node<>(k, v);
-      toInsert.priority = toInsert.generateRandomInteger();
-      return toInsert;
+      return new Node<>(k, v);
     }
 
     int cmp = k.compareTo(n.key);

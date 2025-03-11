@@ -15,10 +15,6 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
   private Node<K, V> root;
   private int size;
 
-  public AvlTreeMap() {
-    size = 0;
-  }
-
   @Override
   public void insert(K k, V v) throws IllegalArgumentException {
     if (k == null) {
@@ -34,6 +30,7 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
       return new AvlTreeMap.Node<>(k, v);
     }
 
+    // recursively determine where to insert key
     int cmp = k.compareTo(n.key);
     if (cmp < 0) {
       n.left = insert(n.left, k, v);
@@ -43,15 +40,15 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
       throw new IllegalArgumentException("duplicate key " + k);
     }
 
-    n.height = calculateHeight(n);
+    // calculate modified height and balance
     n = balance(n);
+    n.height = calculateHeight(n);
 
     return n;
   }
 
   @Override
   public V remove(K k) throws IllegalArgumentException {
-    // TODO Implement Me!
     Node<K, V> n = findForSure(k);
     V value = n.value;
     root = remove(root, n);
@@ -60,6 +57,7 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
   }
 
   private Node<K, V> remove(Node<K, V> tree, Node<K, V> toRemove) {
+    // recursively find and remove node
     int cmp = tree.key.compareTo(toRemove.key);
     if (cmp == 0) {
       tree = remove(tree);
@@ -69,6 +67,7 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
       tree.right = remove(tree.right, toRemove);
     }
 
+    // rebalance after removal and calculate modified height
     if (tree != null) {
       tree = balance(tree);
       tree.height = calculateHeight(tree);
@@ -107,7 +106,6 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
 
   @Override
   public void put(K k, V v) throws IllegalArgumentException {
-    // TODO Implement Me!
     Node<K, V> n = findForSure(k);
     n.value = v;
   }
@@ -163,9 +161,11 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
   }
 
   private int calculateHeight(Node<K, V> n) {
+    // children heights -1 if null
     int right = -1;
     int left = -1;
 
+    // if children not null get actual heights
     if (n.right != null) {
       right = n.right.height;
     }
@@ -173,6 +173,7 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
       left = n.left.height;
     }
 
+    // calculate height
     return Math.max(right, left) + 1;
   }
 
@@ -199,19 +200,24 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
   }
 
   private int balanceFactor(Node<K, V> n) {
+    // height -1 if null
     int right = -1;
     int left = -1;
 
+    // if not null get actual height
     if (n.right != null) {
       right = n.right.height;
     }
     if (n.left != null) {
       left = n.left.height;
     }
+
+    // calculate bf
     return right - left;
   }
 
   private Node<K, V> rightRotation(Node<K, V> n) {
+    // right structural rotation
     Node<K, V> rotated = n.left;
     Node<K, V> shift = rotated.right;
     rotated.right = n;
@@ -220,6 +226,7 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
   }
 
   private Node<K, V> leftRotation(Node<K, V> n) {
+    // left structural rotation
     Node<K, V> rotated = n.right;
     Node<K, V> shift = rotated.left;
     rotated.left = n;

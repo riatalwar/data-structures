@@ -222,6 +222,8 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
     Node<K, V> shift = rotated.right;
     rotated.right = n;
     n.left = shift;
+    n.height = calculateHeight(n);
+    rotated.height = calculateHeight(n);
     return rotated;
   }
 
@@ -231,6 +233,8 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
     Node<K, V> shift = rotated.left;
     rotated.left = n;
     n.right = shift;
+    n.height = calculateHeight(n);
+    rotated.height = calculateHeight(n);
     return rotated;
   }
 

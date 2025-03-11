@@ -62,8 +62,24 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
 
   @Override
   public V remove(K k) throws IllegalArgumentException {
-    // TODO Implement Me!
-    return null;
+    Node<K, V> n = findForSure(k);
+    n.priority = -1;
+    root = remove(root, n);
+    size--;
+    return n.value;
+  }
+
+  private Node<K, V> remove(Node<K, V> tree, Node<K, V> toRemove) {
+    int cmp = toRemove.key.compareTo(tree.key);
+    if (cmp < 0) {
+      tree.left = remove(tree.left, toRemove);
+    } else if (cmp > 0) {
+      tree.right = remove(tree.right, toRemove);
+    } else {
+      return remove(tree);
+    }
+
+    return orderPriorites(tree);
   }
 
   private Node<K, V> remove(Node<K, V> n) {

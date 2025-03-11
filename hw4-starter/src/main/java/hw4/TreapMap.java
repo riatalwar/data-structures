@@ -66,6 +66,33 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
     return null;
   }
 
+  private Node<K, V> remove(Node<K, V> n) {
+    // Easy if the node has 0 or 1 child.
+    if (n.right == null) {
+      return n.left;
+    } else if (n.left == null) {
+      return n.right;
+    }
+
+    // If it has two children, find the predecessor (max in left subtree),
+    Node<K, V> toReplaceWith = max(n);
+    // then copy its data to the given node (value change),
+    n.key = toReplaceWith.key;
+    n.value = toReplaceWith.value;
+    // then remove the predecessor node (structural change).
+    n.left = remove(n.left, toReplaceWith);
+
+    return n;
+  }
+
+  private Node<K, V> max(Node<K, V> n) {
+    Node<K, V> curr = n.left;
+    while (curr.right != null) {
+      curr = curr.right;
+    }
+    return curr;
+  }
+
   @Override
   public void put(K k, V v) throws IllegalArgumentException {
     Node<K, V> n = findForSure(k);

@@ -62,17 +62,16 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
   private Node<K, V> remove(Node<K, V> tree, Node<K, V> toRemove) {
     int cmp = tree.key.compareTo(toRemove.key);
     if (cmp == 0) {
-      return remove(tree);
+      tree = remove(tree);
     } else if (cmp > 0) {
       tree.left = remove(tree.left, toRemove);
     } else {
       tree.right = remove(tree.right, toRemove);
     }
 
-    tree.height = calculateHeight(tree);
-    int bf = balanceFactor(tree);
-    if (bf < -1 || bf > 1) {
-      balance(tree);
+    if (tree != null) {
+      tree = balance(tree);
+      tree.height = calculateHeight(tree);
     }
 
     return tree;
@@ -115,11 +114,8 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
 
   @Override
   public V get(K k) throws IllegalArgumentException {
-    Node<K, V> n = find(k);
-    if (n != null) {
-      return n.value;
-    }
-    return null;
+    Node<K, V> n = findForSure(k);
+    return n.value;
   }
 
   @Override
@@ -183,6 +179,7 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
   private Node<K, V> balance(Node<K, V> n) {
     int bf = balanceFactor(n);
 
+    // if left heavy
     if (bf < -1) {
       int bfLeft = balanceFactor(n.left);
       if (bfLeft > 0) {
@@ -190,6 +187,7 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
       }
       n = rightRotation(n);
     } else if (bf > 1) {
+      // if right heavy
       int bfRight = balanceFactor(n.right);
       if (bfRight < 0) {
         n.right = rightRotation(n.right);

@@ -34,7 +34,32 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
 
   @Override
   public void insert(K k, V v) throws IllegalArgumentException {
-    // TODO Implement Me!
+    if (k == null) {
+      throw new IllegalArgumentException("cannot handle null key");
+    }
+
+    root = insert(root, k, v);
+    size++;
+  }
+
+  private Node<K, V> insert(Node<K, V> n, K k, V v) {
+    if (n == null) {
+      Node<K, V> toInsert = new Node<>(k, v);
+      toInsert.priority = toInsert.generateRandomInteger();
+      return toInsert;
+    }
+
+    int cmp = k.compareTo(n.key);
+    if (cmp < 0) {
+      n.left = insert(n.left, k, v);
+    } else if (cmp > 0) {
+      n.right = insert(n.right, k, v);
+    } else {
+      throw new IllegalArgumentException("duplicate key " + k);
+    }
+
+    n = orderPriorites(n);
+    return n;
   }
 
   @Override

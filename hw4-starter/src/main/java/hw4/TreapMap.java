@@ -1,6 +1,7 @@
 package hw4;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.Stack;
 
@@ -96,7 +97,7 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
     } else if (n.left == null) {
       return n.right;
     }
-    
+
     // reorder priorities if two children to shift to bottom
     Node<K, V> ordered = orderPriorites(n);
 
@@ -237,6 +238,9 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
 
     @Override
     public K next() {
+      if (!hasNext()) {
+        throw new NoSuchElementException();
+      }
       Node<K, V> top = stack.pop();
       pushLeft(top.right);
       return top.key;

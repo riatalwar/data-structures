@@ -1,6 +1,7 @@
 package hw4;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Stack;
 
 /**
@@ -181,16 +182,16 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
     int bf = balanceFactor(n);
 
     // if left heavy
-    if (bf < -1) {
+    if (bf > 1) {
       int bfLeft = balanceFactor(n.left);
-      if (bfLeft > 0) {
+      if (bfLeft < 0) {
         n.left = leftRotation(n.left);
       }
       n = rightRotation(n);
-    } else if (bf > 1) {
+    } else if (bf < -1) {
       // if right heavy
       int bfRight = balanceFactor(n.right);
-      if (bfRight < 0) {
+      if (bfRight > 0) {
         n.right = rightRotation(n.right);
       }
       n = leftRotation(n);
@@ -213,7 +214,7 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
     }
 
     // calculate bf
-    return right - left;
+    return left - right;
   }
 
   private Node<K, V> rightRotation(Node<K, V> n) {
@@ -266,6 +267,9 @@ public class AvlTreeMap<K extends Comparable<K>, V> implements OrderedMap<K, V> 
 
     @Override
     public K next() {
+      if (!hasNext()) {
+        throw new NoSuchElementException();
+      }
       AvlTreeMap.Node<K, V> top = stack.pop();
       pushLeft(top.right);
       return top.key;

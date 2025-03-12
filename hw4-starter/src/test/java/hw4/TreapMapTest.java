@@ -61,9 +61,74 @@ public class TreapMapTest extends BinarySearchTreeMapTest {
     assertEquals((String.join("\n", expected) + "\n"), map.toString());
   }
 
-  // remove right rotation
-  // remove left rotation
-  // remove multiple rotations
+
+  @Test
+  @DisplayName("remove() results in right rotations")
+  public void removeOneChildRightRotation() {
+    map.insert("2", "a");
+    map.insert("1", "b");
+    map.insert("3", "c");
+    map.insert("4", "d");
+
+    map.remove("4");
+
+    String[] expected = new String[]{
+            "2:a:-1155484576",
+            "1:b:-723955400 3:c:1033096058"
+    };
+    assertEquals((String.join("\n", expected) + "\n"), map.toString());
+  }
+
+  @Test
+  @DisplayName("remove() results in left rotations")
+  public void removeOneChildLeftRotation() {
+    map.insert("2", "a");
+    map.insert("1", "b");
+    map.insert("3", "c");
+    map.insert("0", "d");
+
+    map.remove("0");
+
+    String[] expected = new String[]{
+            "2:a:-1155484576",
+            "1:b:-723955400 3:c:1033096058"
+    };
+    assertEquals((String.join("\n", expected) + "\n"), map.toString());
+  }
+
+  @Test
+  @DisplayName("remove() node with two children results in left rotations")
+  public void removeTwoChildrenLeftRotation() {
+    map.insert("2", "a");
+    map.insert("3", "b");
+    map.insert("1", "c");
+
+    map.remove("2");
+
+    String[] expected = new String[]{
+            "3:b:-723955400",
+            "1:c:1033096058 null"
+    };
+    assertEquals((String.join("\n", expected) + "\n"), map.toString());
+  }
+
+  @Test
+  @DisplayName("remove() node with two children results in right rotation")
+  public void removeTwoChildrenRightRotation() {
+    map.insert("2", "a");
+    map.insert("3", "b");
+    map.insert("1", "c");
+    map.insert("0", "d");
+
+    map.remove("2");
+
+    String[] expected = new String[]{
+            "0:d:-1690734402",
+            "null 3:b:-723955400",
+            "null null 1:c:1033096058 null"
+    };
+    assertEquals((String.join("\n", expected) + "\n"), map.toString());
+  }
 
   // TODO Add tests
   //  (think about how you might write tests while randomness is involved in TreapMap implementation!)

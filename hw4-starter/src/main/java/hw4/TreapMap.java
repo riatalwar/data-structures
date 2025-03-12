@@ -2,6 +2,7 @@ package hw4;
 
 import java.util.Iterator;
 import java.util.Random;
+import java.util.Stack;
 
 /**
  * Map implemented as a Treap.
@@ -15,6 +16,7 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
   private static Random rand;
   /*** Do not change variable name of 'root'. ***/
   private Node<K, V> root;
+  private int size;
 
   /**
    * Make a TreapMap.
@@ -47,6 +49,7 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
       return new Node<>(k, v);
     }
 
+    // determine where to insert new node by key
     int cmp = k.compareTo(n.key);
     if (cmp < 0) {
       n.left = insert(n.left, k, v);
@@ -56,6 +59,7 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
       throw new IllegalArgumentException("duplicate key " + k);
     }
 
+    // ensure priorities remain ordered
     n = orderPriorites(n);
     return n;
   }
@@ -63,13 +67,15 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
   @Override
   public V remove(K k) throws IllegalArgumentException {
     Node<K, V> n = findForSure(k);
-    n.priority = -1;
+    // node should have max int value to sink to bottom
+    n.priority = Integer.MAX_VALUE;
     root = remove(root, n);
     size--;
     return n.value;
   }
 
   private Node<K, V> remove(Node<K, V> tree, Node<K, V> toRemove) {
+    // determine where to remove node from
     int cmp = toRemove.key.compareTo(tree.key);
     if (cmp < 0) {
       tree.left = remove(tree.left, toRemove);
@@ -79,7 +85,8 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
       return remove(tree);
     }
 
-    return orderPriorites(tree);
+    // ensure order is maintained
+    return tree;
   }
 
   private Node<K, V> remove(Node<K, V> n) {
@@ -89,24 +96,12 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
     } else if (n.left == null) {
       return n.right;
     }
+    
+    // reorder priorities if two children to shift to bottom
+    Node<K, V> ordered = orderPriorites(n);
 
-    // If it has two children, find the predecessor (max in left subtree),
-    Node<K, V> toReplaceWith = max(n);
-    // then copy its data to the given node (value change),
-    n.key = toReplaceWith.key;
-    n.value = toReplaceWith.value;
-    // then remove the predecessor node (structural change).
-    n.left = remove(n.left, toReplaceWith);
-
-    return n;
-  }
-
-  private Node<K, V> max(Node<K, V> n) {
-    Node<K, V> curr = n.left;
-    while (curr.right != null) {
-      curr = curr.right;
-    }
-    return curr;
+    // again find node and try to remove
+    return remove(ordered, n);
   }
 
   @Override
@@ -117,11 +112,8 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
 
   @Override
   public V get(K k) throws IllegalArgumentException {
-    Node<K, V> n = find(k);
-    if (n != null) {
-      return n.value;
-    }
-    return null;
+    Node<K, V> n = findForSure(k);
+    return n.value;
   }
 
   @Override
@@ -145,6 +137,7 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
       return null;
     }
 
+    // recursively locate node
     int cmp = k.compareTo(n.key);
     if (cmp < 0) {
       return find(n.left, k);
@@ -169,8 +162,10 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
   }
 
   private Node<K, V> orderPriorites(Node<K, V> tree) {
+    // if null max priority to be at bottom
     int rightPrior = Integer.MAX_VALUE;
     int leftPrior = Integer.MAX_VALUE;
+    // if not null get priorities
     if (tree.right != null) {
       rightPrior = tree.right.priority;
     }
@@ -178,6 +173,7 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
       leftPrior = tree.left.priority;
     }
 
+    // rotate to order priorities
     if (tree.left != null && leftPrior < rightPrior
               && leftPrior < tree.priority) {
       return rightRotation(tree);
@@ -189,6 +185,7 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
   }
 
   private Node<K, V> rightRotation(Node<K, V> n) {
+    // right structural rotation
     Node<K, V> rotated = n.left;
     Node<K, V> shift = rotated.right;
     rotated.right = n;
@@ -197,6 +194,7 @@ public class TreapMap<K extends Comparable<K>, V> implements OrderedMap<K, V> {
   }
 
   private Node<K, V> leftRotation(Node<K, V> n) {
+    // left structural rotation
     Node<K, V> rotated = n.right;
     Node<K, V> shift = rotated.left;
     rotated.left = n;

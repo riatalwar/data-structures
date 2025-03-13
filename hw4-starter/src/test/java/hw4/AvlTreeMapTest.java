@@ -18,8 +18,6 @@ public class AvlTreeMapTest extends BinarySearchTreeMapTest {
     return new AvlTreeMap<>();
   }
 
-  // TODO Add more tests
-
   @Test
   @DisplayName("insert() correctly executes a left rotation.")
   public void insertLeftRotation() {

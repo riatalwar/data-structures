@@ -185,6 +185,57 @@ public class AvlTreeMapTest extends BinarySearchTreeMapTest {
   }
 
   @Test
+  @DisplayName("remove() removes node with no children")
+  public void removeNoChildren() {
+    map.insert("2", "a");
+    map.insert("1", "b");
+    map.insert("3", "c");
+    map.insert("4", "d");
+
+    map.remove("4");
+
+    String[] expected = new String[]{
+            "2:a",
+            "1:b 3:c"
+    };
+    assertEquals((String.join("\n", expected) + "\n"), map.toString());
+  }
+
+  @Test
+  @DisplayName("remove() removes node with one child")
+  public void removeOneChild() {
+    map.insert("2", "a");
+    map.insert("1", "b");
+    map.insert("3", "c");
+    map.insert("4", "d");
+
+    map.remove("3");
+
+    String[] expected = new String[]{
+            "2:a",
+            "1:b 4:d"
+    };
+    assertEquals((String.join("\n", expected) + "\n"), map.toString());
+  }
+
+  @Test
+  @DisplayName("remove() removes node with two children")
+  public void removeTwoChildren() {
+    map.insert("2", "a");
+    map.insert("1", "b");
+    map.insert("3", "c");
+    map.insert("4", "d");
+
+    map.remove("2");
+
+    String[] expected = new String[]{
+            "3:c",
+            "1:b 4:d"
+    };
+    assertEquals((String.join("\n", expected) + "\n"), map.toString());
+  }
+
+  @Test
   @DisplayName("remove() accurately changes the size of the tree.")
   public void removeChangesSize() {
     map.insert("2", "a");

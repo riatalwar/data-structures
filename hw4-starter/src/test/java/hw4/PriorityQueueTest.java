@@ -208,4 +208,21 @@ public abstract class PriorityQueueTest {
     assertEquals(0, count);
   }
 
+  // TODO: comparator
+  // TODO: iterator exception test
+
+  @Test
+  @DisplayName("iterator throws exception past end")
+  public void iteratorNextNoSuchElement() {
+    Iterator<Integer> it = pq.iterator();
+    while (it.hasNext()) {
+      it.next();
+    }
+    try {
+      it.next();
+      fail("Expected NoSuchElementException");
+    } catch (NoSuchElementException e) {
+      // success
+    }
+  }
 }

@@ -1,5 +1,12 @@
 package hw4;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import java.util.Comparator;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class BinaryHeapPriorityQueueTest extends PriorityQueueTest {
 
   @Override

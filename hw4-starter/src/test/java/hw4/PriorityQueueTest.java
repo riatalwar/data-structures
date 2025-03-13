@@ -208,9 +208,6 @@ public abstract class PriorityQueueTest {
     assertEquals(0, count);
   }
 
-  // TODO: comparator
-  // TODO: iterator exception test
-
   @Test
   @DisplayName("iterator throws exception past end")
   public void iteratorNextNoSuchElement() {

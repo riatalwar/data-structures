@@ -37,6 +37,10 @@ public class ChainingHashMap<K, V> implements Map<K, V> {
     map[idx].add(n);
 
     numElements++;
+
+    if (loadFactor() >= LOAD_REHASH) {
+      rehash();
+    }
   }
 
   @Override

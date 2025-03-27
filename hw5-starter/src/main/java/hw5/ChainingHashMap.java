@@ -61,14 +61,7 @@ public class ChainingHashMap<K, V> implements Map<K, V> {
     if (bucket == null) {
       throw new IllegalArgumentException("key is not mapped");
     }
-    Node<K, V> toRemove = null;
-
-    // search for key
-    for (Node<K, V> n : bucket) {
-      if (n.key == k) {
-        toRemove = n;
-      }
-    }
+    Node<K, V> toRemove = findInBucket(bucket, k);
 
     // throw err if not found
     if (toRemove == null) {
@@ -118,14 +111,7 @@ public class ChainingHashMap<K, V> implements Map<K, V> {
       return null;
     }
 
-    // search bucket for key
-    for (Node<K, V> n : bucket) {
-      if (n.key == k) {
-        return n;
-      }
-    }
-
-    return null;
+    return findInBucket(bucket, k);
   }
 
   @Override
@@ -139,6 +125,16 @@ public class ChainingHashMap<K, V> implements Map<K, V> {
 
   private double loadFactor() {
     return (double) numElements / capacity;
+  }
+
+  private Node<K, V> findInBucket(LinkedList<Node<K, V>> bucket, K k) {
+    for (Node<K, V> n : bucket) {
+      if (n.key == k) {
+        return n;
+      }
+    }
+
+    return null;
   }
 
   private void rehash() {

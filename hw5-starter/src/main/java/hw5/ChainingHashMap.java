@@ -11,7 +11,9 @@ public class ChainingHashMap<K, V> implements Map<K, V> {
   private int numElements;
   private LinkedList<Node<K, V>>[] map;
   private final double LOAD_REHASH = 0.75;
-  private final int[] PRIMES = {5, 11, 23, 47, 97, 197, 397, 797, 1597, 3203, 6421, 12853, 25717, 51437,102877, 205759, 411527, 823117, 1646237,3292489, 6584983, 13169977};
+  private final int[] PRIMES =
+      {5, 11, 23, 47, 97, 197, 397, 797, 1597, 3203, 6421, 12853, 25717, 51437,102877, 205759,
+       411527, 823117, 1646237,3292489, 6584983, 13169977};
   private int primeIdx;
 
 

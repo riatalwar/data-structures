@@ -135,6 +135,31 @@ public class ChainingHashMap<K, V> implements Map<K, V> {
     return (double) numElements / capacity;
   }
 
+  private void rehash() {
+    // either go to next prime sizing or double when finished
+    if (primeIdx < PRIMES.length - 1) {
+      primeIdx++;
+      capacity = PRIMES[primeIdx];
+    } else {
+      capacity *= 2;
+    }
+
+    // save reference to old map and create new with updated capacity
+    LinkedList<Node<K, V>>[] oldMap = map;
+    map = (LinkedList<Node<K, V>>[]) (Array.newInstance(LinkedList.class, capacity));
+    numElements = 0;
+
+    // fill in resized map by rehashing entries
+    for (LinkedList<Node<K, V>> bucket : oldMap) {
+      if (bucket == null) {
+        continue;
+      }
+      for (Node<K, V> n : bucket) {
+        insert(n.key, n.value);
+      }
+    }
+  }
+
   @Override
   public Iterator<K> iterator() {
     return new ChainingHashMapIterator();

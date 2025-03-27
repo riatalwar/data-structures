@@ -16,7 +16,8 @@ public class ChainingHashMap<K, V> implements Map<K, V> {
 
 
   public ChainingHashMap() {
-    capacity = 13;
+    primeIdx = 0;
+    capacity = PRIMES[primeIdx];
     map = (LinkedList<Node<K, V>>[]) (Array.newInstance(LinkedList.class, capacity));
   }
 

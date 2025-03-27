@@ -17,6 +17,10 @@ public class ChainingHashMap<K, V> implements Map<K, V> {
   private int primeIdx;
 
 
+  /**
+   * ChainingHashMap constructor
+   * Sets initial capacity and initialized map.
+   */
   public ChainingHashMap() {
     primeIdx = 0;
     capacity = PRIMES[primeIdx];

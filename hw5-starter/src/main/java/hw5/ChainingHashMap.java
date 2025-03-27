@@ -119,14 +119,17 @@ public class ChainingHashMap<K, V> implements Map<K, V> {
     return numElements;
   }
 
+  // Calculate the index of a key by hashing
   private int getIndex(K k) {
     return k.hashCode() % capacity;
   }
 
+  // Calculate the current load factor
   private double loadFactor() {
     return (double) numElements / capacity;
   }
 
+  // Determine if key is in bucket and return corresponding node if found
   private Node<K, V> findInBucket(LinkedList<Node<K, V>> bucket, K k) {
     for (Node<K, V> n : bucket) {
       if (n.key == k) {
@@ -137,6 +140,7 @@ public class ChainingHashMap<K, V> implements Map<K, V> {
     return null;
   }
 
+  // Resize and rehash entries in map
   private void rehash() {
     // either go to next prime sizing or double when finished
     if (primeIdx < PRIMES.length - 1) {

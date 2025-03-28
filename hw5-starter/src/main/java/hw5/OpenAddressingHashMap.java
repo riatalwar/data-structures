@@ -103,7 +103,7 @@ public class OpenAddressingHashMap<K, V> implements Map<K, V> {
       idx = (getIndex(k) + i * i) % capacity;
       if (map[idx] != null && map[idx].key == k) {
         if (map[idx].dead) {
-          return null;
+          continue;
         }
         return map[idx];
       }

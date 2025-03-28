@@ -176,7 +176,7 @@ public class OpenAddressingHashMap<K, V> implements Map<K, V> {
   private class OpenAddressingHashMapIterator implements Iterator<K> {
     int index;
 
-    public OpenAddressingHashMapIterator() {
+    private OpenAddressingHashMapIterator() {
       index = 0;
       while (index < map.length && map[index] == null) {
         index++;

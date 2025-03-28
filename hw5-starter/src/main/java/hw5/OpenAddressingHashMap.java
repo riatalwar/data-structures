@@ -178,7 +178,8 @@ public class OpenAddressingHashMap<K, V> implements Map<K, V> {
 
     private OpenAddressingHashMapIterator() {
       index = 0;
-      while (index < map.length && map[index] == null) {
+      while (index < map.length
+              && (map[index] == null || map[index].dead)) {
         index++;
       }
     }

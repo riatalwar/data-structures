@@ -197,7 +197,8 @@ public class OpenAddressingHashMap<K, V> implements Map<K, V> {
       Node<K, V> n = map[index];
       do {
         index++;
-      } while (index < map.length && map[index] == null);
+      } while (index < map.length
+              && (map[index] == null || map[index].dead));
       return n.key;
     }
   }

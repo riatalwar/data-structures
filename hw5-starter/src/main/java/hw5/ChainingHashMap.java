@@ -197,17 +197,21 @@ public class ChainingHashMap<K, V> implements Map<K, V> {
     ChainingHashMapIterator() {
       index = 0;
       // find first full bucket
-      while (index < capacity && map[index] == null) {
+      while (index < capacity && (map[index] == null
+              || (map[index] != null && map[index].isEmpty()))) {
         index++;
       }
-      if (index < capacity && map[index] != null) {
+      if (index < capacity) {
         bucketIt = map[index].iterator();
       }
     }
 
     @Override
     public boolean hasNext() {
-      return index < capacity && bucketIt.hasNext();
+      if (index >= capacity) {
+        return false;
+      }
+      return bucketIt != null && bucketIt.hasNext();
     }
 
     @Override
@@ -222,10 +226,11 @@ public class ChainingHashMap<K, V> implements Map<K, V> {
         // skip over empty buckets
         do {
           index++;
-        } while (index < capacity && map[index] == null);
+        } while (index < capacity && (map[index] == null
+                || (map[index] != null && map[index].isEmpty())));
 
         // get next iterator
-        if (index < capacity && map[index] != null) {
+        if (index < capacity) {
           bucketIt = map[index].iterator();
         }
       }

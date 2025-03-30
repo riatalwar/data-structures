@@ -142,6 +142,7 @@ public class OpenAddressingHashMap<K, V> implements Map<K, V> {
     Node<K, V>[] oldMap = map;
     map = (Node<K, V>[]) (Array.newInstance(Node.class, capacity));
     numElements = 0;
+    slotsFilled = 0;
 
     // fill in resized map by rehashing entries
     for (Node<K, V> n : oldMap) {

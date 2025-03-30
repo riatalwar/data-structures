@@ -132,7 +132,7 @@ public class ChainingHashMap<K, V> implements Map<K, V> {
   // Determine if key is in bucket and return corresponding node if found
   private Node<K, V> findInBucket(LinkedList<Node<K, V>> bucket, K k) {
     for (Node<K, V> n : bucket) {
-      if (n.key == k) {
+      if (k.equals(n.key)) {
         return n;
       }
     }

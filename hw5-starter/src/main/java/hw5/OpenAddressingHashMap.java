@@ -104,10 +104,9 @@ public class OpenAddressingHashMap<K, V> implements Map<K, V> {
     // if table[index] is occupied, then
     for (int i = 0; i < capacity; i++) {
       idx = (getIndex(k) + i * i) % capacity;
-      if (map[idx] != null && map[idx].key == k) {
-        if (map[idx].dead) {
-          continue;
-        }
+      if (map[idx] != null
+              && k.equals(map[idx].key)
+              && !map[idx].dead) {
         return map[idx];
       }
     }

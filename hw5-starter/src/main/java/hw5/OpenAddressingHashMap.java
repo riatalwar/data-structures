@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 
 public class OpenAddressingHashMap<K, V> implements Map<K, V> {
   private int capacity;
+  private int slotsFilled;
   private int numElements;
   private Node<K, V>[] map;
   private final double LOAD_REHASH = 0.75;

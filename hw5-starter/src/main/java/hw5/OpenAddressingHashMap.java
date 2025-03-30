@@ -93,6 +93,9 @@ public class OpenAddressingHashMap<K, V> implements Map<K, V> {
 
   @Override
   public boolean has(K k) {
+    if (k == null) {
+      return false;
+    }
     return find(k) != null;
   }
 

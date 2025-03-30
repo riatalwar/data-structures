@@ -125,7 +125,7 @@ public class OpenAddressingHashMap<K, V> implements Map<K, V> {
 
   // Calculate the current load factor
   private double loadFactor() {
-    return (double) numElements / capacity;
+    return (double) slotsFilled / capacity;
   }
 
   // Resize and rehash entries in map

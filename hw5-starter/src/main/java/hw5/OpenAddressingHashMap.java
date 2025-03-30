@@ -29,25 +29,51 @@ public class OpenAddressingHashMap<K, V> implements Map<K, V> {
   public void insert(K k, V v) throws IllegalArgumentException {
     if (k == null) {
       throw new IllegalArgumentException("key is null");
-    } else if (has(k)) {
-      throw new IllegalArgumentException("key is already mapped");
     }
 
-    int idx;
-    Node<K, V> n = new Node<>(k, v);
-    for (int i = 0; i < capacity; i++) {
-      idx = (getIndex(k) + i * i) % capacity;
-      if (map[idx] == null) {
-        map[idx] = n;
-        break;
-      }
+    int idx = getInsertIndex(k);
+
+    if (idx == -1) {
+      rehash();
+      insert(k, v);
+    } else {
+      map[idx] = new Node<>(k, v);
     }
 
     numElements++;
+    slotsFilled++;
 
     if (loadFactor() >= LOAD_REHASH) {
       rehash();
     }
+  }
+
+  // helper function to determine where to insert key
+  private int getInsertIndex(K k) {
+    int idx;
+    int firstTomb = capacity;
+
+    // quadratic probe through map
+    for (int i = 0; i < capacity; i++) {
+      idx = (getIndex(k) + i * i) % capacity;
+
+      // end of search, key not found
+      if (map[idx] == null) {
+        if (firstTomb != capacity) {
+          idx = firstTomb;
+          slotsFilled--;
+        }
+        return idx;
+      // key already mapped
+      } else if (k.equals(map[idx].key) && !map[idx].dead) {
+        throw new IllegalArgumentException("key is already mapped");
+      // record first tomb
+      } else if (firstTomb == capacity
+              && map[idx].dead) {
+        firstTomb = idx;
+      }
+    }
+    return -1;
   }
 
   @Override

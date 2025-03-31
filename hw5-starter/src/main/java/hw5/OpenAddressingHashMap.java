@@ -147,7 +147,7 @@ public class OpenAddressingHashMap<K, V> implements Map<K, V> {
 
   // Calculate the index of a key by hashing
   private int getIndex(K k) {
-    return k.hashCode() % capacity;
+    return Math.abs(k.hashCode()) % capacity;
   }
 
   // Calculate the current load factor

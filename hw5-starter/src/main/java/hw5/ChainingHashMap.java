@@ -10,8 +10,8 @@ public class ChainingHashMap<K, V> implements Map<K, V> {
   private int capacity;
   private int numElements;
   private LinkedList<Node<K, V>>[] map;
-  private final double LOAD_REHASH = 0.75;
-  private final int[] PRIMES =
+  private final double loadRehash = 0.75;
+  private final int[] primes =
       {5, 11, 23, 47, 97, 197, 397, 797, 1597, 3203, 6421, 12853, 25717, 51437,102877, 205759,
        411527, 823117, 1646237,3292489, 6584983, 13169977};
   private int primeIdx;
@@ -23,7 +23,7 @@ public class ChainingHashMap<K, V> implements Map<K, V> {
    */
   public ChainingHashMap() {
     primeIdx = 0;
-    capacity = PRIMES[primeIdx];
+    capacity = primes[primeIdx];
     map = (LinkedList<Node<K, V>>[]) (Array.newInstance(LinkedList.class, capacity));
   }
 
@@ -44,7 +44,7 @@ public class ChainingHashMap<K, V> implements Map<K, V> {
 
     numElements++;
 
-    if (loadFactor() >= LOAD_REHASH) {
+    if (loadFactor() >= loadRehash) {
       rehash();
     }
   }
@@ -146,9 +146,9 @@ public class ChainingHashMap<K, V> implements Map<K, V> {
   // Resize and rehash entries in map
   private void rehash() {
     // either go to next prime sizing or double when finished
-    if (primeIdx < PRIMES.length - 1) {
+    if (primeIdx < primes.length - 1) {
       primeIdx++;
-      capacity = PRIMES[primeIdx];
+      capacity = primes[primeIdx];
     } else {
       capacity *= 2;
     }

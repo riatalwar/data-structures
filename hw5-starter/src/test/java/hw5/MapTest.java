@@ -3,6 +3,8 @@ package hw5;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Iterator;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -212,6 +214,53 @@ public abstract class MapTest {
     assertEquals(3, counter);
   }
 
+
+  @Test
+  public void testSeriesOperations() {
+    map.insert("1", "a");
+    map.insert("2", "b");
+    map.insert("3", "c");
+    map.insert("4", "d");
+    map.insert("5", "e");
+
+    assertEquals(5, map.size());
+
+    assertEquals("c", map.remove("3"));
+    assertFalse(map.has("3"));
+    assertEquals("d", map.get("4"));
+    map.put("5", "f");
+    try {
+      map.insert("5", "a");
+      fail();
+    } catch (Exception e) {
+      //
+    }
+    assertEquals("f", map.get("5"));
+    map.insert("6", "g");
+    assertEquals("g", map.get("6"));
+    map.remove("1");
+    assertFalse(map.has("1"));
+    map.insert("3", "c2");
+    assertEquals("c2", map.get("3"));
+
+    int count = 0;
+    Iterator it = map.iterator();
+     while (it.hasNext()) {
+      System.out.println(it.next());
+      count++;
+    }
+    assertEquals(5, count);
+  }
+
+  @Test
+  public void testInsertCase3() {
+    String s = "a";
+    for (int i = 98; i <= 122; i++) {
+      System.out.println(s);
+      map.insert(s, "1");
+      s += (char) i;
+    }
+  }
   // Ideally we should also check for "Keys must be immutable"
   // This is not trivial; check out
   // https://github.com/MutabilityDetector/MutabilityDetector

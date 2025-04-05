@@ -35,15 +35,19 @@ public class ChainingHashMap<K, V> implements Map<K, V> {
       throw new IllegalArgumentException("key is already mapped");
     }
 
+    // find bucket index
     int idx = getIndex(k);
+    // create bucket if necessary
     if (map[idx] == null) {
       map[idx] = new LinkedList<>();
     }
+
     Node<K, V> n = new Node<>(k, v);
     map[idx].add(n);
 
     numElements++;
 
+    // rehash when load threshold reached
     if (loadFactor() >= loadRehash) {
       rehash();
     }
@@ -201,6 +205,7 @@ public class ChainingHashMap<K, V> implements Map<K, V> {
               || (map[index] != null && map[index].isEmpty()))) {
         index++;
       }
+      // ensure array not empty before creating iterator
       if (index < capacity) {
         bucketIt = map[index].iterator();
       }
@@ -234,6 +239,7 @@ public class ChainingHashMap<K, V> implements Map<K, V> {
           bucketIt = map[index].iterator();
         }
       }
+      
       return k;
     }
   }

@@ -1,5 +1,7 @@
 package hw5;
 
+import org.apache.commons.math3.primes.Primes;
+
 import java.lang.reflect.Array;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -11,7 +13,7 @@ public class OpenAddressingHashMap<K, V> implements Map<K, V> {
   private Node<K, V>[] map;
   private final double loadRehash = 0.75;
   private final int[] primes =
-      {5, 11, 23, 47, 97, 197, 397, 797, 1597, 3203, 6421, 12853, 25717, 51437,102877, 205759,
+      {3, 5, 11, 23, 47, 97, 197, 397, 797, 1597, 3203, 6421, 12853, 25717, 51437,102877, 205759,
           411527, 823117, 1646237,3292489, 6584983, 13169977};
   private int primeIdx;
 
@@ -20,7 +22,7 @@ public class OpenAddressingHashMap<K, V> implements Map<K, V> {
    * Sets initial capacity and initialized map.
    */
   public OpenAddressingHashMap() {
-    primeIdx = 0;
+    primeIdx = 1;
     capacity = primes[primeIdx];
     map = (Node<K, V>[]) (Array.newInstance(Node.class, capacity));
   }
@@ -31,18 +33,14 @@ public class OpenAddressingHashMap<K, V> implements Map<K, V> {
       throw new IllegalArgumentException("key is null");
     }
 
+    // insert key at calculated index
     int idx = getInsertIndex(k);
-
-    if (idx == -1) {
-      rehash();
-      insert(k, v);
-    } else {
-      map[idx] = new Node<>(k, v);
-    }
+    map[idx] = new Node<>(k, v);
 
     numElements++;
     slotsFilled++;
 
+    // if threshold passed rehash map
     if (loadFactor() >= loadRehash) {
       rehash();
     }
@@ -53,12 +51,13 @@ public class OpenAddressingHashMap<K, V> implements Map<K, V> {
     int idx;
     int firstTomb = capacity;
 
-    // quadratic probe through map
+    // double hash probe through map
     for (int i = 0; i < capacity; i++) {
-      idx = (getIndex(k) + i * i) % capacity;
+      idx = (getIndex(k) + i * doubleHash(k)) % capacity;
 
       // end of search, key not found
       if (map[idx] == null) {
+        // tomb replacement if encountered
         if (firstTomb != capacity) {
           idx = firstTomb;
           slotsFilled--;
@@ -128,15 +127,16 @@ public class OpenAddressingHashMap<K, V> implements Map<K, V> {
 
   private Node<K, V> find(K k) {
     int idx;
-    // if table[index] is occupied, then
+    // double hash probe until found
     for (int i = 0; i < capacity; i++) {
-      idx = (getIndex(k) + i * i) % capacity;
+      idx = (getIndex(k) + i * doubleHash(k)) % capacity;
       if (map[idx] != null
               && k.equals(map[idx].key)
               && !map[idx].dead) {
         return map[idx];
       }
     }
+    // not found returns null
     return null;
   }
 
@@ -148,6 +148,12 @@ public class OpenAddressingHashMap<K, V> implements Map<K, V> {
   // Calculate the index of a key by hashing
   private int getIndex(K k) {
     return Math.abs(k.hashCode()) % capacity;
+  }
+
+  // Calculate a second hash value for probing
+  private int doubleHash(K k) {
+    int q = primes[primeIdx - 1];
+    return q - Math.abs(k.hashCode()) % q;
   }
 
   // Calculate the current load factor
@@ -208,6 +214,7 @@ public class OpenAddressingHashMap<K, V> implements Map<K, V> {
 
     private OpenAddressingHashMapIterator() {
       index = 0;
+      // find first occupied index
       while (index < map.length
               && (map[index] == null || map[index].dead)) {
         index++;
@@ -224,11 +231,15 @@ public class OpenAddressingHashMap<K, V> implements Map<K, V> {
       if (!hasNext()) {
         throw new NoSuchElementException();
       }
+
       Node<K, V> n = map[index];
+
+      // locate next occupied index
       do {
         index++;
       } while (index < map.length
               && (map[index] == null || map[index].dead));
+
       return n.key;
     }
   }

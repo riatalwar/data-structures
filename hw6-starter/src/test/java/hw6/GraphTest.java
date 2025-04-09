@@ -1,5 +1,6 @@
 package hw6;
 
+import exceptions.InsertionException;
 import exceptions.PositionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -47,6 +48,55 @@ public abstract class GraphTest {
     }
   }
 
+  @Test
+  @DisplayName("insert(V, null, e) throws exception")
+  public void insertEdgeThrowsPositionExceptionWhenSecondVertexIsNull() {
+    try {
+      Vertex<String> v = graph.insert("v");
+      graph.insert(v, null, "e");
+      fail("The expected exception was not thrown");
+    } catch (PositionException ex) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("insert(null, null, e) throws exception")
+  public void insertEdgeThrowsPositionExceptionWhenBothVertexNull() {
+    try {
+      graph.insert(null, null, "e");
+      fail("The expected exception was not thrown");
+    } catch (PositionException ex) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("insert(V, V, e) self loop throws exception")
+  public void insertEdgeThrowsInsertionExceptionWhenSelfLoop() {
+    try {
+      Vertex<String> v = graph.insert("v");
+      graph.insert(v, v, "e");
+      fail("The expected exception was not thrown");
+    } catch (InsertionException ex) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("insert(V, V, e) duplicate throws exception")
+  public void insertEdgeThrowsInsertionExceptionWhenDuplicate() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    graph.insert(v1, v2, "e");
+    try {
+      graph.insert(v1, v2, "e");
+      fail("The expected exception was not thrown");
+    } catch (InsertionException ex) {
+      return;
+    }
+  }
+
   // TODO add more tests here.
   // TODO insert(V) tests
     // exception if vertex in graph
@@ -57,11 +107,11 @@ public abstract class GraphTest {
     // insert multiple elements all accessible
 
   // TODO insert(V, V, E) tests
-    // exception invalid first vertex
-    // exception invalid second vertex
-    // exception invalid both vertex
-    // exception self loo
-    // exception duplicate edge
+    // exception invalid first vertex +
+    // exception invalid second vertex +
+    // exception invalid both vertex +
+    // exception self loop +
+    // exception duplicate edge +
     // insert one edge succeeds
     // insert multiple edges succeeds
     // insert both directions

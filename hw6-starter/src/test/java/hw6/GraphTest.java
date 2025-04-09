@@ -116,4 +116,34 @@ public abstract class GraphTest {
     // exception invalid edge
     // returns correct vertex
     // listed as incoming to vertex
+
+  // TODO label(Vertex, Object)
+    // exception invalid vertex
+    // labels vertex correctly
+    // label multiple objects same
+    // label multiple objects different
+
+  // TODO label(Edge, Object)
+    // exception invalid edge
+    // labels edge correctly
+    // label multiple objects same
+    // label multiple objects different
+
+  // TODO label(Vertex)
+    // exception invalid vertex
+    // null for unlabeled vertex
+    // correct label for vertex
+    // diff vertices correct label
+
+  // TODO label(Edge)
+    // exception invalid edge
+    // null for unlabeled edge
+    // correct label for edge
+    // diff edges correct label
+
+  // TODO clearLabels()
+    // no edges/vertices
+    // only vertices, unlabeled
+    // only vertices, labeled
+    // multiple edges and vertices, labeled and unlabeled
 }

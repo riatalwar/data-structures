@@ -24,16 +24,17 @@ public abstract class GraphTest {
   @DisplayName("insert(v) returns a vertex with given data")
   public void canGetVertexAfterInsert() {
     Vertex<String> v1 = graph.insert("v1");
-    assertEquals(v1.get(), "v1");
+    assertEquals("v1", v1.get());
   }
 
+  // insert(Vertex, Vertex, Edge) tests
   @Test
   @DisplayName("insert(U, V, e) returns an edge with given data")
   public void canGetEdgeAfterInsert() {
     Vertex<String> v1 = graph.insert("v1");
     Vertex<String> v2 = graph.insert("v2");
     Edge<String> e1 = graph.insert(v1, v2, "v1-v2");
-    assertEquals(e1.get(), "v1-v2");
+    assertEquals("v1-v2", e1.get());
   }
 
   @Test
@@ -97,6 +98,72 @@ public abstract class GraphTest {
     }
   }
 
+  @Test
+  @DisplayName("insert(V, V, e) multiple to same vertex")
+  public void insertMultipleEdgesToSameVertex() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Vertex<String> v3 = graph.insert("v3");
+    Vertex<String> v4 = graph.insert("v4");
+
+    Edge<String> e1 = graph.insert(v2, v1, "e1");
+    Edge<String> e2 = graph.insert(v3, v1, "e2");
+    Edge<String> e3 = graph.insert(v4, v1, "e3");
+
+    assertEquals("v2-v1", e1.get());
+    assertEquals("v3-v1", e2.get());
+    assertEquals("v4-v1", e3.get());
+  }
+
+  @Test
+  @DisplayName("insert(V, V, e) multiple from same vertex")
+  public void insertMultipleEdgesFromSameVertex() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Vertex<String> v3 = graph.insert("v3");
+    Vertex<String> v4 = graph.insert("v4");
+
+    Edge<String> e1 = graph.insert(v1, v2, "e1");
+    Edge<String> e2 = graph.insert(v1, v3, "e2");
+    Edge<String> e3 = graph.insert(v1, v4, "e3");
+
+    assertEquals("v1-v2", e1.get());
+    assertEquals("v1-v3", e2.get());
+    assertEquals("v1-v4", e3.get());
+  }
+
+  @Test
+  @DisplayName("insert(V, V, e) multiple interconnecting vertices")
+  public void insertMultipleEdgesInterconnectingVertices() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Vertex<String> v3 = graph.insert("v3");
+    Vertex<String> v4 = graph.insert("v4");
+
+    Edge<String> e1 = graph.insert(v1, v2, "e1");
+    Edge<String> e2 = graph.insert(v2, v3, "e2");
+    Edge<String> e3 = graph.insert(v3, v4, "e3");
+    Edge<String> e4 = graph.insert(v4, v1, "e4");
+
+    assertEquals("v1-v2", e1.get());
+    assertEquals("v2-v3", e2.get());
+    assertEquals("v3-v4", e3.get());
+    assertEquals("v4-v1", e4.get());
+  }
+
+  @Test
+  @DisplayName("insert(V, V, e) both directions between two vertices")
+  public void insertEdgesBothDirections() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+
+    Edge<String> e1 = graph.insert(v1, v2, "e1");
+    Edge<String> e2 = graph.insert(v2, v1, "e2");
+
+    assertEquals("v1-v2", e1.get());
+    assertEquals("v2-v1", e2.get());
+  }
+
   // TODO add more tests here.
   // TODO insert(V) tests
     // exception if vertex in graph
@@ -112,9 +179,9 @@ public abstract class GraphTest {
     // exception invalid both vertex +
     // exception self loop +
     // exception duplicate edge +
-    // insert one edge succeeds
-    // insert multiple edges succeeds
-    // insert both directions
+    // insert one edge succeeds +
+    // insert multiple edges succeeds +
+    // insert both directions +
 
   // TODO remove(Vertex)
     // exception null vertex

@@ -2,6 +2,7 @@ package hw6;
 
 import exceptions.InsertionException;
 import exceptions.PositionException;
+import exceptions.RemovalException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -250,6 +251,92 @@ public abstract class GraphTest {
     assertEquals("v2-v1", e2.get());
   }
 
+  // remove(Vertex) tests
+  @Test
+  @DisplayName("remove(V) null throws exception")
+  public void removeVertexThrowsExceptionWhenNull() {
+    try {
+      graph.remove((Vertex<String>) null);
+      fail("The expected exception was not thrown");
+    } catch (PositionException ex) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("remove(V) incoming edge throws exception")
+  public void removeVertexThrowsExceptionWhenIncomingEdge() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    graph.insert(v1, v2, "e");
+    try {
+      graph.remove(v2);
+      fail("The expected exception was not thrown");
+    } catch (RemovalException ex) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("remove(V) outgoing edge throws exception")
+  public void removeVertexThrowsExceptionWhenOutgoingEdge() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    graph.insert(v1, v2, "e");
+    try {
+      graph.remove(v1);
+      fail("The expected exception was not thrown");
+    } catch (RemovalException ex) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("remove(V) only vertex returns data")
+  public void removeOnlyVertexReturnsCorrectValue() {
+    Vertex<String> v1 = graph.insert("v1");
+    assertEquals("v1", graph.remove(v1));
+
+    int count = 0;
+    for (Vertex<String> v : graph.vertices()) {
+      count++;
+    }
+    assertEquals(0, count);
+  }
+
+  @Test
+  @DisplayName("remove(V) single vertex returns data")
+  public void removeSingleVertexReturnsCorrectValue() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    assertEquals("v1", graph.remove(v1));
+
+    int count = 0;
+    for (Vertex<String> v : graph.vertices()) {
+      count++;
+    }
+    assertEquals(1, count);
+  }
+
+  @Test
+  @DisplayName("remove(V) multiple vertices correct number vertices")
+  public void removeMultipleVerticesResultsCorrectNumberOfVertices() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Vertex<String> v3 = graph.insert("v3");
+    Vertex<String> v4 = graph.insert("v4");
+    graph.insert(v1, v2, "e");
+
+    assertEquals("v3", graph.remove(v3));
+    assertEquals("v4", graph.remove(v4));
+
+    int count = 0;
+    for (Vertex<String> v : graph.vertices()) {
+      count++;
+    }
+    assertEquals(2, count);
+  }
+
   // TODO add more tests here.
   // TODO insert(V) tests
     // exception if vertex in graph +
@@ -270,12 +357,11 @@ public abstract class GraphTest {
     // insert both directions +
 
   // TODO remove(Vertex)
-    // exception null vertex
-    // exception null data
-    // exception incident edges
-    // remove one vertex returns data
-    // vertex no longer in vertices
-    // remove multiple vertices
+    // exception null vertex +
+    // exception incident edges +
+    // remove one vertex returns data +
+    // vertex no longer in vertices +
+    // remove multiple vertices +
 
   // TODO remove(Edge)
     // exception null edge

@@ -8,24 +8,34 @@ import exceptions.EmptyException;
  * @param <T> base type.
  */
 public class ArrayQueue<T> implements Queue<T> {
+  int front, back;
+  T[] queue;
 
   @Override
   public void enqueue(T value) {
     // TODO: Implement me!
+    
   }
 
   @Override
   public void dequeue() throws EmptyException {
-    // TODO: Implement me!
+    if (empty()) {
+      throw new EmptyException();
+    }
+    queue[front] = null;
+    front = (front + 1) % queue.length;
   }
 
   @Override
   public T front() throws EmptyException {
-    return null; // TODO: Implement me!
+    if (empty()) {
+      throw new EmptyException();
+    }
+    return queue[front]; // TODO: Implement me!
   }
 
   @Override
   public boolean empty() {
-    return false; // TODO: Implement me!
+    return queue[front] == null; // TODO: Implement me!
   }
 }

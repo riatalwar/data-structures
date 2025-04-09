@@ -6,8 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class GraphTest {
 
@@ -20,11 +19,98 @@ public abstract class GraphTest {
 
   protected abstract Graph<String, String> createGraph();
 
+  // insert(V) tests
   @Test
   @DisplayName("insert(v) returns a vertex with given data")
   public void canGetVertexAfterInsert() {
     Vertex<String> v1 = graph.insert("v1");
     assertEquals("v1", v1.get());
+  }
+
+  @Test
+  @DisplayName("insert(v) null throws exception")
+  public void insertNullVertexThrowsInsertionException() {
+    try {
+      graph.insert(null);
+      fail("The expected exception was not thrown");
+    } catch (InsertionException e) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("insert(v) duplicate throws exception")
+  public void insertDuplicateVertexThrowsInsertionException() {
+    Vertex<String> v1 = graph.insert("v1");
+    assertEquals("v1", v1.get());
+    try {
+      graph.insert("v1");
+      fail("The expected exception was not thrown");
+    } catch (InsertionException e) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("insert(v) new vertex has no outgoing edges")
+  public void insertedVertexHasNoOutgoingEdgesAfterInsertion() {
+    Vertex<String> v1 = graph.insert("v1");
+    assertEquals("v1", v1.get());
+    Iterable<Edge<String>> outgoing = graph.outgoing(v1);
+
+    int count = 0;
+    for (Edge<String> e : outgoing) {
+      count++;
+    }
+
+    assertEquals(0, count);
+  }
+
+  @Test
+  @DisplayName("insert(v) new vertex has no incoming edges")
+  public void insertedVertexHasNoIncomingEdgesAfterInsertion() {
+    Vertex<String> v1 = graph.insert("v1");
+    assertEquals("v1", v1.get());
+    Iterable<Edge<String>> incoming = graph.incoming(v1);
+
+    int count = 0;
+    for (Edge<String> e : incoming) {
+      count++;
+    }
+
+    assertEquals(0, count);
+  }
+
+  @Test
+  @DisplayName("insert(v) new vertex has null label")
+  public void insertedVertexHasNullLabel() {
+    Vertex<String> v1 = graph.insert("v1");
+    assertEquals("v1", v1.get());
+
+    assertNull(graph.label(v1));
+  }
+
+  @Test
+  @DisplayName("insert(v) multiple vertices succeeds")
+  public void insertMultipleVertices() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Vertex<String> v3 = graph.insert("v3");
+    Vertex<String> v4 = graph.insert("v4");
+
+    assertEquals("v1", v1.get());
+    assertEquals("v2", v2.get());
+    assertEquals("v3", v3.get());
+    assertEquals("v4", v4.get());
+
+    Iterable<Vertex<String>> vertices = graph.vertices();
+
+    int count = 0;
+    for (Vertex<String> v : vertices) {
+      count++;
+    }
+
+    assertEquals(4, count);
   }
 
   // insert(Vertex, Vertex, Edge) tests
@@ -166,12 +252,12 @@ public abstract class GraphTest {
 
   // TODO add more tests here.
   // TODO insert(V) tests
-    // exception if vertex in graph
-    // null vertex exception
-    // inserted vertex has no outgoing
-    // inserted vertex has no incoming
-    // vertex has null label after creation
-    // insert multiple elements all accessible
+    // exception if vertex in graph +
+    // null vertex exception +
+    // inserted vertex has no outgoing +
+    // inserted vertex has no incoming +
+    // vertex has null label after creation +
+    // insert multiple elements all accessible +
 
   // TODO insert(V, V, E) tests
     // exception invalid first vertex +

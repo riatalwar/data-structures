@@ -355,6 +355,7 @@ public abstract class GraphTest {
     // insert one edge succeeds +
     // insert multiple edges succeeds +
     // insert both directions +
+    // TODO node is part of different graph
 
   // TODO remove(Vertex)
     // exception null vertex +
@@ -362,6 +363,7 @@ public abstract class GraphTest {
     // remove one vertex returns data +
     // vertex no longer in vertices +
     // remove multiple vertices +
+    // TODO node is part of different graph
 
   // TODO remove(Edge)
     // exception null edge
@@ -369,6 +371,7 @@ public abstract class GraphTest {
     // remove one edge returns data
     // edge no longer in edges
     // remove multiple edges
+    // TODO node is part of different graph
 
   // TODO vertices()
     // iterator no vertices
@@ -387,6 +390,7 @@ public abstract class GraphTest {
     // one outgoing/no incoming
     // multiple outgoing/no incoming
     // multiple outgoing/incoming
+    // TODO node is part of different graph
 
   // TODO incoming(Vertex)
     // exception null vertex
@@ -395,40 +399,47 @@ public abstract class GraphTest {
     // one incoming/no outgoing
     // multiple incoming/no outgoing
     // multiple incoming/outgoing
+    // TODO node is part of different graph
 
   // TODO from(Edge)
     // exception invalid edge
     // returns correct vertex
     // listed as outgoing from vertex
+    // TODO node is part of different graph
 
   // TODO to(Edge)
     // exception invalid edge
     // returns correct vertex
     // listed as incoming to vertex
+    // TODO node is part of different graph
 
   // TODO label(Vertex, Object)
     // exception invalid vertex
     // labels vertex correctly
     // label multiple objects same
     // label multiple objects different
+    // TODO node is part of different graph
 
   // TODO label(Edge, Object)
     // exception invalid edge
     // labels edge correctly
     // label multiple objects same
     // label multiple objects different
+    // TODO node is part of different graph
 
   // TODO label(Vertex)
     // exception invalid vertex
     // null for unlabeled vertex
     // correct label for vertex
     // diff vertices correct label
+    // TODO node is part of different graph
 
   // TODO label(Edge)
     // exception invalid edge
     // null for unlabeled edge
     // correct label for edge
     // diff edges correct label
+    // TODO node is part of different graph
 
   // TODO clearLabels()
     // no edges/vertices

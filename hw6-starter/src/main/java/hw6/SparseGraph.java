@@ -158,7 +158,14 @@ public class SparseGraph<V, E> implements Graph<V, E> {
 
   @Override
   public void clearLabels() {
-    // TODO Implement me!
+    // for each vertex clear label and all outgoing labels
+    for (Vertex<V> v : vertices.values()) {
+      VertexNode<V> vn = convert(v);
+      vn.label = null;
+      for (Edge<E> e : outgoing(vn)) {
+        (convert(e)).label = null;
+      }
+    }
   }
 
   @Override

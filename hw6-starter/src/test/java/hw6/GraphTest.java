@@ -434,7 +434,12 @@ public abstract class GraphTest {
     Vertex<String> v2 = graph.insert("v2");
     Edge<String> e = graph.insert(v1, v2, "e");
 
-    graph.remove((Vertex<String>) null);
+    try {
+      graph.remove((Vertex<String>) null);
+      fail("The expected exception was not thrown");
+    } catch (PositionException ex) {
+      return;
+    }
   }
 
   @Test

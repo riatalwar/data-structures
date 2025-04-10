@@ -246,9 +246,9 @@ public abstract class GraphTest {
     Edge<String> e2 = graph.insert(v3, v1, "e2");
     Edge<String> e3 = graph.insert(v4, v1, "e3");
 
-    assertEquals("v2-v1", e1.get());
-    assertEquals("v3-v1", e2.get());
-    assertEquals("v4-v1", e3.get());
+    assertEquals("e1", e1.get());
+    assertEquals("e2", e2.get());
+    assertEquals("e3", e3.get());
   }
 
   @Test
@@ -263,9 +263,9 @@ public abstract class GraphTest {
     Edge<String> e2 = graph.insert(v1, v3, "e2");
     Edge<String> e3 = graph.insert(v1, v4, "e3");
 
-    assertEquals("v1-v2", e1.get());
-    assertEquals("v1-v3", e2.get());
-    assertEquals("v1-v4", e3.get());
+    assertEquals("e1", e1.get());
+    assertEquals("e2", e2.get());
+    assertEquals("e3", e3.get());
   }
 
   @Test
@@ -281,10 +281,10 @@ public abstract class GraphTest {
     Edge<String> e3 = graph.insert(v3, v4, "e3");
     Edge<String> e4 = graph.insert(v4, v1, "e4");
 
-    assertEquals("v1-v2", e1.get());
-    assertEquals("v2-v3", e2.get());
-    assertEquals("v3-v4", e3.get());
-    assertEquals("v4-v1", e4.get());
+    assertEquals("e1", e1.get());
+    assertEquals("e2", e2.get());
+    assertEquals("e3", e3.get());
+    assertEquals("e4", e4.get());
   }
 
   @Test
@@ -296,8 +296,8 @@ public abstract class GraphTest {
     Edge<String> e1 = graph.insert(v1, v2, "e1");
     Edge<String> e2 = graph.insert(v2, v1, "e2");
 
-    assertEquals("v1-v2", e1.get());
-    assertEquals("v2-v1", e2.get());
+    assertEquals("e1", e1.get());
+    assertEquals("e2", e2.get());
   }
 
   // remove(Vertex) tests
@@ -474,8 +474,8 @@ public abstract class GraphTest {
   public void removeMultipleEdgesResultsCorrectNumberOfEdges() {
     Vertex<String> v1 = graph.insert("v1");
     Vertex<String> v2 = graph.insert("v2");
-    Vertex<String> v3 = graph.insert("v2");
-    Vertex<String> v4 = graph.insert("v2");
+    Vertex<String> v3 = graph.insert("v3");
+    Vertex<String> v4 = graph.insert("v4");
     Edge<String> e1 = graph.insert(v1, v2, "e1");
     Edge<String> e2 = graph.insert(v1, v3, "e2");
     Edge<String> e3 = graph.insert(v3, v4, "e3");

@@ -3,9 +3,13 @@ package hw6;
 import exceptions.InsertionException;
 import exceptions.PositionException;
 import exceptions.RemovalException;
+import org.apache.commons.math3.util.OpenIntToDoubleHashMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -186,6 +190,51 @@ public abstract class GraphTest {
   }
 
   @Test
+  @DisplayName("insert(V, V, e) first vertex wrong graph throws exception")
+  public void insertEdgeThrowsExceptionWhenFirstVertexWrongGraph() {
+    Graph<String, String> g = createGraph();
+    Vertex<String> v1 = g.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+
+    try {
+      graph.insert(v1, v2, "e");
+      fail("The expected exception was not thrown");
+    } catch (PositionException e) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("insert(V, V, e) second vertex wrong graph throws exception")
+  public void insertEdgeThrowsExceptionWhenSecondVertexWrongGraph() {
+    Graph<String, String> g = createGraph();
+    Vertex<String> v1 = g.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+
+    try {
+      graph.insert(v2, v1, "e");
+      fail("The expected exception was not thrown");
+    } catch (PositionException e) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("insert(V, V, e) both vertex wrong graph throws exception")
+  public void insertEdgeThrowsExceptionWhenBothVertexWrongGraph() {
+    Graph<String, String> g = createGraph();
+    Vertex<String> v1 = g.insert("v1");
+    Vertex<String> v2 = g.insert("v2");
+
+    try {
+      graph.insert(v1, v2, "e");
+      fail("The expected exception was not thrown");
+    } catch (PositionException e) {
+      return;
+    }
+  }
+
+  @Test
   @DisplayName("insert(V, V, e) multiple to same vertex")
   public void insertMultipleEdgesToSameVertex() {
     Vertex<String> v1 = graph.insert("v1");
@@ -257,6 +306,19 @@ public abstract class GraphTest {
   public void removeVertexThrowsExceptionWhenNull() {
     try {
       graph.remove((Vertex<String>) null);
+      fail("The expected exception was not thrown");
+    } catch (PositionException ex) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("remove(V) vertex from different graph throws exception")
+  public void removeVertexThrowsExceptionWhenWrongGraph() {
+    Graph<String, String> g = createGraph();
+    Vertex<String> v1 = g.insert("v1");
+    try {
+      graph.remove(v1);
       fail("The expected exception was not thrown");
     } catch (PositionException ex) {
       return;
@@ -355,7 +417,7 @@ public abstract class GraphTest {
     // insert one edge succeeds +
     // insert multiple edges succeeds +
     // insert both directions +
-    // TODO node is part of different graph
+    // node is part of different graph +
 
   // TODO remove(Vertex)
     // exception null vertex +
@@ -363,25 +425,175 @@ public abstract class GraphTest {
     // remove one vertex returns data +
     // vertex no longer in vertices +
     // remove multiple vertices +
-    // TODO node is part of different graph
+    // node is part of different graph +
+
+  @Test
+  @DisplayName("remove(E) null throws exception")
+  public void removeNullEdgeThrowsException() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Edge<String> e = graph.insert(v1, v2, "e");
+
+    graph.remove((Vertex<String>) null);
+  }
+
+  @Test
+  @DisplayName("remove(E) from wrong graph throws exception")
+  public void removeEdgeFromWrongGraphThrowsException() {
+    Graph<String, String> g = createGraph();
+    Vertex<String> v1 = g.insert("v1");
+    Vertex<String> v2 = g.insert("v2");
+    Edge<String> e = g.insert(v1, v2, "e");
+
+    try {
+      graph.remove(e);
+      fail("The expected exception was not thrown");
+    } catch (PositionException ex) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("remove(E) single edge returns correct data")
+  public void removeSingleEdgeReturnsData() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Edge<String> e = graph.insert(v1, v2, "e");
+
+    assertEquals("e", graph.remove(e));
+
+    int count = 0;
+    for (Edge<String> edge : graph.edges()) {
+      count++;
+    }
+    assertEquals(0, count);
+  }
+
+  @Test
+  @DisplayName("remove(E) multiple edges leaves the correct number remaining")
+  public void removeMultipleEdgesResultsCorrectNumberOfEdges() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Vertex<String> v3 = graph.insert("v2");
+    Vertex<String> v4 = graph.insert("v2");
+    Edge<String> e1 = graph.insert(v1, v2, "e1");
+    Edge<String> e2 = graph.insert(v1, v3, "e2");
+    Edge<String> e3 = graph.insert(v3, v4, "e3");
+    Edge<String> e4 = graph.insert(v2, v4, "e4");
+
+    assertEquals("e1", graph.remove(e1));
+    assertEquals("e3", graph.remove(e3));
+
+    int count = 0;
+    for (Edge<String> edge : graph.edges()) {
+      count++;
+    }
+    assertEquals(2, count);
+  }
 
   // TODO remove(Edge)
-    // exception null edge
-    // exception null data
-    // remove one edge returns data
-    // edge no longer in edges
-    // remove multiple edges
-    // TODO node is part of different graph
+    // exception null edge +
+    // remove one edge returns data +
+    // edge no longer in edges +
+    // remove multiple edges +
+    // node is part of different graph +
 
+  @Test
+  @DisplayName("vertices() empty graph")
+  public void verticesEmptyGraph() {
+    int count = 0;
+    for (Vertex<String> v : graph.vertices()) {
+      count++;
+    }
+    assertEquals(0, count);
+  }
+
+  @Test
+  @DisplayName("vertices() single vertex")
+  public void verticesSingleVertex() {
+    graph.insert("v");
+    int count = 0;
+    for (Vertex<String> v : graph.vertices()) {
+      count++;
+    }
+    assertEquals(1, count);
+  }
+
+  @Test
+  @DisplayName("vertices() multiple vertices")
+  public void verticesMultipleVertices() {
+    graph.insert("v1");
+    graph.insert("v2");
+    graph.insert("v3");
+    graph.insert("v4");
+
+    int count = 0;
+    for (Vertex<String> v : graph.vertices()) {
+      count++;
+    }
+    assertEquals(4, count);
+  }
+
+  @Test
+  @DisplayName("vertices() throws exception past end")
+  public void verticesThrowsExceptionPastEnd() {
+    graph.insert("v1");
+    graph.insert("v2");
+    graph.insert("v3");
+    graph.insert("v4");
+
+    Iterable<Vertex<String>> vertices = graph.vertices();
+    Iterator<Vertex<String>> it = vertices.iterator();
+    int count = 0;
+    while (it.hasNext()) {
+      count++;
+      it.next();
+    }
+    assertEquals(4, count);
+    try {
+      it.next();
+      fail("The expected exception was not thrown");
+    } catch (NoSuchElementException e) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("vertices() throws exception for removal")
+  public void verticesThrowsExceptionForRemoval() {
+    graph.insert("v1");
+    graph.insert("v2");
+    graph.insert("v3");
+    graph.insert("v4");
+
+    Iterable<Vertex<String>> vertices = graph.vertices();
+    Iterator<Vertex<String>> it = vertices.iterator();
+    int count = 0;
+    while (it.hasNext()) {
+      count++;
+      it.next();
+      try {
+        it.remove();
+        fail("The expected exception was not thrown");
+      } catch (UnsupportedOperationException e) {
+        return;
+      }
+    }
+    assertEquals(4, count);
+  }
   // TODO vertices()
-    // iterator no vertices
-    // iterator one vertex
-    // iterator multiple vertices
+    // iterator no vertices +
+    // iterator one vertex +
+    // iterator multiple vertices +
+    // breaks if wander past end +
+    // does not allow removal +
 
   // TODO edges()
     // iterator no vertices
     // iterator one vertex
     // iterator multiple vertices
+    // breaks if wander past end
+    // does not allow removal
 
   // TODO outgoing(Vertex)
     // exception null vertex

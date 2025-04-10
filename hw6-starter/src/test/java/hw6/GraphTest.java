@@ -588,12 +588,110 @@ public abstract class GraphTest {
     // breaks if wander past end +
     // does not allow removal +
 
+
+  @Test
+  @DisplayName("edges() empty graph")
+  public void edgesEmptyGraph() {
+    int count = 0;
+    for (Edge<String> e : graph.edges()) {
+      count++;
+    }
+    assertEquals(0, count);
+  }
+
+  @Test
+  @DisplayName("edges() single edge")
+  public void edgesSingleVertex() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    graph.insert(v1, v2, "e1");
+    int count = 0;
+    for (Edge<String> e : graph.edges()) {
+      count++;
+    }
+    assertEquals(1, count);
+  }
+
+  @Test
+  @DisplayName("edges() multiple edges")
+  public void edgesMultipleVertices() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Vertex<String> v3 = graph.insert("v3");
+    Vertex<String> v4 = graph.insert("v4");
+    graph.insert(v1, v2, "e1");
+    graph.insert(v2, v3, "e2");
+    graph.insert(v1, v4, "e3");
+    graph.insert(v3, v4, "e4");
+
+    int count = 0;
+    for (Edge<String> e : graph.edges()) {
+      count++;
+    }
+    assertEquals(4, count);
+  }
+
+  @Test
+  @DisplayName("edges() throws exception past end")
+  public void edgesThrowsExceptionPastEnd() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Vertex<String> v3 = graph.insert("v3");
+    Vertex<String> v4 = graph.insert("v4");
+    graph.insert(v1, v2, "e1");
+    graph.insert(v2, v3, "e2");
+    graph.insert(v1, v4, "e3");
+    graph.insert(v3, v4, "e4");
+
+    Iterable<Edge<String>> edges = graph.edges();
+    Iterator<Edge<String>> it = edges.iterator();
+    int count = 0;
+    while (it.hasNext()) {
+      count++;
+      it.next();
+    }
+    assertEquals(4, count);
+    try {
+      it.next();
+      fail("The expected exception was not thrown");
+    } catch (NoSuchElementException e) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("edges() throws exception for removal")
+  public void edgesThrowsExceptionForRemoval() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Vertex<String> v3 = graph.insert("v3");
+    Vertex<String> v4 = graph.insert("v4");
+    graph.insert(v1, v2, "e1");
+    graph.insert(v2, v3, "e2");
+    graph.insert(v1, v4, "e3");
+    graph.insert(v3, v4, "e4");
+
+    Iterable<Edge<String>> edges = graph.edges();
+    Iterator<Edge<String>> it = edges.iterator();
+    int count = 0;
+    while (it.hasNext()) {
+      count++;
+      it.next();
+      try {
+        it.remove();
+        fail("The expected exception was not thrown");
+      } catch (UnsupportedOperationException e) {
+        return;
+      }
+    }
+    assertEquals(4, count);
+  }
   // TODO edges()
-    // iterator no vertices
-    // iterator one vertex
-    // iterator multiple vertices
-    // breaks if wander past end
-    // does not allow removal
+    // iterator no vertices +
+    // iterator one vertex +
+    // iterator multiple vertices +
+    // breaks if wander past end +
+    // does not allow removal +
 
   // TODO outgoing(Vertex)
     // exception null vertex

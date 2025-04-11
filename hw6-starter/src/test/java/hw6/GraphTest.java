@@ -427,6 +427,7 @@ public abstract class GraphTest {
     // remove multiple vertices +
     // node is part of different graph +
 
+  // remove(Edge) tests
   @Test
   @DisplayName("remove(E) null throws exception")
   public void removeNullEdgeThrowsException() {
@@ -503,6 +504,7 @@ public abstract class GraphTest {
     // remove multiple edges +
     // node is part of different graph +
 
+  // vertices() tests
   @Test
   @DisplayName("vertices() empty graph")
   public void verticesEmptyGraph() {
@@ -593,7 +595,7 @@ public abstract class GraphTest {
     // breaks if wander past end +
     // does not allow removal +
 
-
+  // edges() tests
   @Test
   @DisplayName("edges() empty graph")
   public void edgesEmptyGraph() {
@@ -698,9 +700,9 @@ public abstract class GraphTest {
     // breaks if wander past end +
     // does not allow removal +
 
-
+  // outgoing(Vertex) tests
   @Test
-  @DisplayName("outgoing() throws exception past end")
+  @DisplayName("outgoing(V) throws exception past end")
   public void outgoingThrowsExceptionPastEnd() {
     Vertex<String> v1 = graph.insert("v1");
     Vertex<String> v2 = graph.insert("v2");
@@ -727,7 +729,7 @@ public abstract class GraphTest {
   }
 
   @Test
-  @DisplayName("outgoing() throws exception for vertex in wrong graph")
+  @DisplayName("outgoing(V) throws exception for vertex in wrong graph")
   public void outgoingThrowsExceptionVertexFromDifferentGraph() {
     Graph<String, String> g = createGraph();
     Vertex<String> v1 = g.insert("v1");
@@ -741,7 +743,7 @@ public abstract class GraphTest {
   }
 
   @Test
-  @DisplayName("outgoing() throws exception for null vertex")
+  @DisplayName("outgoing(V) throws exception for null vertex")
   public void outgoingThrowsExceptionNullVertex() {
     try {
       Iterable<Edge<String>> out = graph.outgoing(null);
@@ -752,7 +754,7 @@ public abstract class GraphTest {
   }
 
   @Test
-  @DisplayName("outgoing() throws exception for removal")
+  @DisplayName("outgoing(V) throws exception for removal")
   public void outgoingThrowsExceptionForRemoval() {
     Vertex<String> v1 = graph.insert("v1");
     Vertex<String> v2 = graph.insert("v2");
@@ -779,7 +781,7 @@ public abstract class GraphTest {
   }
 
   @Test
-  @DisplayName("outgoing() succeeds when no edges")
+  @DisplayName("outgoing(V) succeeds when no edges")
   public void outgoingVertexNoEdges() {
     Vertex<String> v1 = graph.insert("v1");
 
@@ -791,7 +793,7 @@ public abstract class GraphTest {
   }
 
   @Test
-  @DisplayName("outgoing() succeeds when one outgoing")
+  @DisplayName("outgoing(V) succeeds when one outgoing")
   public void outgoingVertexOneOutgoingEdge() {
     Vertex<String> v1 = graph.insert("v1");
     Vertex<String> v2 = graph.insert("v2");
@@ -805,7 +807,7 @@ public abstract class GraphTest {
   }
 
   @Test
-  @DisplayName("outgoing() succeeds when only incoming edges")
+  @DisplayName("outgoing(V) succeeds when only incoming edges")
   public void outgoingVertexOnlyIncoming() {
     Vertex<String> v1 = graph.insert("v1");
     Vertex<String> v2 = graph.insert("v2");
@@ -821,7 +823,7 @@ public abstract class GraphTest {
   }
 
   @Test
-  @DisplayName("outgoing() succeeds when only outgoing edges")
+  @DisplayName("outgoing(V) succeeds when only outgoing edges")
   public void outgoingVertexOnlyOutgoing() {
     Vertex<String> v1 = graph.insert("v1");
     Vertex<String> v2 = graph.insert("v2");
@@ -837,7 +839,7 @@ public abstract class GraphTest {
   }
 
   @Test
-  @DisplayName("outgoing() succeeds when both outgoing and incoming edges")
+  @DisplayName("outgoing(V) succeeds when both outgoing and incoming edges")
   public void outgoingVertexOutgoingAndIncoming() {
     Vertex<String> v1 = graph.insert("v1");
     Vertex<String> v2 = graph.insert("v2");
@@ -863,8 +865,9 @@ public abstract class GraphTest {
     // exception past end +
     // node is part of different graph +
 
+  // incoming(Vertex) tests
   @Test
-  @DisplayName("incoming() throws exception past end")
+  @DisplayName("incoming(V) throws exception past end")
   public void incomingThrowsExceptionPastEnd() {
     Vertex<String> v1 = graph.insert("v1");
     Vertex<String> v2 = graph.insert("v2");
@@ -891,7 +894,7 @@ public abstract class GraphTest {
   }
 
   @Test
-  @DisplayName("incoming() throws exception for vertex in wrong graph")
+  @DisplayName("incoming(V) throws exception for vertex in wrong graph")
   public void incomingThrowsExceptionVertexFromDifferentGraph() {
     Graph<String, String> g = createGraph();
     Vertex<String> v1 = g.insert("v1");
@@ -905,7 +908,7 @@ public abstract class GraphTest {
   }
 
   @Test
-  @DisplayName("incoming() throws exception for null vertex")
+  @DisplayName("incoming(V) throws exception for null vertex")
   public void incomingThrowsExceptionNullVertex() {
     try {
       Iterable<Edge<String>> out = graph.incoming(null);
@@ -916,7 +919,7 @@ public abstract class GraphTest {
   }
 
   @Test
-  @DisplayName("incoming() throws exception for removal")
+  @DisplayName("incoming(V) throws exception for removal")
   public void incomingThrowsExceptionForRemoval() {
     Vertex<String> v1 = graph.insert("v1");
     Vertex<String> v2 = graph.insert("v2");
@@ -943,7 +946,7 @@ public abstract class GraphTest {
   }
 
   @Test
-  @DisplayName("incoming() succeeds when no edges")
+  @DisplayName("incoming(V) succeeds when no edges")
   public void incomingVertexNoEdges() {
     Vertex<String> v1 = graph.insert("v1");
 
@@ -955,7 +958,7 @@ public abstract class GraphTest {
   }
 
   @Test
-  @DisplayName("incoming() succeeds when one incoming")
+  @DisplayName("incoming(V) succeeds when one incoming")
   public void incomingVertexOneIncomingEdge() {
     Vertex<String> v1 = graph.insert("v1");
     Vertex<String> v2 = graph.insert("v2");
@@ -969,7 +972,7 @@ public abstract class GraphTest {
   }
 
   @Test
-  @DisplayName("incoming() succeeds when only incoming edges")
+  @DisplayName("incoming(V) succeeds when only incoming edges")
   public void incomingVertexOnlyIncoming() {
     Vertex<String> v1 = graph.insert("v1");
     Vertex<String> v2 = graph.insert("v2");
@@ -985,7 +988,7 @@ public abstract class GraphTest {
   }
 
   @Test
-  @DisplayName("incoming() succeeds when only outgoing edges")
+  @DisplayName("incoming(V) succeeds when only outgoing edges")
   public void incomingVertexOnlyOutgoing() {
     Vertex<String> v1 = graph.insert("v1");
     Vertex<String> v2 = graph.insert("v2");
@@ -1001,7 +1004,7 @@ public abstract class GraphTest {
   }
 
   @Test
-  @DisplayName("incoming() succeeds when both outgoing and incoming edges")
+  @DisplayName("incoming(V) succeeds when both outgoing and incoming edges")
   public void incomingVertexOutgoingAndIncoming() {
     Vertex<String> v1 = graph.insert("v1");
     Vertex<String> v2 = graph.insert("v2");
@@ -1027,45 +1030,113 @@ public abstract class GraphTest {
     // exception past end +
     // node is part of different graph +
 
-  // TODO from(Edge)
-    // exception invalid edge
-    // returns correct vertex
-    // listed as outgoing from vertex
-    // TODO node is part of different graph
+  // from(Edge) tests
+  @Test
+  @DisplayName("from(E) throws exception null edge")
+  public void fromExceptionNullEdge() {
+    try {
+      graph.from(null);
+      fail("The expected exception was not thrown");
+    } catch (PositionException e) {
+      return;
+    }
+  }
 
+  @Test
+  @DisplayName("from(E) throws exception edge from different graph")
+  public void fromExceptionEdgeFromDifferentGraph() {
+    Graph<String, String> g = createGraph();
+    Vertex<String> v1 = g.insert("v1");
+    Vertex<String> v2 = g.insert("v2");
+    Edge<String> e = g.insert(v1, v2, "e");
+    try {
+      graph.from(e);
+      fail("The expected exception was not thrown");
+    } catch (PositionException ex) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("from(E) returns correct origin")
+  public void fromReturnsCorrectVertex() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Edge<String> e = graph.insert(v1, v2, "e");
+    assertEquals(v1, graph.from(e));
+  }
+  // TODO from(Edge)
+    // exception null edge +
+    // returns correct vertex +
+    // node is part of different graph +
+
+  // to(Edge) tests
+  @Test
+  @DisplayName("to(E) throws exception null edge")
+  public void toExceptionNullEdge() {
+    try {
+      graph.to(null);
+      fail("The expected exception was not thrown");
+    } catch (PositionException e) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("to(E) throws exception edge from different graph")
+  public void toExceptionEdgeFromDifferentGraph() {
+    Graph<String, String> g = createGraph();
+    Vertex<String> v1 = g.insert("v1");
+    Vertex<String> v2 = g.insert("v2");
+    Edge<String> e = g.insert(v1, v2, "e");
+    try {
+      graph.to(e);
+      fail("The expected exception was not thrown");
+    } catch (PositionException ex) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("to(E) returns correct origin")
+  public void toReturnsCorrectVertex() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Edge<String> e = graph.insert(v1, v2, "e");
+    assertEquals(v2, graph.to(e));
+  }
   // TODO to(Edge)
-    // exception invalid edge
-    // returns correct vertex
-    // listed as incoming to vertex
-    // TODO node is part of different graph
+    // exception null edge +
+    // returns correct vertex +
+    // node is part of different graph +
 
   // TODO label(Vertex, Object)
     // exception invalid vertex
     // labels vertex correctly
     // label multiple objects same
     // label multiple objects different
-    // TODO node is part of different graph
+    // node is part of different graph
 
   // TODO label(Edge, Object)
     // exception invalid edge
     // labels edge correctly
     // label multiple objects same
     // label multiple objects different
-    // TODO node is part of different graph
+    // node is part of different graph
 
   // TODO label(Vertex)
     // exception invalid vertex
     // null for unlabeled vertex
     // correct label for vertex
     // diff vertices correct label
-    // TODO node is part of different graph
+    // node is part of different graph
 
   // TODO label(Edge)
     // exception invalid edge
     // null for unlabeled edge
     // correct label for edge
     // diff edges correct label
-    // TODO node is part of different graph
+    // node is part of different graph
 
   // TODO clearLabels()
     // no edges/vertices

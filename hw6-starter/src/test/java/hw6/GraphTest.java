@@ -1254,19 +1254,71 @@ public abstract class GraphTest {
     // label multiple objects different +
     // node is part of different graph +
 
+  // label(Vertex) tests
+  @Test
+  @DisplayName("label(V) throws exception null vertex")
+  public void getLabelExceptionNullVertex() {
+    try {
+      graph.label((Vertex<String>) null);
+      fail("The expected exception was not thrown");
+    } catch (PositionException e) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("label(V) throws exception vertex from different graph")
+  public void getLabelExceptionVertexFromDifferentGraph() {
+    Graph<String, String> g = createGraph();
+    Vertex<String> v1 = g.insert("v1");
+    g.label(v1, "v1");
+    try {
+      graph.label(v1);
+      fail("The expected exception was not thrown");
+    } catch (PositionException ex) {
+      return;
+    }
+  }
   // TODO label(Vertex)
-    // exception null vertex
+    // exception null vertex +
     // null for unlabeled vertex
     // correct label for vertex
     // diff vertices correct label
-    // node is part of different graph
+    // node is part of different graph +
 
+  // label(Edge) tests
+  @Test
+  @DisplayName("label(V) throws exception null vertex")
+  public void getLabelExceptionNullEdge() {
+    try {
+      graph.label((Edge<String>) null);
+      fail("The expected exception was not thrown");
+    } catch (PositionException e) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("label(V) throws exception vertex from different graph")
+  public void getLabelExceptionEdgeFromDifferentGraph() {
+    Graph<String, String> g = createGraph();
+    Vertex<String> v1 = g.insert("v1");
+    Vertex<String> v2 = g.insert("v1");
+    Edge<String> e = g.insert(v1, v2, "e");
+    g.label(e, "v1");
+    try {
+      graph.label(e);
+      fail("The expected exception was not thrown");
+    } catch (PositionException ex) {
+      return;
+    }
+  }
   // TODO label(Edge)
-    // exception null edge
+    // exception null edge +
     // null for unlabeled edge
     // correct label for edge
     // diff edges correct label
-    // node is part of different graph
+    // node is part of different graph +
 
   // TODO clearLabels()
     // no edges/vertices

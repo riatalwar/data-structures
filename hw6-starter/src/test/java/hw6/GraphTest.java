@@ -1113,7 +1113,7 @@ public abstract class GraphTest {
   // label(Vertex, Object) tests
   @Test
   @DisplayName("label(V, O) throws exception null edge")
-  public void labelExceptionNullVertex() {
+  public void addLabelExceptionNullVertex() {
     try {
       graph.label((Vertex<String>) null, "");
       fail("The expected exception was not thrown");
@@ -1124,7 +1124,7 @@ public abstract class GraphTest {
 
   @Test
   @DisplayName("label(V, O) throws exception vertex from different graph")
-  public void labelExceptionVertexFromDifferentGraph() {
+  public void addLabelExceptionVertexFromDifferentGraph() {
     Graph<String, String> g = createGraph();
     Vertex<String> v1 = g.insert("v1");
     try {
@@ -1137,7 +1137,7 @@ public abstract class GraphTest {
 
   @Test
   @DisplayName("label(V, O) returns correct origin")
-  public void labelCorrectlyAddsLabelToVertex() {
+  public void addLabelCorrectlyAddsLabelToVertex() {
     Vertex<String> v1 = graph.insert("v1");
     graph.label(v1, "label");
     assertEquals("label", graph.label(v1));
@@ -1145,7 +1145,7 @@ public abstract class GraphTest {
 
   @Test
   @DisplayName("label(V, O) can give multiple objects same label")
-  public void labelMultipleVerticesSame() {
+  public void addLabelMultipleVerticesSame() {
     Vertex<String> v1 = graph.insert("v1");
     Vertex<String> v2 = graph.insert("v2");
     Vertex<String> v3 = graph.insert("v3");
@@ -1159,7 +1159,7 @@ public abstract class GraphTest {
 
   @Test
   @DisplayName("label(V, O) can give multiple objects different label")
-  public void labelMultipleVerticesDifferent() {
+  public void addLabelMultipleVerticesDifferent() {
     Vertex<String> v1 = graph.insert("v1");
     Vertex<String> v2 = graph.insert("v2");
     Vertex<String> v3 = graph.insert("v3");
@@ -1180,7 +1180,7 @@ public abstract class GraphTest {
   // label(Edge, Object) tests
   @Test
   @DisplayName("label(E, O) throws exception null edge")
-  public void labelExceptionNullEdge() {
+  public void addLabelExceptionNullEdge() {
     try {
       graph.label((Edge<String>) null, "");
       fail("The expected exception was not thrown");
@@ -1191,7 +1191,7 @@ public abstract class GraphTest {
 
   @Test
   @DisplayName("label(E, O) throws exception vertex from different graph")
-  public void labelExceptionEdgeFromDifferentGraph() {
+  public void addLabelExceptionEdgeFromDifferentGraph() {
     Graph<String, String> g = createGraph();
     Vertex<String> v1 = g.insert("v1");
     Vertex<String> v2 = g.insert("v2");
@@ -1206,7 +1206,7 @@ public abstract class GraphTest {
 
   @Test
   @DisplayName("label(E, O) returns correct origin")
-  public void labelCorrectlyAddsLabelToEdge() {
+  public void addLabelCorrectlyAddsLabelToEdge() {
     Vertex<String> v1 = graph.insert("v1");
     Vertex<String> v2 = graph.insert("v2");
     Edge<String> e = graph.insert(v1, v2, "e");
@@ -1216,7 +1216,7 @@ public abstract class GraphTest {
 
   @Test
   @DisplayName("label(E, O) can give multiple objects same label")
-  public void labelMultipleEdgesSame() {
+  public void addLabelMultipleEdgesSame() {
     Vertex<String> v1 = graph.insert("v1");
     Vertex<String> v2 = graph.insert("v2");
     Vertex<String> v3 = graph.insert("v3");
@@ -1233,7 +1233,7 @@ public abstract class GraphTest {
 
   @Test
   @DisplayName("label(E, O) can give multiple objects different label")
-  public void labelMultipleEdgesDifferent() {
+  public void addLabelMultipleEdgesDifferent() {
     Vertex<String> v1 = graph.insert("v1");
     Vertex<String> v2 = graph.insert("v2");
     Vertex<String> v3 = graph.insert("v3");
@@ -1255,14 +1255,14 @@ public abstract class GraphTest {
     // node is part of different graph +
 
   // TODO label(Vertex)
-    // exception invalid vertex
+    // exception null vertex
     // null for unlabeled vertex
     // correct label for vertex
     // diff vertices correct label
     // node is part of different graph
 
   // TODO label(Edge)
-    // exception invalid edge
+    // exception null edge
     // null for unlabeled edge
     // correct label for edge
     // diff edges correct label

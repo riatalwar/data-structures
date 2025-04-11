@@ -1145,7 +1145,7 @@ public abstract class GraphTest {
 
   @Test
   @DisplayName("label(V, O) can give multiple objects same label")
-  public void labelMultipleObjectsSame() {
+  public void labelMultipleVerticesSame() {
     Vertex<String> v1 = graph.insert("v1");
     Vertex<String> v2 = graph.insert("v2");
     Vertex<String> v3 = graph.insert("v3");
@@ -1159,7 +1159,7 @@ public abstract class GraphTest {
 
   @Test
   @DisplayName("label(V, O) can give multiple objects different label")
-  public void labelMultipleObjectsDifferent() {
+  public void labelMultipleVerticesDifferent() {
     Vertex<String> v1 = graph.insert("v1");
     Vertex<String> v2 = graph.insert("v2");
     Vertex<String> v3 = graph.insert("v3");
@@ -1171,18 +1171,88 @@ public abstract class GraphTest {
     assertEquals(4.7, graph.label(v3));
   }
   // TODO label(Vertex, Object)
-    // exception invalid vertex
-    // labels vertex correctly
-    // label multiple objects same
-    // label multiple objects different
-    // node is part of different graph
+    // exception null vertex +
+    // labels vertex correctly +
+    // label multiple objects same +
+    // label multiple objects different +
+    // node is part of different graph +
 
+  // label(Edge, Object) tests
+  @Test
+  @DisplayName("label(E, O) throws exception null edge")
+  public void labelExceptionNullEdge() {
+    try {
+      graph.label((Edge<String>) null, "");
+      fail("The expected exception was not thrown");
+    } catch (PositionException e) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("label(E, O) throws exception vertex from different graph")
+  public void labelExceptionEdgeFromDifferentGraph() {
+    Graph<String, String> g = createGraph();
+    Vertex<String> v1 = g.insert("v1");
+    Vertex<String> v2 = g.insert("v2");
+    Edge<String> e = g.insert(v1, v2, "e");
+    try {
+      graph.label(e, "v1");
+      fail("The expected exception was not thrown");
+    } catch (PositionException ex) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("label(E, O) returns correct origin")
+  public void labelCorrectlyAddsLabelToEdge() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Edge<String> e = graph.insert(v1, v2, "e");
+    graph.label(e, "label");
+    assertEquals("label", graph.label(e));
+  }
+
+  @Test
+  @DisplayName("label(E, O) can give multiple objects same label")
+  public void labelMultipleEdgesSame() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Vertex<String> v3 = graph.insert("v3");
+    Edge<String> e1 = graph.insert(v1, v2, "e1");
+    Edge<String> e2 = graph.insert(v2, v3, "e2");
+    Edge<String> e3 = graph.insert(v3, v1, "e3");
+    graph.label(e1, "label");
+    graph.label(e2, "label");
+    graph.label(e3, "label");
+    assertEquals("label", graph.label(e1));
+    assertEquals("label", graph.label(e2));
+    assertEquals("label", graph.label(e3));
+  }
+
+  @Test
+  @DisplayName("label(E, O) can give multiple objects different label")
+  public void labelMultipleEdgesDifferent() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Vertex<String> v3 = graph.insert("v3");
+    Edge<String> e1 = graph.insert(v1, v2, "e1");
+    Edge<String> e2 = graph.insert(v2, v3, "e2");
+    Edge<String> e3 = graph.insert(v3, v1, "e3");
+    graph.label(e1, "label");
+    graph.label(e2, 1);
+    graph.label(e3, 4.7);
+    assertEquals("label", graph.label(e1));
+    assertEquals(1, graph.label(e2));
+    assertEquals(4.7, graph.label(e3));
+  }
   // TODO label(Edge, Object)
-    // exception invalid edge
-    // labels edge correctly
-    // label multiple objects same
-    // label multiple objects different
-    // node is part of different graph
+    // exception null edge +
+    // labels edge correctly +
+    // label multiple objects same +
+    // label multiple objects different +
+    // node is part of different graph +
 
   // TODO label(Vertex)
     // exception invalid vertex

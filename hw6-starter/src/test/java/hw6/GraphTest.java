@@ -752,6 +752,33 @@ public abstract class GraphTest {
   }
 
   @Test
+  @DisplayName("outgoing() throws exception for removal")
+  public void outgoingThrowsExceptionForRemoval() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Vertex<String> v3 = graph.insert("v3");
+    Vertex<String> v4 = graph.insert("v4");
+    graph.insert(v1, v2, "e1");
+    graph.insert(v1, v3, "e2");
+    graph.insert(v1, v4, "e3");
+
+    Iterable<Edge<String>> out = graph.outgoing(v1);
+    Iterator<Edge<String>> it = out.iterator();
+    int count = 0;
+    while (it.hasNext()) {
+      count++;
+      it.next();
+      try {
+        it.remove();
+        fail("The expected exception was not thrown");
+      } catch (UnsupportedOperationException e) {
+        return;
+      }
+    }
+    assertEquals(3, count);
+  }
+
+  @Test
   @DisplayName("outgoing() succeeds when no edges")
   public void outgoingVertexNoEdges() {
     Vertex<String> v1 = graph.insert("v1");
@@ -836,15 +863,169 @@ public abstract class GraphTest {
     // exception past end +
     // node is part of different graph +
 
+  @Test
+  @DisplayName("incoming() throws exception past end")
+  public void incomingThrowsExceptionPastEnd() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Vertex<String> v3 = graph.insert("v3");
+    Vertex<String> v4 = graph.insert("v4");
+    graph.insert(v2, v1, "e1");
+    graph.insert(v3, v1, "e2");
+    graph.insert(v4, v1, "e3");
+
+    Iterable<Edge<String>> in = graph.incoming(v1);
+    Iterator<Edge<String>> it = in.iterator();
+    int count = 0;
+    while (it.hasNext()) {
+      count++;
+      it.next();
+    }
+    assertEquals(3, count);
+    try {
+      it.next();
+      fail("The expected exception was not thrown");
+    } catch (NoSuchElementException e) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("incoming() throws exception for vertex in wrong graph")
+  public void incomingThrowsExceptionVertexFromDifferentGraph() {
+    Graph<String, String> g = createGraph();
+    Vertex<String> v1 = g.insert("v1");
+
+    try {
+      Iterable<Edge<String>> out = graph.incoming(v1);
+      fail("The expected exception was not thrown");
+    } catch (PositionException e) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("incoming() throws exception for null vertex")
+  public void incomingThrowsExceptionNullVertex() {
+    try {
+      Iterable<Edge<String>> out = graph.incoming(null);
+      fail("The expected exception was not thrown");
+    } catch (PositionException e) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("incoming() throws exception for removal")
+  public void incomingThrowsExceptionForRemoval() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Vertex<String> v3 = graph.insert("v3");
+    Vertex<String> v4 = graph.insert("v4");
+    graph.insert(v2, v1, "e1");
+    graph.insert(v3, v1, "e2");
+    graph.insert(v4, v1, "e3");
+
+    Iterable<Edge<String>> out = graph.incoming(v1);
+    Iterator<Edge<String>> it = out.iterator();
+    int count = 0;
+    while (it.hasNext()) {
+      count++;
+      it.next();
+      try {
+        it.remove();
+        fail("The expected exception was not thrown");
+      } catch (UnsupportedOperationException e) {
+        return;
+      }
+    }
+    assertEquals(3, count);
+  }
+
+  @Test
+  @DisplayName("incoming() succeeds when no edges")
+  public void incomingVertexNoEdges() {
+    Vertex<String> v1 = graph.insert("v1");
+
+    int count = 0;
+    for (Edge<String> e : graph.incoming(v1)) {
+      count++;
+    }
+    assertEquals(0, count);
+  }
+
+  @Test
+  @DisplayName("incoming() succeeds when one incoming")
+  public void incomingVertexOneIncomingEdge() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    graph.insert(v2, v1, "e");
+
+    int count = 0;
+    for (Edge<String> e : graph.incoming(v1)) {
+      count++;
+    }
+    assertEquals(1, count);
+  }
+
+  @Test
+  @DisplayName("incoming() succeeds when only incoming edges")
+  public void incomingVertexOnlyIncoming() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Vertex<String> v3 = graph.insert("v3");
+    graph.insert(v2, v1, "e");
+    graph.insert(v3, v1, "e");
+
+    int count = 0;
+    for (Edge<String> e : graph.incoming(v1)) {
+      count++;
+    }
+    assertEquals(2, count);
+  }
+
+  @Test
+  @DisplayName("incoming() succeeds when only outgoing edges")
+  public void incomingVertexOnlyOutgoing() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Vertex<String> v3 = graph.insert("v3");
+    graph.insert(v1, v2, "e");
+    graph.insert(v1, v3, "e");
+
+    int count = 0;
+    for (Edge<String> e : graph.incoming(v1)) {
+      count++;
+    }
+    assertEquals(0, count);
+  }
+
+  @Test
+  @DisplayName("incoming() succeeds when both outgoing and incoming edges")
+  public void incomingVertexOutgoingAndIncoming() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Vertex<String> v3 = graph.insert("v3");
+    graph.insert(v2, v1, "e");
+    graph.insert(v3, v1, "e");
+    graph.insert(v1, v2, "e");
+    graph.insert(v1, v3, "e");
+
+    int count = 0;
+    for (Edge<String> e : graph.incoming(v1)) {
+      count++;
+    }
+    assertEquals(2, count);
+  }
   // TODO incoming(Vertex)
-    // exception null vertex
-    // no outgoing/incoming
-    // no incoming/yes outgoing
-    // one incoming/no outgoing
-    // multiple incoming/no outgoing
-    // multiple incoming/outgoing
-    // exception past end
-    // node is part of different graph
+    // exception null vertex +
+    // no outgoing/incoming +
+    // no incoming/yes outgoing +
+    // one incoming/no outgoing +
+    // multiple incoming/no outgoing +
+    // multiple incoming/outgoing +
+    // exception past end +
+    // node is part of different graph +
 
   // TODO from(Edge)
     // exception invalid edge

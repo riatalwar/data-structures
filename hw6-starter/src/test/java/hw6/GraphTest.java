@@ -1354,9 +1354,117 @@ public abstract class GraphTest {
     // diff edges correct label
     // node is part of different graph +
 
+  // clearLabels() tests
+  @Test
+  @DisplayName("clearLabels() works on empty graph")
+  public void clearLabelsEmptyGraph() {
+    graph.clearLabels();
+    int count = 0;
+    for (Vertex<String> v : graph.vertices()) {
+      count++;
+    }
+    for (Edge<String> e : graph.edges()) {
+      count++;
+    }
+    assertEquals(0, count);
+  }
+
+  @Test
+  @DisplayName("clearLabels() works on unlabeled graph")
+  public void clearLabelsAllUnlabeled() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    graph.insert(v1, v2, "e1");
+    graph.insert(v2, v1, "e2");
+    graph.clearLabels();
+    int count = 0;
+    for (Vertex<String> v : graph.vertices()) {
+      count++;
+      assertNull(graph.label(v));
+    }
+    for (Edge<String> e : graph.edges()) {
+      count++;
+      assertNull(graph.label(e));
+    }
+    assertEquals(4, count);
+  }
+
+  @Test
+  @DisplayName("clearLabels() clears labeled vertices")
+  public void clearLabelsLabeledVertices() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    graph.label(v1, "label1");
+    graph.label(v2, 2);
+
+    graph.insert(v1, v2, "e1");
+    graph.insert(v2, v1, "e2");
+
+    graph.clearLabels();
+    int count = 0;
+    for (Vertex<String> v : graph.vertices()) {
+      count++;
+      assertNull(graph.label(v));
+    }
+    for (Edge<String> e : graph.edges()) {
+      count++;
+      assertNull(graph.label(e));
+    }
+    assertEquals(4, count);
+  }
+
+  @Test
+  @DisplayName("clearLabels() clears labeled edges")
+  public void clearLabelsLabeledEdges() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+
+    Edge<String> e1 = graph.insert(v1, v2, "e1");
+    Edge<String> e2 = graph.insert(v2, v1, "e2");
+    graph.label(e1, "label1");
+    graph.label(e2, 2);
+
+    graph.clearLabels();
+    int count = 0;
+    for (Vertex<String> v : graph.vertices()) {
+      count++;
+      assertNull(graph.label(v));
+    }
+    for (Edge<String> e : graph.edges()) {
+      count++;
+      assertNull(graph.label(e));
+    }
+    assertEquals(4, count);
+  }
+
+  @Test
+  @DisplayName("clearLabels() clears all labels of different types")
+  public void clearLabelsMultipleOfDifferentTypes() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    graph.label(v1, 4.6);
+    graph.label(v2, true);
+
+    Edge<String> e1 = graph.insert(v1, v2, "e1");
+    Edge<String> e2 = graph.insert(v2, v1, "e2");
+    graph.label(e1, "label1");
+    graph.label(e2, 2);
+
+    graph.clearLabels();
+    int count = 0;
+    for (Vertex<String> v : graph.vertices()) {
+      count++;
+      assertNull(graph.label(v));
+    }
+    for (Edge<String> e : graph.edges()) {
+      count++;
+      assertNull(graph.label(e));
+    }
+    assertEquals(4, count);
+  }
   // TODO clearLabels()
-    // no edges/vertices
-    // only vertices, unlabeled
-    // only vertices, labeled
-    // multiple edges and vertices, labeled and unlabeled
+    // no edges/vertices +
+    // only vertices, unlabeled +
+    // only vertices, labeled +
+    // multiple edges and vertices, labeled and unlabeled +
 }

@@ -752,7 +752,7 @@ public abstract class GraphTest {
   }
 
   @Test
-  @DisplayName("outgoing() throws exception past end")
+  @DisplayName("outgoing() succeeds when no edges")
   public void outgoingVertexNoEdges() {
     Vertex<String> v1 = graph.insert("v1");
 
@@ -764,7 +764,7 @@ public abstract class GraphTest {
   }
 
   @Test
-  @DisplayName("outgoing() throws exception past end")
+  @DisplayName("outgoing() succeeds when one outgoing")
   public void outgoingVertexOneOutgoingEdge() {
     Vertex<String> v1 = graph.insert("v1");
     Vertex<String> v2 = graph.insert("v2");
@@ -778,7 +778,7 @@ public abstract class GraphTest {
   }
 
   @Test
-  @DisplayName("outgoing() throws exception past end")
+  @DisplayName("outgoing() succeeds when only incoming edges")
   public void outgoingVertexOnlyIncoming() {
     Vertex<String> v1 = graph.insert("v1");
     Vertex<String> v2 = graph.insert("v2");
@@ -794,7 +794,7 @@ public abstract class GraphTest {
   }
 
   @Test
-  @DisplayName("outgoing() throws exception past end")
+  @DisplayName("outgoing() succeeds when only outgoing edges")
   public void outgoingVertexOnlyOutgoing() {
     Vertex<String> v1 = graph.insert("v1");
     Vertex<String> v2 = graph.insert("v2");
@@ -810,7 +810,7 @@ public abstract class GraphTest {
   }
 
   @Test
-  @DisplayName("outgoing() throws exception past end")
+  @DisplayName("outgoing() succeeds when both outgoing and incoming edges")
   public void outgoingVertexOutgoingAndIncoming() {
     Vertex<String> v1 = graph.insert("v1");
     Vertex<String> v2 = graph.insert("v2");
@@ -827,13 +827,14 @@ public abstract class GraphTest {
     assertEquals(2, count);
   }
   // TODO outgoing(Vertex)
-    // exception null vertex
-    // no outgoing/incoming
-    // no outgoing/yes incoming
-    // one outgoing/no incoming
-    // multiple outgoing/no incoming
-    // multiple outgoing/incoming
-    // TODO node is part of different graph
+    // exception null vertex +
+    // no outgoing/incoming +
+    // no outgoing/yes incoming +
+    // one outgoing/no incoming +
+    // multiple outgoing/no incoming +
+    // multiple outgoing/incoming +
+    // exception past end +
+    // node is part of different graph +
 
   // TODO incoming(Vertex)
     // exception null vertex
@@ -842,7 +843,8 @@ public abstract class GraphTest {
     // one incoming/no outgoing
     // multiple incoming/no outgoing
     // multiple incoming/outgoing
-    // TODO node is part of different graph
+    // exception past end
+    // node is part of different graph
 
   // TODO from(Edge)
     // exception invalid edge

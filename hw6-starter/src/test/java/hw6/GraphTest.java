@@ -698,6 +698,134 @@ public abstract class GraphTest {
     // breaks if wander past end +
     // does not allow removal +
 
+
+  @Test
+  @DisplayName("outgoing() throws exception past end")
+  public void outgoingThrowsExceptionPastEnd() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Vertex<String> v3 = graph.insert("v3");
+    Vertex<String> v4 = graph.insert("v4");
+    graph.insert(v1, v2, "e1");
+    graph.insert(v1, v3, "e2");
+    graph.insert(v1, v4, "e3");
+
+    Iterable<Edge<String>> out = graph.outgoing(v1);
+    Iterator<Edge<String>> it = out.iterator();
+    int count = 0;
+    while (it.hasNext()) {
+      count++;
+      it.next();
+    }
+    assertEquals(3, count);
+    try {
+      it.next();
+      fail("The expected exception was not thrown");
+    } catch (NoSuchElementException e) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("outgoing() throws exception for vertex in wrong graph")
+  public void outgoingThrowsExceptionVertexFromDifferentGraph() {
+    Graph<String, String> g = createGraph();
+    Vertex<String> v1 = g.insert("v1");
+
+    try {
+      Iterable<Edge<String>> out = graph.outgoing(v1);
+      fail("The expected exception was not thrown");
+    } catch (PositionException e) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("outgoing() throws exception for null vertex")
+  public void outgoingThrowsExceptionNullVertex() {
+    try {
+      Iterable<Edge<String>> out = graph.outgoing(null);
+      fail("The expected exception was not thrown");
+    } catch (PositionException e) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("outgoing() throws exception past end")
+  public void outgoingVertexNoEdges() {
+    Vertex<String> v1 = graph.insert("v1");
+
+    int count = 0;
+    for (Edge<String> e : graph.outgoing(v1)) {
+      count++;
+    }
+    assertEquals(0, count);
+  }
+
+  @Test
+  @DisplayName("outgoing() throws exception past end")
+  public void outgoingVertexOneOutgoingEdge() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    graph.insert(v1, v2, "e");
+
+    int count = 0;
+    for (Edge<String> e : graph.outgoing(v1)) {
+      count++;
+    }
+    assertEquals(1, count);
+  }
+
+  @Test
+  @DisplayName("outgoing() throws exception past end")
+  public void outgoingVertexOnlyIncoming() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Vertex<String> v3 = graph.insert("v3");
+    graph.insert(v2, v1, "e");
+    graph.insert(v3, v1, "e");
+
+    int count = 0;
+    for (Edge<String> e : graph.outgoing(v1)) {
+      count++;
+    }
+    assertEquals(0, count);
+  }
+
+  @Test
+  @DisplayName("outgoing() throws exception past end")
+  public void outgoingVertexOnlyOutgoing() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Vertex<String> v3 = graph.insert("v3");
+    graph.insert(v1, v2, "e");
+    graph.insert(v1, v3, "e");
+
+    int count = 0;
+    for (Edge<String> e : graph.outgoing(v1)) {
+      count++;
+    }
+    assertEquals(2, count);
+  }
+
+  @Test
+  @DisplayName("outgoing() throws exception past end")
+  public void outgoingVertexOutgoingAndIncoming() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Vertex<String> v3 = graph.insert("v3");
+    graph.insert(v2, v1, "e");
+    graph.insert(v3, v1, "e");
+    graph.insert(v1, v2, "e");
+    graph.insert(v1, v3, "e");
+
+    int count = 0;
+    for (Edge<String> e : graph.outgoing(v1)) {
+      count++;
+    }
+    assertEquals(2, count);
+  }
   // TODO outgoing(Vertex)
     // exception null vertex
     // no outgoing/incoming

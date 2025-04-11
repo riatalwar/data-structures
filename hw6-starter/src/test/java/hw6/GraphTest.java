@@ -1279,10 +1279,25 @@ public abstract class GraphTest {
       return;
     }
   }
+
+  @Test
+  @DisplayName("label(V) of unlabeled vertex is null")
+  public void getLabelUnlabeledVertexNull() {
+    Vertex<String> v1 = graph.insert("v1");
+    assertNull(graph.label(v1));
+  }
+
+  @Test
+  @DisplayName("label(V) of vertex is correct")
+  public void getLabelVertexCorrectResult() {
+    Vertex<String> v1 = graph.insert("v1");
+    graph.label(v1, "labelv1");
+    assertEquals("labelv1", graph.label(v1));
+  }
   // TODO label(Vertex)
     // exception null vertex +
-    // null for unlabeled vertex
-    // correct label for vertex
+    // null for unlabeled vertex +
+    // correct label for vertex +
     // diff vertices correct label
     // node is part of different graph +
 
@@ -1303,7 +1318,7 @@ public abstract class GraphTest {
   public void getLabelExceptionEdgeFromDifferentGraph() {
     Graph<String, String> g = createGraph();
     Vertex<String> v1 = g.insert("v1");
-    Vertex<String> v2 = g.insert("v1");
+    Vertex<String> v2 = g.insert("v2");
     Edge<String> e = g.insert(v1, v2, "e");
     g.label(e, "v1");
     try {
@@ -1313,10 +1328,29 @@ public abstract class GraphTest {
       return;
     }
   }
+
+  @Test
+  @DisplayName("label(V) of unlabeled edge is null")
+  public void getLabelUnlabeledEdgeNull() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Edge<String> e = graph.insert(v1, v2, "e");
+    assertNull(graph.label(e));
+  }
+
+  @Test
+  @DisplayName("label(E) of edge is correct")
+  public void getLabelEdgeCorrectResult() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Edge<String> e = graph.insert(v1, v2, "e");
+    graph.label(e, "labele");
+    assertEquals("labele", graph.label(e));
+  }
   // TODO label(Edge)
     // exception null edge +
-    // null for unlabeled edge
-    // correct label for edge
+    // null for unlabeled edge +
+    // correct label for edge +
     // diff edges correct label
     // node is part of different graph +
 

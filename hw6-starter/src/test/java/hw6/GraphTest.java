@@ -1110,6 +1110,66 @@ public abstract class GraphTest {
     // returns correct vertex +
     // node is part of different graph +
 
+  // label(Vertex, Object) tests
+  @Test
+  @DisplayName("label(V, O) throws exception null edge")
+  public void labelExceptionNullVertex() {
+    try {
+      graph.label((Vertex<String>) null, "");
+      fail("The expected exception was not thrown");
+    } catch (PositionException e) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("label(V, O) throws exception vertex from different graph")
+  public void labelExceptionVertexFromDifferentGraph() {
+    Graph<String, String> g = createGraph();
+    Vertex<String> v1 = g.insert("v1");
+    try {
+      graph.label(v1, "v1");
+      fail("The expected exception was not thrown");
+    } catch (PositionException ex) {
+      return;
+    }
+  }
+
+  @Test
+  @DisplayName("label(V, O) returns correct origin")
+  public void labelCorrectlyAddsLabelToVertex() {
+    Vertex<String> v1 = graph.insert("v1");
+    graph.label(v1, "label");
+    assertEquals("label", graph.label(v1));
+  }
+
+  @Test
+  @DisplayName("label(V, O) can give multiple objects same label")
+  public void labelMultipleObjectsSame() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Vertex<String> v3 = graph.insert("v3");
+    graph.label(v1, "label");
+    graph.label(v2, "label");
+    graph.label(v3, "label");
+    assertEquals("label", graph.label(v1));
+    assertEquals("label", graph.label(v2));
+    assertEquals("label", graph.label(v3));
+  }
+
+  @Test
+  @DisplayName("label(V, O) can give multiple objects different label")
+  public void labelMultipleObjectsDifferent() {
+    Vertex<String> v1 = graph.insert("v1");
+    Vertex<String> v2 = graph.insert("v2");
+    Vertex<String> v3 = graph.insert("v3");
+    graph.label(v1, "label");
+    graph.label(v2, 1);
+    graph.label(v3, 4.7);
+    assertEquals("label", graph.label(v1));
+    assertEquals(1, graph.label(v2));
+    assertEquals(4.7, graph.label(v3));
+  }
   // TODO label(Vertex, Object)
     // exception invalid vertex
     // labels vertex correctly

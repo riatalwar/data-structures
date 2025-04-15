@@ -79,7 +79,7 @@ public class SparseGraph<V, E> implements Graph<V, E> {
     VertexNode<V> t = convert(to);
 
     // check for self loop and duplicate edges
-    if (f.data == t.data) {
+    if (f.get().equals(t.get())) {
       throw new InsertionException("insertion creates self loop");
     } else if (f.outgoing.containsKey(t.get())) {
       throw new InsertionException("insertion creates duplicate edge");
@@ -105,6 +105,7 @@ public class SparseGraph<V, E> implements Graph<V, E> {
     if (!toRemove.incoming.isEmpty() || !toRemove.outgoing.isEmpty()) {
       throw new RemovalException("vertex has incident edges");
     }
+    toRemove.owner = null;
 
     vertices.remove(v.get());
     return v.get();
@@ -114,6 +115,7 @@ public class SparseGraph<V, E> implements Graph<V, E> {
   public E remove(Edge<E> e) throws PositionException {
     // get edge information
     EdgeNode<E> toRemove = convert(e);
+    toRemove.owner = null;
     VertexNode<V> f = toRemove.from;
     VertexNode<V> t = toRemove.to;
 

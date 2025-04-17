@@ -37,11 +37,9 @@ public class DijkstraStreetSearcher extends StreetSearcher {
     Vertex<String> start = vertices.get(startName);
     Vertex<String> end = vertices.get(endName);
 
-    double totalDist = -1;
+    double totalDist = 0;
     // handle same start and endpoint
-    if (start == end) {
-      totalDist = 0;
-    } else {
+    if (start != end) {
       totalDist = dijkstra(startName, endName);
     }
 
@@ -67,31 +65,35 @@ public class DijkstraStreetSearcher extends StreetSearcher {
 
       // mark found vertex as explored
       explored.put(min.getFirst().get(), true);
+      checkOutgoingEdges(min, explored, pq);
+    }
 
-      // loop over outgoing edges from vertex
-      for (Edge<String> e : graph.outgoing(min.getFirst())) {
-        Vertex<String> to = graph.to(e);
-        // for unexplored vertices check if shorter path found
-        if (!explored.containsKey(to.get())) {
-          Double dist = min.getSecond() + (Double)(graph.label(e));
+    return distance.get(endName).getSecond();
+  }
 
-          // if found shorter path update distance and previous
-          if (dist < distance.getOrDefault(to.get(), new Pair<>(to, MAX_DISTANCE)).getSecond()) {
-            insertDistance(pq, to, dist);
-            graph.label(to, e);           // update previous
-          }
+  // check outgoing edges of vertex for shorter path
+  private void checkOutgoingEdges(Pair<Vertex<String>, Double> v, HashMap<String, Boolean> explored,
+                                  PriorityQueue<Pair<Vertex<String>, Double>> pq) {
+    for (Edge<String> e : graph.outgoing(v.getFirst())) {
+      Vertex<String> to = graph.to(e);
+      // for unexplored vertices check if shorter path found
+      if (!explored.containsKey(to.get())) {
+        Double dist = v.getSecond() + (Double)(graph.label(e));
+
+        // if found shorter path update distance and previous
+        if (dist < distance.getOrDefault(to.get(), new Pair<>(to, MAX_DISTANCE)).getSecond()) {
+          insertDistance(pq, to, dist);
+          graph.label(to, e);           // update previous
         }
       }
     }
-    return distance.get(endName).getSecond();
   }
 
   // update distance of a given vertex
   private void insertDistance(PriorityQueue<Pair<Vertex<String>, Double>> pq, Vertex<String> v, Double dist) {
-    pq.remove(distance.get(v.get()));    // remove if already in queue
     Pair<Vertex<String>, Double> p = new Pair<>(v, dist);
-    distance.put(v.get(), p); // update distance
-    pq.add(p);       // add by updated priority to queue
+    distance.put(v.get(), p);
+    pq.add(p);
   }
 
   // contain print logic

@@ -55,6 +55,13 @@ public class DijkstraStreetSearcher extends StreetSearcher {
     insertDistance(pq, vertices.get(startName), 0.0);
 
     for (int i = 0; i < vertices.size(); i++) {
+      // if cannot explore all vertices
+      if (pq.isEmpty()) {
+        if (distance.get(endName).getSecond() != MAX_DISTANCE) {
+          break;
+        }
+        return -1;  // path not found
+      }
       // find unexplored vertex with the smallest distance
       Pair<Vertex<String>, Double> min = pq.poll();
 

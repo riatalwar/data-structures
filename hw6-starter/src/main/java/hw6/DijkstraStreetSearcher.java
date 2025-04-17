@@ -1,16 +1,12 @@
 package hw6;
 
-import org.apache.commons.math3.util.Pair;
-
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.PriorityQueue;
+import org.apache.commons.math3.util.Pair;
 
 public class DijkstraStreetSearcher extends StreetSearcher {
-
-  private HashMap<String, Pair<Vertex<String>, Double>> distance;
-
 
   /**
    * Creates a StreetSearcher object.
@@ -19,7 +15,6 @@ public class DijkstraStreetSearcher extends StreetSearcher {
    */
   public DijkstraStreetSearcher(Graph<String, String> graph) {
     super(graph);
-    distance = new HashMap<>();
   }
 
   @Override
@@ -47,10 +42,11 @@ public class DijkstraStreetSearcher extends StreetSearcher {
   }
 
   private double dijkstra(String startName, String endName) {
+    HashMap<String, Pair<Vertex<String>, Double>> distance = new HashMap<>();
     PriorityQueue<Pair<Vertex<String>, Double>> pq = new PriorityQueue<>(new DistanceComparator());
     HashMap<String, Boolean> explored = new HashMap<>();
 
-    insertDistance(pq, vertices.get(startName), 0.0);
+    insertDistance(pq, distance, vertices.get(startName), 0.0);
 
     for (int i = 0; i < vertices.size(); i++) {
       // if cannot explore all vertices
@@ -65,15 +61,17 @@ public class DijkstraStreetSearcher extends StreetSearcher {
 
       // mark found vertex as explored
       explored.put(min.getFirst().get(), true);
-      checkOutgoingEdges(min, explored, pq);
+      checkOutgoingEdges(pq, distance, explored, min);
     }
 
     return distance.get(endName).getSecond();
   }
 
   // check outgoing edges of vertex for shorter path
-  private void checkOutgoingEdges(Pair<Vertex<String>, Double> v, HashMap<String, Boolean> explored,
-                                  PriorityQueue<Pair<Vertex<String>, Double>> pq) {
+  private void checkOutgoingEdges(PriorityQueue<Pair<Vertex<String>, Double>> pq,
+                                  HashMap<String, Pair<Vertex<String>, Double>> distance,
+                                  HashMap<String, Boolean> explored,
+                                  Pair<Vertex<String>, Double> v) {
     for (Edge<String> e : graph.outgoing(v.getFirst())) {
       Vertex<String> to = graph.to(e);
       // for unexplored vertices check if shorter path found
@@ -82,7 +80,7 @@ public class DijkstraStreetSearcher extends StreetSearcher {
 
         // if found shorter path update distance and previous
         if (dist < distance.getOrDefault(to.get(), new Pair<>(to, MAX_DISTANCE)).getSecond()) {
-          insertDistance(pq, to, dist);
+          insertDistance(pq, distance, to, dist);
           graph.label(to, e);           // update previous
         }
       }
@@ -90,7 +88,9 @@ public class DijkstraStreetSearcher extends StreetSearcher {
   }
 
   // update distance of a given vertex
-  private void insertDistance(PriorityQueue<Pair<Vertex<String>, Double>> pq, Vertex<String> v, Double dist) {
+  private void insertDistance(PriorityQueue<Pair<Vertex<String>, Double>> pq,
+                              HashMap<String, Pair<Vertex<String>, Double>> distance,
+                              Vertex<String> v, Double dist) {
     Pair<Vertex<String>, Double> p = new Pair<>(v, dist);
     distance.put(v.get(), p);
     pq.add(p);

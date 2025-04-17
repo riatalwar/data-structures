@@ -41,10 +41,12 @@ public class DijkstraStreetSearcher extends StreetSearcher {
 
   // implement dijkstra's algorithm
   private double dijkstra(String startName, String endName) {
+    // initialize tracker data structures
     HashMap<String, Pair<Vertex<String>, Double>> distance = new HashMap<>();
     PriorityQueue<Pair<Vertex<String>, Double>> pq = new PriorityQueue<>(new DistanceComparator());
     HashMap<String, Boolean> explored = new HashMap<>();
 
+    // insert start node
     insertDistance(pq, distance, vertices.get(startName), 0.0);
 
     while (!pq.isEmpty()) {
@@ -59,6 +61,7 @@ public class DijkstraStreetSearcher extends StreetSearcher {
       checkOutgoingEdges(pq, distance, explored, min);
     }
 
+    // default -1 if path not found
     return distance.getOrDefault(endName, new Pair<>(null, -1.0)).getSecond();
   }
 
@@ -100,6 +103,7 @@ public class DijkstraStreetSearcher extends StreetSearcher {
     }
   }
 
+  // comparator for distances of two vertices
   static class DistanceComparator implements Comparator<Pair<Vertex<String>, Double>> {
     @Override
     public int compare(Pair<Vertex<String>, Double> obj1, Pair<Vertex<String>, Double> obj2) {

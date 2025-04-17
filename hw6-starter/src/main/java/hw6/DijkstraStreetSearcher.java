@@ -8,6 +8,8 @@ import org.apache.commons.math3.util.Pair;
 
 public class DijkstraStreetSearcher extends StreetSearcher {
 
+  private static final Pair<Vertex<String>, Double> DEFAULT_DISTANCE = new Pair<>(null, MAX_DISTANCE);
+
   /**
    * Creates a StreetSearcher object.
    *
@@ -27,8 +29,7 @@ public class DijkstraStreetSearcher extends StreetSearcher {
       System.out.println("ERROR: " + e.getMessage());
       return;
     }
-
-
+    
     Vertex<String> start = vertices.get(startName);
     Vertex<String> end = vertices.get(endName);
 
@@ -41,6 +42,7 @@ public class DijkstraStreetSearcher extends StreetSearcher {
     print(end, start, totalDist);
   }
 
+  // implement dijkstra's algorithm
   private double dijkstra(String startName, String endName) {
     HashMap<String, Pair<Vertex<String>, Double>> distance = new HashMap<>();
     PriorityQueue<Pair<Vertex<String>, Double>> pq = new PriorityQueue<>(new DistanceComparator());
@@ -51,7 +53,7 @@ public class DijkstraStreetSearcher extends StreetSearcher {
     for (int i = 0; i < vertices.size(); i++) {
       // if cannot explore all vertices
       if (pq.isEmpty()) {
-        if (distance.get(endName).getSecond() != MAX_DISTANCE) {
+        if (distance.getOrDefault(endName, DEFAULT_DISTANCE).getSecond() != MAX_DISTANCE) {
           break;
         }
         return -1;  // path not found
@@ -79,7 +81,7 @@ public class DijkstraStreetSearcher extends StreetSearcher {
         Double dist = v.getSecond() + (Double)(graph.label(e));
 
         // if found shorter path update distance and previous
-        if (dist < distance.getOrDefault(to.get(), new Pair<>(to, MAX_DISTANCE)).getSecond()) {
+        if (dist < distance.getOrDefault(to.get(), DEFAULT_DISTANCE).getSecond()) {
           insertDistance(pq, distance, to, dist);
           graph.label(to, e);           // update previous
         }

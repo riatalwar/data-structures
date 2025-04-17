@@ -7,9 +7,6 @@ import java.util.PriorityQueue;
 import org.apache.commons.math3.util.Pair;
 
 public class DijkstraStreetSearcher extends StreetSearcher {
-
-  private static final Pair<Vertex<String>, Double> DEFAULT_DISTANCE = new Pair<>(null, MAX_DISTANCE);
-
   /**
    * Creates a StreetSearcher object.
    *
@@ -29,7 +26,7 @@ public class DijkstraStreetSearcher extends StreetSearcher {
       System.out.println("ERROR: " + e.getMessage());
       return;
     }
-    
+
     Vertex<String> start = vertices.get(startName);
     Vertex<String> end = vertices.get(endName);
 
@@ -50,23 +47,19 @@ public class DijkstraStreetSearcher extends StreetSearcher {
 
     insertDistance(pq, distance, vertices.get(startName), 0.0);
 
-    for (int i = 0; i < vertices.size(); i++) {
-      // if cannot explore all vertices
-      if (pq.isEmpty()) {
-        if (distance.getOrDefault(endName, DEFAULT_DISTANCE).getSecond() != MAX_DISTANCE) {
-          break;
-        }
-        return -1;  // path not found
-      }
+    while (!pq.isEmpty()) {
       // find unexplored vertex with the smallest distance
       Pair<Vertex<String>, Double> min = pq.poll();
+      if (explored.containsKey(min.getFirst().get())) {
+        continue;
+      }
 
       // mark found vertex as explored
       explored.put(min.getFirst().get(), true);
       checkOutgoingEdges(pq, distance, explored, min);
     }
 
-    return distance.get(endName).getSecond();
+    return distance.getOrDefault(endName, new Pair<>(null, -1.0)).getSecond();
   }
 
   // check outgoing edges of vertex for shorter path
@@ -81,7 +74,7 @@ public class DijkstraStreetSearcher extends StreetSearcher {
         Double dist = v.getSecond() + (Double)(graph.label(e));
 
         // if found shorter path update distance and previous
-        if (dist < distance.getOrDefault(to.get(), DEFAULT_DISTANCE).getSecond()) {
+        if (dist < distance.getOrDefault(to.get(), new Pair<>(null, MAX_DISTANCE)).getSecond()) {
           insertDistance(pq, distance, to, dist);
           graph.label(to, e);           // update previous
         }

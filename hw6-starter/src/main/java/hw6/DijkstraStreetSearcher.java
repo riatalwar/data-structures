@@ -45,6 +45,11 @@ public class DijkstraStreetSearcher extends StreetSearcher {
     HashMap<String, Pair<Vertex<String>, Double>> distance = new HashMap<>();
     PriorityQueue<Pair<Vertex<String>, Double>> pq = new PriorityQueue<>(new DistanceComparator());
     HashMap<String, Boolean> explored = new HashMap<>();
+//    for (String v : vertices.keySet()) {
+//      Pair<Vertex<String>, Double> p = new Pair<>(vertices.get(v), MAX_DISTANCE);
+//      distance.put(v, p);
+//      explored.put(v, false);
+//    }
 
     // insert start node
     insertDistance(pq, distance, vertices.get(startName), 0.0);
@@ -52,6 +57,9 @@ public class DijkstraStreetSearcher extends StreetSearcher {
     while (!pq.isEmpty()) {
       // find unexplored vertex with the smallest distance
       Pair<Vertex<String>, Double> min = pq.poll();
+      if (min.getFirst().get().equals(endName)) {
+        break;
+      }
       if (explored.containsKey(min.getFirst().get())) {
         continue;
       }
